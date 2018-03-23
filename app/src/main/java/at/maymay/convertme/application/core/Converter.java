@@ -1,7 +1,9 @@
-package at.maymay.convertme;
+package at.maymay.convertme.application.core;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import at.maymay.convertme.R;
 
 public class Converter extends AppCompatActivity {
 

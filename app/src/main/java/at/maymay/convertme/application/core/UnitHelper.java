@@ -1,4 +1,4 @@
-package at.maymay.convertme;
+package at.maymay.convertme.application.core;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package at.maymay.convertme;
+package at.maymay.convertme.application.core;
 
 /**
  * Created by mmalte on 21.03.18.
