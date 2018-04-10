@@ -2,39 +2,36 @@ package at.maymay.convertme.application.core;
 
 import java.io.Serializable;
 
-/**
- * Created by mmalte on 21.03.18.
- */
 
 public class Unit implements Serializable {
 
-    private String name;
-    private String shortcut;
-    private UnitTyp type;
-    private double factor;
+    public Unit(String name, String shortcut, double factor)
+    {
+        name_ = name;
+        shortcut_ = shortcut;
+        factor_ = factor;
+    }
+
+    private String name_;
+    private String shortcut_;
+    private double factor_;
 
     public String getName() {
-        return name;
+        return name_;
     }
     public void setName(String name) {
-        this.name = name;
+        this.name_ = name;
     }
     public String getShortcut() {
-        return shortcut;
+        return shortcut_;
     }
     public void setShortcut(String shortcut) {
-        this.shortcut = shortcut;
-    }
-    public UnitTyp getType() {
-        return type;
-    }
-    public void setType(UnitTyp typ) {
-        this.type = typ;
+        this.shortcut_ = shortcut;
     }
     public double getFactor() {
-        return factor;
+        return factor_;
     }
     public void setFactor(double factor) {
-        this.factor = factor;
+        this.factor_ = factor;
     }
 }
