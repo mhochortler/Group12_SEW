@@ -3,10 +3,12 @@ package at.maymay.convertme;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import at.maymay.convertme.application.core.Category;
 import at.maymay.convertme.application.core.Converter;
+import at.maymay.convertme.application.core.CurrencyExchangeAPI;
 import at.maymay.convertme.application.core.Unit;
 import at.maymay.convertme.application.core.Weight;
 
@@ -36,4 +38,18 @@ public class ConverterUnitTest {
         double result = Converter.convert(unit_List.get(0), unit_List.get(1), 10.0);
         assertEquals(1000.0, result, 0.0);
     }
+
+    @Test
+    public void test_get_exchange_rate_throwsException() {
+        double result = CurrencyExchangeAPI.getExchangeRate("USX", "EUPO");
+        assertEquals(0.0, result, 0.0);
+    }
+
+    @Test
+    public void test_get_exchange_rate_isCorrect() {
+        double result = CurrencyExchangeAPI.getExchangeRate("USD", "EUR");
+        assertNotEquals(0.0, result, 0.0);
+    }
+
+
 }
