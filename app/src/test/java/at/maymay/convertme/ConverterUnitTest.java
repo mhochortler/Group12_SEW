@@ -40,9 +40,16 @@ public class ConverterUnitTest {
     }
 
     @Test
-    public void test_get_exchange_rate()
-    {
-        double result = CurrencyExchangeAPI.getExchangeRate("USD", "EUR");
-        System.out.println("Rate from USD to EUR: " + result);
+    public void test_get_exchange_rate_throwsException() {
+        double result = CurrencyExchangeAPI.getExchangeRate("USX", "EUPO");
+        assertEquals(0.0, result, 0.0);
     }
+
+    @Test
+    public void test_get_exchange_rate_isCorrect() {
+        double result = CurrencyExchangeAPI.getExchangeRate("USD", "EUR");
+        assertNotEquals(0.0, result, 0.0);
+    }
+
+
 }
