@@ -11,6 +11,12 @@ import org.junit.runner.RunWith;
 
 import at.maymay.convertme.application.core.Converter;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static org.junit.Assert.*;
 
 /**
@@ -29,5 +35,12 @@ public class ConverterInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("at.maymay.convertme", appContext.getPackageName());
+    }
+
+    @Test
+    public void test_btn_convert() throws Exception {
+        onView(withId(R.id.ptxt_input)).perform(typeText("10"));
+        onView(withId(R.id.btn_convert)).perform(click());
+        onView(withId(R.id.ptxt_result)).check(matches(withText("1000.0")));
     }
 }
