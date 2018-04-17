@@ -1,7 +1,5 @@
 package at.maymay.convertme.application.core;
 
-import java.util.List;
-
 public class Weight extends Category {
 
     public Weight(){
