@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class ConverterUnitTest {
 
-    List<Unit> unit_List;
+    private List<Unit> unit_List;
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
