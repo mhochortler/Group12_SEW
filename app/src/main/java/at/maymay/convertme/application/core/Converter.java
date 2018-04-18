@@ -2,8 +2,6 @@ package at.maymay.convertme.application.core;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,11 +22,11 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_converter);
 
-        btn_convert = findViewById(R.id.btn_convert);
-        ptxt_result = findViewById(R.id.ptxt_result);
-        ptxt_input = findViewById(R.id.ptxt_input);
-        input_unit = findViewById(R.id.input_unit);
-        output_unit = findViewById(R.id.output_unit);
+        btn_convert = (Button) findViewById(R.id.btn_convert);
+        ptxt_result = (EditText) findViewById(R.id.ptxt_result);
+        ptxt_input = (EditText) findViewById(R.id.ptxt_input);
+        input_unit = (TextView) findViewById(R.id.input_unit);
+        output_unit = (TextView) findViewById(R.id.output_unit);
 
         btn_convert.setOnClickListener(this);
     }
