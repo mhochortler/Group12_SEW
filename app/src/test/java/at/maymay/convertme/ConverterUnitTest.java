@@ -9,6 +9,7 @@ import java.util.List;
 import at.maymay.convertme.application.core.Category;
 import at.maymay.convertme.application.core.Converter;
 import at.maymay.convertme.application.core.CurrencyExchangeAPI;
+import at.maymay.convertme.application.core.Length;
 import at.maymay.convertme.application.core.Unit;
 import at.maymay.convertme.application.core.Weight;
 
@@ -21,7 +22,7 @@ import static org.junit.Assert.*;
  */
 public class ConverterUnitTest {
 
-    List<Unit> unit_List;
+    private List<Unit> unit_List;
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
@@ -29,8 +30,8 @@ public class ConverterUnitTest {
 
     @Before
     public void initCategory() {
-        Category cat_weight = new Weight();
-        unit_List = cat_weight.getUnitList();
+        Category cat_length = new Length();
+        unit_List = cat_length.getUnitList();
     }
 
     @Test

@@ -42,5 +42,7 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.ptxt_input)).perform(typeText("10"));
         onView(withId(R.id.btn_convert)).perform(click());
         onView(withId(R.id.ptxt_result)).check(matches(withText("1000.0")));
+        onView(withId(R.id.input_unit)).check(matches(withText("kg")));
+        onView(withId(R.id.output_unit)).check(matches(withText("dag")));
     }
 }
