@@ -51,6 +51,4 @@ public class ConverterUnitTest {
         double result = CurrencyExchangeAPI.getExchangeRate("USD", "EUR");
         assertNotEquals(0.0, result, 0.0);
     }
-
-
 }

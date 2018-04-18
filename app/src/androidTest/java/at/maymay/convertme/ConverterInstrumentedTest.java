@@ -45,4 +45,5 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.input_unit)).check(matches(withText("kg")));
         onView(withId(R.id.output_unit)).check(matches(withText("dag")));
     }
+
 }

@@ -8,17 +8,18 @@
 
     <Button
         android:id="@+id/btn_convert"
-        android:layout_width="100dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginBottom="16dp"
         android:text="Convert"
-        app:layout_constraintEnd_toStartOf="@+id/ptxt_result"
-        app:layout_constraintStart_toEndOf="@+id/input_unit"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/ptxt_input"
-        android:layout_width="80dp"
+        android:layout_width="97dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="56dp"
@@ -30,39 +31,42 @@
 
     <EditText
         android:id="@+id/ptxt_result"
-        android:layout_width="80dp"
+        android:layout_width="97dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="56dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/output_unit"
-        app:layout_constraintStart_toEndOf="@+id/btn_convert"
+        app:layout_constraintStart_toEndOf="@+id/input_unit"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <TextView
+    <Spinner
         android:id="@+id/input_unit"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:layout_gravity="fill"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="65dp"
-        android:text=""
-        app:layout_constraintEnd_toStartOf="@+id/btn_convert"
+        android:layout_marginTop="60dp"
+        android:spinnerMode="dropdown"
+        android:background="@android:drawable/btn_default"
         app:layout_constraintStart_toEndOf="@+id/ptxt_input"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <Spinner
         android:id="@+id/output_unit"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="65dp"
-        android:text=""
+        android:layout_marginTop="60dp"
+        android:spinnerMode="dropdown"
+        android:layout_gravity="fill"
+        android:background="@android:drawable/btn_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ptxt_result"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
