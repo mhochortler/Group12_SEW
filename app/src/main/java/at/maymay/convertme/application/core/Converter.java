@@ -17,6 +17,13 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
     TextView input_unit;
     TextView output_unit;
 
+    private Currency currency;
+    private Length length;
+    private Speed speed;
+    private Temperature temperature;
+    private Volume volume;
+    private Weight weight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +36,17 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         output_unit = (TextView) findViewById(R.id.output_unit);
 
         btn_convert.setOnClickListener(this);
+
+        initCategories();
+    }
+
+    public void initCategories() {
+        currency = new Currency();
+        length = new Length();
+        speed = new Speed();
+        temperature = new Temperature();
+        volume = new Volume();
+        weight = new Weight();
     }
 
     public static double convert(Unit from, Unit to, double value) {
