@@ -34,13 +34,13 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_converter);
 
+        initCategories();
         btn_convert = (Button) findViewById(R.id.btn_convert);
         ptxt_result = (EditText) findViewById(R.id.ptxt_result);
         ptxt_input = (EditText) findViewById(R.id.ptxt_input);
         input_unit = (Spinner) findViewById(R.id.input_unit);
         output_unit = (Spinner) findViewById(R.id.output_unit);
 
-        String[] length_items = new String[]{"m", "ft", "in", "yd", "mile", "nmi"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_style, getStringsForCategory(length));
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -48,8 +48,6 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         output_unit.setAdapter(adapter);
 
         btn_convert.setOnClickListener(this);
-
-        initCategories();
     }
 
     public static double convert(Unit from, Unit to, double value) {
@@ -78,7 +76,7 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
             result.add(u.getShortcut());
         }
 
-        return (String[]) result.toArray();
+        return result.toArray(new String[result.size()]);
     }
 
     private void initCategories() {
