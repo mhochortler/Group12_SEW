@@ -1,13 +1,12 @@
 package at.maymay.convertme.application.core;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +16,9 @@ import at.maymay.convertme.R;
 public class Converter extends AppCompatActivity implements View.OnClickListener {
 
     Button btn_convert;
-    EditText ptxt_input;
-    EditText ptxt_result;
-    Spinner input_unit;
-    Spinner output_unit;
+    Button btn_addNewLine;
+
+    List<ConversionListElement> list_elements = new ArrayList<>();
 
     private Currency currency;
     private Length length;
@@ -35,19 +33,13 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_converter);
 
         initCategories();
+        addNewConversionLine(length);
+
         btn_convert = (Button) findViewById(R.id.btn_convert);
-        ptxt_result = (EditText) findViewById(R.id.ptxt_result);
-        ptxt_input = (EditText) findViewById(R.id.ptxt_input);
-        input_unit = (Spinner) findViewById(R.id.input_unit);
-        output_unit = (Spinner) findViewById(R.id.output_unit);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_style, getStringsForCategory(length));
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        input_unit.setAdapter(adapter);
-        output_unit.setAdapter(adapter);
+        btn_addNewLine = (Button) findViewById(R.id.btn_addNewLine);
 
         btn_convert.setOnClickListener(this);
+        btn_addNewLine.setOnClickListener(this);
     }
 
     public static double convert(Unit from, Unit to, double value) {
@@ -62,21 +54,20 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
             case R.id.btn_convert:
                 Unit kg = new Unit("kilogram", "kg", 1000.0);
                 Unit dag = new Unit("decagram", "dag", 10.0);
-                double result = convert(kg, dag, Double.parseDouble(ptxt_input.getText().toString()));
-                ptxt_result.setText(String.valueOf(result));
+                for(ConversionListElement element : list_elements)
+                {
+                    if(element.getTextViewInput().getText().length() != 0)
+                    {
+                        double result = convert(kg, dag, element.getInput());
+                        element.setOutput(result);
+                    }
+                }
+                break;
 
+            case R.id.btn_addNewLine:
+                addNewConversionLine(length);
                 break;
         }
-    }
-
-    private String[] getStringsForCategory(Category cat) {
-        List<String> result = new ArrayList<>();
-
-        for(Unit u : cat.getUnitList()) {
-            result.add(u.getShortcut());
-        }
-
-        return result.toArray(new String[result.size()]);
     }
 
     private void initCategories() {
@@ -88,53 +79,53 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         weight = new Weight();
     }
 
+    private void addNewConversionLine(Category category)
+    {
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        assert inflater != null;
+        View view = inflater.inflate(R.layout.convert_list_item, null);
+
+        ConversionListElement new_element = new ConversionListElement(this, view, category);
+        list_elements.add(new_element);
+
+        LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
+        llayout.addView(view);
+    }
 
     public Currency getCurrency() {
         return currency;
     }
-
     public void setCurrency(Currency currency) {
         this.currency = currency;
     }
-
     public Length getLength() {
         return length;
     }
-
     public void setLength(Length length) {
         this.length = length;
     }
-
     public Speed getSpeed() {
         return speed;
     }
-
     public void setSpeed(Speed speed) {
         this.speed = speed;
     }
-
     public Temperature getTemperature() {
         return temperature;
     }
-
     public void setTemperature(Temperature temperature) {
         this.temperature = temperature;
     }
-
     public Volume getVolume() {
         return volume;
     }
-
     public void setVolume(Volume volume) {
         this.volume = volume;
     }
-
     public Weight getWeight() {
         return weight;
     }
-
     public void setWeight(Weight weight) {
         this.weight = weight;
     }
 }
-

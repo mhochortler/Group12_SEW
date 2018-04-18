@@ -6,66 +6,49 @@
     android:layout_height="match_parent"
     tools:context="at.maymay.convertme.application.core.Converter">
 
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="528dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layout_conversions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+    </ScrollView>
+
     <Button
         android:id="@+id/btn_convert"
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="160dp"
         android:text="Convert"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/ptxt_input"
-        android:layout_width="97dp"
+    <Button
+        android:id="@+id/btn_addNewLine"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="56dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/input_unit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/ptxt_result"
-        android:layout_width="97dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/output_unit"
-        app:layout_constraintStart_toEndOf="@+id/input_unit"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <Spinner
-        android:id="@+id/input_unit"
-        android:layout_width="75dp"
-        android:layout_height="40dp"
-        android:layout_gravity="fill"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="60dp"
-        android:spinnerMode="dropdown"
-        android:background="@android:drawable/btn_default"
-        app:layout_constraintStart_toEndOf="@+id/ptxt_input"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/output_unit"
-        android:layout_width="75dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="60dp"
-        android:spinnerMode="dropdown"
-        android:layout_gravity="fill"
-        android:background="@android:drawable/btn_default"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="540dp"
+        android:text="+"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ptxt_result"
         app:layout_constraintTop_toTopOf="parent" />
 
 
