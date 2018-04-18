@@ -30,14 +30,14 @@ public class ConverterUnitTest {
 
     @Before
     public void initCategory() {
-        Category cat_length = new Length();
+        Length cat_length = new Length();
         unit_List = cat_length.getUnitList();
     }
 
     @Test
     public void test_conversion_isCorrect() throws Exception{
         double result = Converter.convert(unit_List.get(0), unit_List.get(1), 10.0);
-        assertEquals(1000.0, result, 0.0);
+        assertEquals(32.8083, result, 0.001);
     }
 
     @Test
