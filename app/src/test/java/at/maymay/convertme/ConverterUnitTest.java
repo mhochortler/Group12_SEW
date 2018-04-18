@@ -8,6 +8,7 @@ import java.util.List;
 
 import at.maymay.convertme.application.core.Category;
 import at.maymay.convertme.application.core.Converter;
+import at.maymay.convertme.application.core.CurrencyExchangeAPI;
 import at.maymay.convertme.application.core.Length;
 import at.maymay.convertme.application.core.Unit;
 import at.maymay.convertme.application.core.Weight;
