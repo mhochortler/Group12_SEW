@@ -28,12 +28,6 @@ public class ConverterUnitTest {
 
     @Before
     public void initCategory() {
-        Category cat_weight = new Weight();
-        unit_List = cat_weight.getUnitList();
-    }
-
-    @Before
-    public void initCategory() {
         Category cat_length = new Length();
         unit_List = cat_length.getUnitList();
     }
