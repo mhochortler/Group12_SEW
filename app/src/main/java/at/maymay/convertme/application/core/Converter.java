@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import at.maymay.convertme.R;
 
 public class Converter extends AppCompatActivity implements View.OnClickListener {
@@ -38,7 +41,7 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         output_unit = (Spinner) findViewById(R.id.output_unit);
 
         String[] length_items = new String[]{"m", "ft", "in", "yd", "mile", "nmi"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_style, length_items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_style, getStringsForCategory(length));
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         input_unit.setAdapter(adapter);
@@ -49,19 +52,9 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         initCategories();
     }
 
-    public void initCategories() {
-        currency = new Currency();
-        length = new Length();
-        speed = new Speed();
-        temperature = new Temperature();
-        volume = new Volume();
-        weight = new Weight();
-    }
-
     public static double convert(Unit from, Unit to, double value) {
         return (value * from.getFactor()) / to.getFactor();
     }
-
 
     @Override
     public void onClick(View view) {
@@ -78,6 +71,24 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    private String[] getStringsForCategory(Category cat) {
+        List<String> result = new ArrayList<>();
+
+        for(Unit u : cat.getUnitList()) {
+            result.add(u.getShortcut());
+        }
+
+        return (String[]) result.toArray();
+    }
+
+    private void initCategories() {
+        currency = new Currency();
+        length = new Length();
+        speed = new Speed();
+        temperature = new Temperature();
+        volume = new Volume();
+        weight = new Weight();
+    }
 
 
     public Currency getCurrency() {
