@@ -5,6 +5,13 @@ import java.io.Serializable;
 
 public class Unit implements Serializable {
 
+    public Unit(String name, String shortcut)
+    {
+        name_ = name;
+        shortcut_ = shortcut;
+        factor_ = 0.0;
+    }
+
     public Unit(String name, String shortcut, double factor)
     {
         name_ = name;
