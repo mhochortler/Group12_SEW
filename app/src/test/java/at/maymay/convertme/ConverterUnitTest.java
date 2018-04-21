@@ -23,15 +23,16 @@ import static org.junit.Assert.*;
 public class ConverterUnitTest {
 
     private List<Unit> unit_List;
+
+    @Before
+    public void setup() throws Exception
+    {
+        unit_List = new Length().getUnitList();
+    }
+
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
-    }
-
-    @Before
-    public void initCategory() {
-        Length cat_length = new Length();
-        unit_List = cat_length.getUnitList();
     }
 
     @Test

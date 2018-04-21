@@ -5,16 +5,12 @@ import android.app.Application;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 
-import at.maymay.convertme.application.core.Currency;
-import at.maymay.convertme.application.core.CurrencyExchangeAPI;
-import at.maymay.convertme.application.core.Unit;
-
 public class AppConfig extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        initDb();
+        //initDb();
         initCurrencyExchangeRates();
     }
 

@@ -1,9 +1,9 @@
 package at.maymay.convertme.application.core;
 
-import android.content.Context;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -12,31 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.maymay.convertme.R;
+import at.maymay.convertme.application.core.ui.CategorySelectionMenu;
+import at.maymay.convertme.application.core.ui.ConversionListElement;
 
-public class Converter extends AppCompatActivity implements View.OnClickListener {
+public class Converter extends AppCompatActivity implements View.OnClickListener{
 
     Button btn_convert;
-    Button btn_addNewLine;
+    FloatingActionButton btn_addNewLine;
+    CategorySelectionMenu category_selection;
 
-    List<ConversionListElement> list_elements = new ArrayList<>();
-
-    private Currency currency;
-    private Length length;
-    private Speed speed;
-    private Temperature temperature;
-    private Volume volume;
-    private Weight weight;
+    private List<ConversionListElement> list_elements = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_converter);
 
-        initCategories();
-        addNewConversionLine(length);
+        category_selection = new CategorySelectionMenu(this);
 
         btn_convert = (Button) findViewById(R.id.btn_convert);
-        btn_addNewLine = (Button) findViewById(R.id.btn_addNewLine);
+        btn_addNewLine = (FloatingActionButton) findViewById(R.id.btn_addNewLine);
 
         btn_convert.setOnClickListener(this);
         btn_addNewLine.setOnClickListener(this);
@@ -52,80 +47,47 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         switch(view.getId())
         {
             case R.id.btn_convert:
-                Unit kg = new Unit("kilogram", "kg", 1000.0);
-                Unit dag = new Unit("decagram", "dag", 10.0);
                 for(ConversionListElement element : list_elements)
                 {
+                    Unit input_unit = element.getSelectedInputUnit();
+                    Unit output_unit = element.getSelectedOutputUnit();
+
                     if(element.getTextViewInput().getText().length() != 0)
                     {
-                        double result = convert(kg, dag, element.getInput());
+                        double result = convert(input_unit, output_unit, element.getInput());
                         element.setOutput(result);
                     }
                 }
                 break;
 
             case R.id.btn_addNewLine:
-                addNewConversionLine(length);
+                if(category_selection.getView().isShown())
+                {
+                    closeSelectCategoryMenu();
+                }
+                else openSelectCategoryMenu();
                 break;
         }
     }
 
-    private void initCategories() {
-        currency = new Currency();
-        length = new Length();
-        speed = new Speed();
-        temperature = new Temperature();
-        volume = new Volume();
-        weight = new Weight();
+    private void openSelectCategoryMenu()
+    {
+        ConstraintLayout main_layout = (ConstraintLayout) findViewById(R.id.main_layout);
+        main_layout.addView(category_selection.getView());
     }
 
-    private void addNewConversionLine(Category category)
+    public void closeSelectCategoryMenu()
     {
-        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        assert inflater != null;
-        View view = inflater.inflate(R.layout.convert_list_item, null);
+        ConstraintLayout main_layout = (ConstraintLayout) findViewById(R.id.main_layout);
+        main_layout.removeView(category_selection.getView());
+    }
 
-        ConversionListElement new_element = new ConversionListElement(this, view, category);
+    public void addNewConversionLine(Category category)
+    {
+        ConversionListElement new_element = new ConversionListElement(this, category);
         list_elements.add(new_element);
 
         LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
-        llayout.addView(view);
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-    public Length getLength() {
-        return length;
-    }
-    public void setLength(Length length) {
-        this.length = length;
-    }
-    public Speed getSpeed() {
-        return speed;
-    }
-    public void setSpeed(Speed speed) {
-        this.speed = speed;
-    }
-    public Temperature getTemperature() {
-        return temperature;
-    }
-    public void setTemperature(Temperature temperature) {
-        this.temperature = temperature;
-    }
-    public Volume getVolume() {
-        return volume;
-    }
-    public void setVolume(Volume volume) {
-        this.volume = volume;
-    }
-    public Weight getWeight() {
-        return weight;
-    }
-    public void setWeight(Weight weight) {
-        this.weight = weight;
+        llayout.addView(new_element.getView());
     }
 }

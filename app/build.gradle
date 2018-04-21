@@ -5,7 +5,6 @@ android {
     defaultConfig {
         applicationId "at.maymay.convertme"
         minSdkVersion 25
-        //noinspection OldTargetApi
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -30,7 +29,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
     implementation 'com.github.sarxos:exchange-rates-api:0.2'
     implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
-
+    implementation 'com.android.support:design:25.4.0'
+    implementation 'com.github.fafaldo:fab-toolbar:1.2.0'
 }
