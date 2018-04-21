@@ -7,7 +7,7 @@ public abstract class Category {
 
     protected abstract void init();
 
-    List<Unit> unit_list_ = new ArrayList<>();
+    protected List<Unit> unit_list_ = new ArrayList<>();
 
     public List<Unit> getUnitList(){
         return unit_list_;

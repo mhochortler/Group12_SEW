@@ -14,7 +14,9 @@ import at.maymay.convertme.application.core.Converter;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static org.junit.Assert.*;
@@ -33,17 +35,33 @@ public class ConverterInstrumentedTest {
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
-
         assertEquals("at.maymay.convertme", appContext.getPackageName());
     }
 
     @Test
-    public void test_btn_convert() throws Exception {
-        onView(withId(R.id.ptxt_input)).perform(typeText("10"));
-        onView(withId(R.id.btn_convert)).perform(click());
-        onView(withId(R.id.ptxt_result)).check(matches(withText("1000.0")));
-        onView(withId(R.id.input_unit)).check(matches(withText("kg")));
-        onView(withId(R.id.output_unit)).check(matches(withText("dag")));
+    public void test_add_new_conversion() throws Exception {
+        onView(withId(R.id.btn_addNewLine)).perform(click());
+        onView(withId(R.id.btn_weight)).perform(click());
+        onView(withId(R.id.ptxt_input)).check(matches(isDisplayed()));
+        onView(withId(R.id.ptxt_result)).check(matches(isDisplayed()));
+        onView(withId(R.id.input_unit)).check(matches(isDisplayed()));
+        onView(withId(R.id.output_unit)).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void test_inputField() throws Exception {
+        onView(withId(R.id.btn_addNewLine)).perform(click());
+        onView(withId(R.id.btn_length)).perform(click());
+        onView(withId(R.id.ptxt_input)).perform(typeText("567"));
+        onView(withText("567")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void test_btn_convert() throws Exception {
+        onView(withId(R.id.btn_addNewLine)).perform(click());
+        onView(withId(R.id.btn_length)).perform(click());
+        onView(withId(R.id.ptxt_input)).perform(typeText("10"));
+        onView(withId(R.id.btn_convert)).perform(click());
+        onView(withId(R.id.ptxt_result)).check(matches(withText("10.0")));
+    }
 }
