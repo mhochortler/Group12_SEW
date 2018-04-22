@@ -16,7 +16,6 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static org.junit.Assert.*;
@@ -40,7 +39,7 @@ public class ConverterInstrumentedTest {
 
     @Test
     public void test_add_new_conversion() throws Exception {
-        onView(withId(R.id.btn_addNewLine)).perform(click());
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_weight)).perform(click());
         onView(withId(R.id.ptxt_input)).check(matches(isDisplayed()));
         onView(withId(R.id.ptxt_result)).check(matches(isDisplayed()));
@@ -50,7 +49,7 @@ public class ConverterInstrumentedTest {
 
     @Test
     public void test_inputField() throws Exception {
-        onView(withId(R.id.btn_addNewLine)).perform(click());
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
         onView(withId(R.id.ptxt_input)).perform(typeText("567"));
         onView(withText("567")).check(matches(isDisplayed()));
@@ -58,10 +57,9 @@ public class ConverterInstrumentedTest {
 
     @Test
     public void test_btn_convert() throws Exception {
-        onView(withId(R.id.btn_addNewLine)).perform(click());
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
         onView(withId(R.id.ptxt_input)).perform(typeText("10"));
-        onView(withId(R.id.btn_convert)).perform(click());
         onView(withId(R.id.ptxt_result)).check(matches(withText("10.0")));
     }
 }
