@@ -1,9 +1,10 @@
 package at.maymay.convertme.application.core.ui;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+
+import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.Category;
@@ -15,7 +16,7 @@ import at.maymay.convertme.application.core.Temperature;
 import at.maymay.convertme.application.core.Volume;
 import at.maymay.convertme.application.core.Weight;
 
-public class CategorySelectionMenu implements View.OnClickListener{
+public class CategorySelectionToolbar implements View.OnClickListener{
 
     private Currency currency;
     private Length length;
@@ -24,19 +25,20 @@ public class CategorySelectionMenu implements View.OnClickListener{
     private Volume volume;
     private Weight weight;
 
+    private FABToolbarLayout layout;
+
     private Category selected_category;
 
-    private View view;
     private Converter main_activity;
 
-    public CategorySelectionMenu(Context context) {
-        this.main_activity = (Converter)context;
+    public CategorySelectionToolbar(Context context) {
 
-        LayoutInflater inflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        assert inflater != null;
-        view = inflater.inflate(R.layout.select_category_menu, null);
+        main_activity = (Converter) context;
+        View view = ((Converter)context).findViewById(R.id.main_layout);
 
-        Button btn_length = (Button) view.findViewById(R.id.btn_length);
+        layout = (FABToolbarLayout) ((Converter) context).findViewById(R.id.layout_fabtoolbar);
+
+        Button btn_length = (Button)view.findViewById(R.id.btn_length);
         Button btn_weight = (Button) view.findViewById(R.id.btn_weight);
         Button btn_speed = (Button) view.findViewById(R.id.btn_speed);
         Button btn_temperature = (Button) view.findViewById(R.id.btn_temperature);
@@ -54,6 +56,11 @@ public class CategorySelectionMenu implements View.OnClickListener{
         this.selected_category = length;
     }
 
+    public void show()
+    {
+        layout.show();
+    }
+
     private void initCategories() {
         currency = new Currency();
         length = new Length();
@@ -61,16 +68,6 @@ public class CategorySelectionMenu implements View.OnClickListener{
         temperature = new Temperature();
         volume = new Volume();
         weight = new Weight();
-    }
-
-    public Category getSelectedCategory()
-    {
-        return selected_category;
-    }
-
-    public View getView()
-    {
-        return view;
     }
 
     @Override
@@ -92,6 +89,6 @@ public class CategorySelectionMenu implements View.OnClickListener{
         }
 
         main_activity.addNewConversionLine(selected_category);
-        main_activity.closeSelectCategoryMenu();
+        layout.hide();
     }
 }
