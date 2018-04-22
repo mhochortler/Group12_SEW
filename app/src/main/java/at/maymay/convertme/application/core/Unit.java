@@ -38,7 +38,4 @@ public class Unit implements Serializable {
     public double getFactor() {
         return factor_;
     }
-    public void setFactor(double factor) {
-        this.factor_ = factor;
-    }
 }

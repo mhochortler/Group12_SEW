@@ -1,8 +1,11 @@
 package at.maymay.convertme.application.core.ui;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.Category;
+import at.maymay.convertme.application.core.Converter;
 import at.maymay.convertme.application.core.Unit;
 
 public class ConversionListElement {
@@ -40,6 +44,64 @@ public class ConversionListElement {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_input.setAdapter(adapter);
         spinner_output.setAdapter(adapter);
+
+        spinner_output.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(getTextViewInput().getText().length() != 0)
+                {
+                    double result = Converter.convert(getSelectedInputUnit(), getSelectedOutputUnit(), getInput());
+                    setOutput(result);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinner_input.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(getTextViewInput().getText().length() != 0)
+                {
+                    double result = Converter.convert(getSelectedInputUnit(), getSelectedOutputUnit(), getInput());
+                    setOutput(result);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        textview_input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(getTextViewInput().getText().length() != 0)
+                {
+                    double result = Converter.convert(getSelectedInputUnit(), getSelectedOutputUnit(), getInput());
+                    setOutput(result);
+                }
+                else
+                {
+                    textview_output.setText(String.valueOf(""));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+
+            }
+        });
     }
 
     public View getView() {

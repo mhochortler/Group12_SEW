@@ -1,13 +1,5 @@
 package at.maymay.convertme.application.core;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Table;
-
-/**
- * Created by mmalte on 18.04.18.
- */
-
-@Table(name = "Currency")
 public class Currency extends Category {
 
     public Currency(){

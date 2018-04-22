@@ -12,7 +12,7 @@
     <ScrollView
         android:id="@+id/scroll_conversions"
         android:layout_width="0dp"
-        android:layout_height="528dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="4dp"
@@ -33,30 +33,95 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </ScrollView>
 
-    <Button
-        android:id="@+id/btn_convert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="160dp"
-        android:text="Convert"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout
+        android:id="@+id/layout_fabtoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:containerId="@+id/fabtoolbar_container"
+        app:fabId="@+id/btn_fabtoolbar"
+        app:fabToolbarId="@+id/fabtoolbar_toolbar"
+        app:fadeInFraction="0.2"
+        app:hideDuration="200"
+        app:horizontalMargin="30dp"
+        app:showDuration="600"
+        app:verticalMargin="30dp">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_addNewLine"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="530dp"
-        android:clickable="true"
-        app:backgroundTint="@android:color/holo_green_dark"
-        app:fabSize="mini"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        <RelativeLayout
+            android:id="@+id/fabtoolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true">
 
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btn_fabtoolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_input_add"
+                android:tint="@android:color/background_dark"
+                app:fabSize="normal" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/fabtoolbar_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_length"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                android:text="L" />
+
+            <Button
+                android:id="@+id/btn_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                android:text="W" />
+
+            <Button
+                android:id="@+id/btn_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                android:text="S" />
+
+            <Button
+                android:id="@+id/btn_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                android:text="T" />
+
+            <Button
+                android:id="@+id/btn_volume"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                android:text="V" />
+
+            <Button
+                android:id="@+id/btn_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                android:text="C" />
+        </LinearLayout>
+
+    </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
 
 </android.support.constraint.ConstraintLayout>

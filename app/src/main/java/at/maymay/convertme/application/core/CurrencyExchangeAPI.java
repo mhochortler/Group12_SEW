@@ -1,10 +1,7 @@
 package at.maymay.convertme.application.core;
 
 import com.github.sarxos.xchange.ExchangeCache;
-import com.github.sarxos.xchange.ExchangeException;
 import com.github.sarxos.xchange.ExchangeRate;
-
-import java.math.BigDecimal;
 
 public class CurrencyExchangeAPI {
 
