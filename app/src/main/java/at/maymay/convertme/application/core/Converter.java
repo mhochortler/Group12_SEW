@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import at.maymay.convertme.R;
@@ -32,7 +33,33 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
     }
 
     public static double convert(Unit from, Unit to, double value) {
+        Category cat = new Temperature();
+        String[] strings = cat.getStringifytUnitList();
+        if(Arrays.asList(strings).contains(from.getShortcut()))
+            return convertTemperature(from, to, value);
         return (value * from.getFactor()) / to.getFactor();
+    }
+
+    public static double convertTemperature(Unit from, Unit to, double value)
+    {
+        if(from.getShortcut().equals("K"))
+            value -= from.getFactor();
+        switch (to.getShortcut()){
+            case "°C":
+                if(from.getShortcut().equals("F°"))
+                    return (value - 32.0) / 1.8;
+                break;
+            case "F°":
+                value = value * 1.8 + 32.0;
+                break;
+            case "K":
+                if(from.getShortcut().equals("F°"))
+                    value =  ((value - 32.0)/from.getFactor());
+                value += to.getFactor();
+            default:
+                return value;
+        }
+        return value;
     }
 
     @Override
