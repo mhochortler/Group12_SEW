@@ -13,6 +13,8 @@ import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.ui.CategorySelectionToolbar;
 import at.maymay.convertme.application.core.ui.ConversionListElement;
 
+import static java.lang.Math.round;
+
 public class Converter extends AppCompatActivity implements View.OnClickListener{
 
     FloatingActionButton btn_fabtoolbar;
