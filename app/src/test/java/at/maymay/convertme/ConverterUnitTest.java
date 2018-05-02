@@ -42,6 +42,15 @@ public class ConverterUnitTest {
     }
 
     @Test
+    public void test_conversion_temperature_isCorrect() throws Exception{
+        Unit k = new Unit("Kelvin", "K", 273.15);
+        Unit f = new Unit("Fahrenheit", "F°", 1.8);
+
+        double result = Converter.convert(k, f, 10.0);
+        assertEquals(-441.67, result, 0.001);
+    }
+
+    @Test
     public void test_get_exchange_rate_throwsException() {
         double result = CurrencyExchangeAPI.getExchangeRate("USX", "EUPO");
         assertEquals(0.0, result, 0.0);
