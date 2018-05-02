@@ -52,7 +52,7 @@ public class ConversionListElement {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(getRightTextViewInput().getText().length() != 0)
                 {
-                    setOutput(getRightInput());
+                    setLeftOutput(getRightInput());
                 }
             }
 
@@ -161,10 +161,10 @@ public class ConversionListElement {
     public double getRightInput() { return Double.parseDouble(textview_output.getText().toString()); }
 
     public void setOutput(double output_value){
-        textview_output.setText(String.format("%.3f", output_value));
+        textview_output.setText(String.format("%.5f", output_value));
     }
     public void setLeftOutput(double output_value){
-        textview_input.setText(String.format("%.3f", output_value));
+        textview_input.setText(String.format("%.5f", getInput()));
     }
 
     public Unit getSelectedInputUnit()
