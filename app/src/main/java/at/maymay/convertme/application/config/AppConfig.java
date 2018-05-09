@@ -10,8 +10,6 @@ public class AppConfig extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //initDb();
-        initCurrencyExchangeRates();
     }
 
     private void initDb() {
@@ -24,11 +22,6 @@ public class AppConfig extends Application {
         dbConfiguration.addModelClasses();
 
         ActiveAndroid.initialize(dbConfiguration.create());
-    }
-
-    private void initCurrencyExchangeRates() {
-        //init exchange rates
-        
     }
 
 }
