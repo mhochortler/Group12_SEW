@@ -11,8 +11,10 @@ import at.maymay.convertme.application.core.Category;
 import at.maymay.convertme.application.core.Converter;
 import at.maymay.convertme.application.core.Currency;
 import at.maymay.convertme.application.core.Length;
+import at.maymay.convertme.application.core.Profile;
 import at.maymay.convertme.application.core.Speed;
 import at.maymay.convertme.application.core.Temperature;
+import at.maymay.convertme.application.core.Unit;
 import at.maymay.convertme.application.core.Volume;
 import at.maymay.convertme.application.core.Weight;
 
@@ -24,6 +26,9 @@ public class CategorySelectionToolbar implements View.OnClickListener{
     private Temperature temperature;
     private Volume volume;
     private Weight weight;
+
+    private Profile austria;
+    private Profile america;
 
     private FABToolbarLayout layout;
 
@@ -52,7 +57,11 @@ public class CategorySelectionToolbar implements View.OnClickListener{
         btn_volume.setOnClickListener(this);
         btn_currency.setOnClickListener(this);
 
+        initProfiles();
         initCategories();
+        setProfiles();
+        changeProfileTo(austria);
+
         this.selected_category = length;
     }
 
@@ -68,6 +77,38 @@ public class CategorySelectionToolbar implements View.OnClickListener{
         temperature = new Temperature();
         volume = new Volume();
         weight = new Weight();
+    }
+
+    private void initProfiles() {
+        austria = new Profile("Austria", "AT");
+        america = new Profile("America", "US");
+    }
+
+    private void setProfiles() {
+        setOneProfile(austria, length.getMeter(), speed.getKmh(), temperature.getCelsius(),
+                volume.getLiter(), weight.getKilogramm(), currency.getEuro());
+
+        setOneProfile(america, length.getYard(), speed.getMph(), temperature.getKelvin(),
+                volume.getCubicFoot(), weight.getPound(), currency.getUSD());
+    }
+
+    private void setOneProfile(Profile profile, Unit length, Unit speed, Unit temperature,
+                               Unit volume, Unit weight, Unit currency) {
+        profile.setDefault_length(length);
+        profile.setDefault_speed(speed);
+        profile.setDefault_temperature(temperature);
+        profile.setDefault_volume(volume);
+        profile.setDefault_weight(weight);
+        profile.setDefault_currency(currency);
+    }
+
+    private void changeProfileTo(Profile profile) {
+        length.changeList(profile);
+        speed.changeList(profile);
+        temperature.changeList(profile);
+        volume.changeList(profile);
+        weight.changeList(profile);
+        currency.changeList(profile);
     }
 
     @Override

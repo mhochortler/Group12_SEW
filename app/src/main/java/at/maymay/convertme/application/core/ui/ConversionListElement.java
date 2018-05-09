@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -122,7 +123,7 @@ public class ConversionListElement {
                 {
                     text_already_changed = true;
                     double result = Converter.convert(getSelectedOutputUnit(), getSelectedInputUnit(), getRightInput());
-                    setLeftOutput(result);
+                    setLeftResult(result);
                 }
                 else if(getRightTextViewInput().getText().length() == 0 && !text_already_changed)
                 {
@@ -163,9 +164,15 @@ public class ConversionListElement {
     public void setOutput(double output_value){
         textview_output.setText(String.format("%.5f", output_value));
     }
+
     public void setLeftOutput(double output_value){
         textview_input.setText(String.format("%.5f", getInput()));
     }
+
+    public void setLeftResult(double output_value){
+        textview_input.setText(String.format("%.5f", output_value));
+    }
+
 
     public Unit getSelectedInputUnit()
     {
