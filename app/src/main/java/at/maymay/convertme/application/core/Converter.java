@@ -1,5 +1,6 @@
 package at.maymay.convertme.application.core;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,8 +14,6 @@ import java.util.List;
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.ui.CategorySelectionToolbar;
 import at.maymay.convertme.application.core.ui.ConversionListElement;
-
-import static java.lang.Math.round;
 
 public class Converter extends AppCompatActivity implements View.OnClickListener{
 
