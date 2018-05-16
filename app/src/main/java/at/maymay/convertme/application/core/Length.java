@@ -1,5 +1,7 @@
 package at.maymay.convertme.application.core;
 
+import java.util.ArrayList;
+
 public class Length extends Category {
 
     public Length() {
@@ -21,11 +23,18 @@ public class Length extends Category {
         unit_list_.add(yd);
         unit_list_.add(mile);
         unit_list_.add(nmi);
+
+        unit_output_list_ = new ArrayList<>(unit_list_);
     }
 
     public void changeList(Profile profile) {
         unit_list_.remove(profile.getDefault_length());
         unit_list_.add(0, profile.getDefault_length());
+    }
+
+    public void changeOutputList(Profile profile) {
+        unit_output_list_.remove(profile.getDefault_length());
+        unit_output_list_.add(0, profile.getDefault_length());
     }
 
     public Unit getMeter() { return unit_list_.get(0); }

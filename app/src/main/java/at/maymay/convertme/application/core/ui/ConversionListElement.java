@@ -43,10 +43,12 @@ public class ConversionListElement {
 
         this.category = category;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.spinner_style, category.getStringifytUnitList());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_input.setAdapter(adapter);
-        spinner_output.setAdapter(adapter);
+        ArrayAdapter<String> adapter_in = new ArrayAdapter<>(context, R.layout.spinner_style, category.getStringifytUnitList());
+        adapter_in.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter_out = new ArrayAdapter<>(context, R.layout.spinner_style, category.getStringifytOutputUnitList());
+        adapter_out.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_input.setAdapter(adapter_in);
+        spinner_output.setAdapter(adapter_out);
 
         spinner_output.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

@@ -1,5 +1,7 @@
 package at.maymay.convertme.application.core;
 
+import java.util.ArrayList;
+
 public class Currency extends Category {
 
     public Currency(){
@@ -18,11 +20,18 @@ public class Currency extends Category {
         unit_list_.add(yen);
         unit_list_.add(rubel);
         unit_list_.add(frank);
+
+        unit_output_list_ = new ArrayList<>(unit_list_);
     }
 
     public void changeList(Profile profile) {
         unit_list_.remove(profile.getDefault_currency());
         unit_list_.add(0, profile.getDefault_currency());
+    }
+
+    public void changeOutputList(Profile profile) {
+        unit_output_list_.remove(profile.getDefault_currency());
+        unit_output_list_.add(0, profile.getDefault_currency());
     }
 
     public Unit getUSD() { return unit_list_.get(0); }

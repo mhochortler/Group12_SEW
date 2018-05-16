@@ -1,5 +1,7 @@
 package at.maymay.convertme.application.core;
 
+import java.util.ArrayList;
+
 public class Volume extends Category {
 
     public Volume(){
@@ -45,10 +47,17 @@ public class Volume extends Category {
         unit_list_.add(ft3);
         unit_list_.add(in3);
 
+        unit_output_list_ = new ArrayList<>(unit_list_);
+
     }
     public void changeList(Profile profile) {
         unit_list_.remove(profile.getDefault_volume());
         unit_list_.add(0, profile.getDefault_volume());
+    }
+
+    public void changeOutputList(Profile profile) {
+        unit_output_list_.remove(profile.getDefault_volume());
+        unit_output_list_.add(0, profile.getDefault_volume());
     }
 
     public Unit getLiter() { return unit_list_.get(0); }

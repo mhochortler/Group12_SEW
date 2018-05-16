@@ -1,10 +1,20 @@
 package at.maymay.convertme.application.core.ui;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.Category;
@@ -27,8 +37,13 @@ public class CategorySelectionToolbar implements View.OnClickListener{
     private Volume volume;
     private Weight weight;
 
+    private Spinner input_profile;
+    private Spinner output_profile;
+
     private Profile austria;
     private Profile america;
+    private List<Profile> ProfileList = new ArrayList<>();
+    private List<String> ProfileShortcuts = new ArrayList<>();
 
     private FABToolbarLayout layout;
 
@@ -40,6 +55,9 @@ public class CategorySelectionToolbar implements View.OnClickListener{
 
         main_activity = (Converter) context;
         View view = ((Converter)context).findViewById(R.id.main_layout);
+
+        this.input_profile = (Spinner) view.findViewById(R.id.input_profile);
+        this.output_profile = (Spinner) view.findViewById(R.id.output_profile);
 
         layout = (FABToolbarLayout) ((Converter) context).findViewById(R.id.layout_fabtoolbar);
 
@@ -60,7 +78,45 @@ public class CategorySelectionToolbar implements View.OnClickListener{
         initProfiles();
         initCategories();
         setProfiles();
-        changeProfileTo(austria);
+        changeInputProfileTo(austria);
+        changeOutputProfileTo(america);
+
+        ProfileShortcuts.add(austria.getShortcut());
+        ProfileShortcuts.add(america.getShortcut());
+
+        ProfileList.add(america);
+        ProfileList.add(austria);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.spinner_style, ProfileShortcuts);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        input_profile.setAdapter(adapter);
+        output_profile.setAdapter(adapter);
+
+        input_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                changeInputProfileTo(getProfileByShortcut(input_profile.getSelectedItem().toString()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        output_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                changeOutputProfileTo(getProfileByShortcut(output_profile.getSelectedItem().toString()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         this.selected_category = length;
     }
@@ -102,7 +158,7 @@ public class CategorySelectionToolbar implements View.OnClickListener{
         profile.setDefault_currency(currency);
     }
 
-    private void changeProfileTo(Profile profile) {
+    private void changeInputProfileTo(Profile profile) {
         length.changeList(profile);
         speed.changeList(profile);
         temperature.changeList(profile);
@@ -110,6 +166,17 @@ public class CategorySelectionToolbar implements View.OnClickListener{
         weight.changeList(profile);
         currency.changeList(profile);
     }
+
+    private void changeOutputProfileTo(Profile profile) {
+        length.changeOutputList(profile);
+        speed.changeOutputList(profile);
+        temperature.changeOutputList(profile);
+        volume.changeOutputList(profile);
+        weight.changeOutputList(profile);
+        currency.changeOutputList(profile);
+    }
+
+
 
     @Override
     public void onClick(View view) {
@@ -131,5 +198,17 @@ public class CategorySelectionToolbar implements View.OnClickListener{
 
         main_activity.addNewConversionLine(selected_category);
         layout.hide();
+    }
+
+    public Profile getProfileByShortcut(String shortcut)
+    {
+        for(Profile profile : ProfileList)
+        {
+            if (profile.getShortcut().equals(shortcut))
+            {
+                return profile;
+            }
+        }
+        return austria;
     }
 }
