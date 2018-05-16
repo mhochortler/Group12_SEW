@@ -71,65 +71,59 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_length"
-                style="?attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/holo_green_dark"
-                android:text="L"
-                android:textColor="@android:color/black" />
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_category_length" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_weight"
-                style="?attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/holo_green_dark"
-                android:text="W"
-                android:textColor="@android:color/black" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_weight" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_speed"
-                style="?attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/holo_green_dark"
-                android:text="S"
-                android:textColor="@android:color/black" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_speed" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_temperature"
-                style="?attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/holo_green_dark"
-                android:text="T"
-                android:textColor="@android:color/black" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_temperature" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_volume"
-                style="?attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/holo_green_dark"
-                android:text="V"
-                android:textColor="@android:color/black" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_volume" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_currency"
-                style="?attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/holo_green_dark"
-                android:text="C"
-                android:textColor="@android:color/black" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_currency" />
         </LinearLayout>
 
     </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
