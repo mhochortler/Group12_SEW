@@ -24,23 +24,13 @@ public class WeightUnitTest {
      Naming-Convention: UnitOfWork_StateUnderTest_ExpectedBehavior
      Methode-Construction: AAA -> Arrange-Act-Assert
      */
-    private List<Unit> weigthList_;
-
-    @Before
-    public void setup() throws Exception
-    {
-        Weight weights = new Weight();
-        weigthList_ = weights.getUnitList();
-    }
-
-
 
     @Test
     public void createWeightCategory_standardConstructor_ReturnsNonEmptyListOfUnits() throws Exception {
         Weight weights = new Weight();
 
-        weigthList_ = weights.getUnitList();
-        boolean isEmpty = weigthList_.isEmpty();
+        List<Unit> weightList = weights.getUnitList();
+        boolean isEmpty = weightList.isEmpty();
 
         assertEquals(false, isEmpty);
     }
@@ -49,10 +39,32 @@ public class WeightUnitTest {
     public void createWeightCategory_standardConstructor_ReturnsListOfUnitsWithCorrectSize() throws Exception {
         Weight weights = new Weight();
 
-        weigthList_ = weights.getUnitList();
-        int size = weigthList_.size();
+        List<Unit> weightList = weights.getUnitList();
+        int size = weightList.size();
 
         assertEquals(7, size);
+    }
+
+    @Test
+    public void createWeightCategory_standardConstructor_ReturnsListOfUnitsWithCorrectShortcuts() throws Exception {
+        Weight weights = new Weight();
+        String[] expectedShortcuts = new String[] {"kg", "dag", "oz", "lb", "st", "ust", "it" };
+
+        List<Unit> weightList = weights.getUnitList();
+
+        for(int i=0; i<expectedShortcuts.length; i++)
+            assertEquals(expectedShortcuts[i], weightList.get(i).getShortcut());
+    }
+
+    @Test
+    public void createWeightCategory_standardConstructor_ReturnsStringifytUnitList() throws Exception {
+        Weight weights = new Weight();
+        String[] expectedList = new String[] {"kg", "dag", "oz", "lb", "st", "ust", "it" };
+
+        String[] stringifytList = weights.getStringifytUnitList();
+
+        for(int i=0; i<expectedList.length; i++)
+            assertEquals(expectedList[i], stringifytList[i]);
     }
 
 
@@ -65,6 +77,17 @@ public class WeightUnitTest {
         Unit kg = weights.GetUnitByShortcut("kg");
 
         assertNotEquals(null, kg);
+    }
+
+    @Test
+    public void createWeightCategory_standardConstructor_RefKilogramUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
+        Weight weights = new Weight();
+        List<Unit> weightList = weights.getUnitList();
+
+        Unit kg = weights.GetUnitByShortcut("kg");
+        Unit kgFromList = weightList.get(0);
+
+        assertEquals(kgFromList, kg);
     }
 
     @Test
@@ -89,6 +112,7 @@ public class WeightUnitTest {
 
 
 
+
     @Test
     public void createWeightCategory_standardConstructor_ReturnsDecagramUnit() throws Exception {
         Weight weights = new Weight();
@@ -96,6 +120,17 @@ public class WeightUnitTest {
         Unit dag = weights.GetUnitByShortcut("dag");
 
         assertNotEquals(null, dag);
+    }
+
+    @Test
+    public void createWeightCategory_standardConstructor_RefDecagramUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
+        Weight weights = new Weight();
+        List<Unit> weightList = weights.getUnitList();
+
+        Unit weight = weights.GetUnitByShortcut("dag");
+        Unit weightFromList = weightList.get(1);
+
+        assertEquals(weight, weightFromList);
     }
 
     @Test
@@ -131,6 +166,17 @@ public class WeightUnitTest {
     }
 
     @Test
+    public void createWeightCategory_standardConstructor_RefOunceUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
+        Weight weights = new Weight();
+        List<Unit> weightList = weights.getUnitList();
+
+        Unit weight = weights.GetUnitByShortcut("oz");
+        Unit weightFromList = weightList.get(2);
+
+        assertEquals(weight, weightFromList);
+    }
+
+    @Test
     public void createWeightCategory_standardConstructor_OunceUnitHasRightName() throws Exception {
         Weight weights = new Weight();
 
@@ -160,6 +206,17 @@ public class WeightUnitTest {
         Unit lb =weights.GetUnitByShortcut("lb");
 
         assertNotEquals(null, lb);
+    }
+
+    @Test
+    public void createWeightCategory_standardConstructor_RefPoundUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
+        Weight weights = new Weight();
+        List<Unit> weightList = weights.getUnitList();
+
+        Unit weight = weights.GetUnitByShortcut("lb");
+        Unit weightFromList = weightList.get(3);
+
+        assertEquals(weight, weightFromList);
     }
 
     @Test
@@ -196,6 +253,17 @@ public class WeightUnitTest {
     }
 
     @Test
+    public void createWeightCategory_standardConstructor_RefStoneUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
+        Weight weights = new Weight();
+        List<Unit> weightList = weights.getUnitList();
+
+        Unit weight = weights.GetUnitByShortcut("st");
+        Unit weightFromList = weightList.get(4);
+
+        assertEquals(weight, weightFromList);
+    }
+
+    @Test
     public void createWeightCategory_standardConstructor_StoneUnitHasRightName() throws Exception {
         Weight weights = new Weight();
 
@@ -229,6 +297,17 @@ public class WeightUnitTest {
     }
 
     @Test
+    public void createWeightCategory_standardConstructor_RefUSTonUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
+        Weight weights = new Weight();
+        List<Unit> weightList = weights.getUnitList();
+
+        Unit weight = weights.GetUnitByShortcut("ust");
+        Unit weightFromList = weightList.get(5);
+
+        assertEquals(weight, weightFromList);
+    }
+
+    @Test
     public void createWeightCategory_standardConstructor_USTonUnitHasRightName() throws Exception {
         Weight weights = new Weight();
 
@@ -257,6 +336,17 @@ public class WeightUnitTest {
         Unit it = weights.GetUnitByShortcut("it");
 
         assertNotEquals(null, it);
+    }
+
+    @Test
+    public void createWeightCategory_standardConstructor_RefImperialTonUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
+        Weight weights = new Weight();
+        List<Unit> weightList = weights.getUnitList();
+
+        Unit weight = weights.GetUnitByShortcut("it");
+        Unit weightFromList = weightList.get(6);
+
+        assertEquals(weight, weightFromList);
     }
 
     @Test

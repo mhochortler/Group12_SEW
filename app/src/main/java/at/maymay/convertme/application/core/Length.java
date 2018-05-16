@@ -12,6 +12,7 @@ public class Length extends Category {
         Unit yd = new Unit ("Yard", "yd", 0.9144);
         Unit mile = new Unit ("Mile", "mile", 1609.34);
         Unit nmi = new Unit ("Nautical Mile", "nmi", 1852);
+
         unit_list_.add(m);
         unit_list_.add(ft);
         unit_list_.add(in);

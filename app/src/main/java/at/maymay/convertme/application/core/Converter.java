@@ -48,14 +48,14 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
             value -= from.getFactor();
         switch (to.getShortcut()){
             case "°C":
-                if(from.getShortcut().equals("F°"))
+                if(from.getShortcut().equals("°F"))
                     return (value - 32.0) / 1.8;
                 break;
-            case "F°":
+            case "°F":
                 value = value * 1.8 + 32.0;
                 break;
             case "K":
-                if(from.getShortcut().equals("F°"))
+                if(from.getShortcut().equals("°F"))
                     value =  ((value - 32.0)/from.getFactor());
                 value += to.getFactor();
             default:

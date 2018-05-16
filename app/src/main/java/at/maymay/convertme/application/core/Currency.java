@@ -13,6 +13,7 @@ public class Currency extends Category {
         Unit yen = new Unit("Yen", "JPY");
         Unit rubel = new Unit("British Pound", "GBP");
         Unit frank = new Unit("Swiss Franc", "CHF");
+
         unit_list_.add(usd);
         unit_list_.add(eur);
         unit_list_.add(yen);

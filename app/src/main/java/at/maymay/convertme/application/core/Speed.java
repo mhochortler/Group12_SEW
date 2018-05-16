@@ -12,6 +12,7 @@ public class Speed extends Category {
         Unit fts = new Unit ("FootSeconds", "ft/s", 1.0972805);
         Unit ms = new Unit ("MeterSeconds", "m/s", 3.6);
         Unit knot = new Unit ("Knot", "kn", 1.8519993);
+
         unit_list_.add(kmh);
         unit_list_.add(mileh);
         unit_list_.add(fts);
