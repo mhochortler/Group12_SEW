@@ -1,27 +1,23 @@
 package at.maymay.convertme.application.core;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.ui.CategorySelectionToolbar;
 import at.maymay.convertme.application.core.ui.ConversionListElement;
 
-import static java.lang.Math.round;
-
 public class Converter extends AppCompatActivity implements View.OnClickListener{
 
     FloatingActionButton btn_fabtoolbar;
     CategorySelectionToolbar fabtoolbar;
-
-    private List<ConversionListElement> list_elements = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +74,21 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
     public void addNewConversionLine(Category category)
     {
         ConversionListElement new_element = new ConversionListElement(this, category);
-        list_elements.add(new_element);
 
         LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
         llayout.addView(new_element.getView());
+    }
+
+    public void deleteConversionLine(View view)
+    {
+        LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
+        llayout.removeView(view);
+
+        if(view != null)
+        {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

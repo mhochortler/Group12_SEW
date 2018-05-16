@@ -36,7 +36,7 @@ public class CategorySelectionToolbar implements View.OnClickListener{
         main_activity = (Converter) context;
         View view = ((Converter)context).findViewById(R.id.main_layout);
 
-        layout = (FABToolbarLayout) ((Converter) context).findViewById(R.id.layout_fabtoolbar);
+        layout = (FABToolbarLayout) view.findViewById(R.id.layout_fabtoolbar);
 
         Button btn_length = (Button)view.findViewById(R.id.btn_length);
         Button btn_weight = (Button) view.findViewById(R.id.btn_weight);
