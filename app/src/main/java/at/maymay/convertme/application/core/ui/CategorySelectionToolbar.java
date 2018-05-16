@@ -3,6 +3,7 @@ package at.maymay.convertme.application.core.ui;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
@@ -36,14 +37,14 @@ public class CategorySelectionToolbar implements View.OnClickListener{
         main_activity = (Converter) context;
         View view = ((Converter)context).findViewById(R.id.main_layout);
 
-        layout = (FABToolbarLayout) ((Converter) context).findViewById(R.id.layout_fabtoolbar);
+        layout = (FABToolbarLayout) view.findViewById(R.id.layout_fabtoolbar);
 
-        Button btn_length = (Button)view.findViewById(R.id.btn_length);
-        Button btn_weight = (Button) view.findViewById(R.id.btn_weight);
-        Button btn_speed = (Button) view.findViewById(R.id.btn_speed);
-        Button btn_temperature = (Button) view.findViewById(R.id.btn_temperature);
-        Button btn_volume = (Button) view.findViewById(R.id.btn_volume);
-        Button btn_currency = (Button) view.findViewById(R.id.btn_currency);
+        ImageButton btn_length = (ImageButton) view.findViewById(R.id.btn_length);
+        ImageButton btn_weight = (ImageButton) view.findViewById(R.id.btn_weight);
+        ImageButton btn_speed = (ImageButton) view.findViewById(R.id.btn_speed);
+        ImageButton btn_temperature = (ImageButton) view.findViewById(R.id.btn_temperature);
+        ImageButton btn_volume = (ImageButton) view.findViewById(R.id.btn_volume);
+        ImageButton btn_currency = (ImageButton) view.findViewById(R.id.btn_currency);
 
         btn_length.setOnClickListener(this);
         btn_weight.setOnClickListener(this);
