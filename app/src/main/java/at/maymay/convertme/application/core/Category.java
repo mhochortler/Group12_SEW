@@ -37,4 +37,17 @@ public abstract class Category {
 
         return result.toArray(new String[result.size()]);
     }
+
+    public Unit GetUnitByShortcut(String shortcut)
+    {
+        Unit result = null;
+
+        for (Unit u : unit_list_) {
+            if (u.getShortcut().equals(shortcut)) {
+                result = u;
+                break;
+            }
+        }
+        return result;
+    }
 }

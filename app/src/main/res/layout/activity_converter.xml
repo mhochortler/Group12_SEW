@@ -63,7 +63,7 @@
     <com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout
         android:id="@+id/layout_fabtoolbar"
         android:layout_width="match_parent"
-        android:layout_height="495dp"
+        android:layout_height="match_parent"
         app:containerId="@+id/fabtoolbar_container"
         app:fabId="@+id/btn_fabtoolbar"
         app:fabToolbarId="@+id/fabtoolbar_toolbar"
@@ -71,9 +71,7 @@
         app:hideDuration="200"
         app:horizontalMargin="30dp"
         app:showDuration="600"
-        app:verticalMargin="30dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        app:verticalMargin="30dp">
 
         <RelativeLayout
             android:id="@+id/fabtoolbar_container"
@@ -88,64 +86,72 @@
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/ic_input_add"
                 android:tint="@android:color/background_dark"
+                app:backgroundTint="@android:color/holo_green_dark"
                 app:fabSize="normal" />
 
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/fabtoolbar_toolbar"
+            style="?attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_length"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="L" />
+                android:background="@android:color/holo_green_dark"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_category_length" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="W" />
+                android:background="@android:color/holo_green_dark"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_weight" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_speed"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="S" />
+                android:background="@android:color/holo_green_dark"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_speed" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="T" />
+                android:background="@android:color/holo_green_dark"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_temperature" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_volume"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="V" />
+                android:background="@android:color/holo_green_dark"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_volume" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_currency"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="C" />
+                android:background="@android:color/holo_green_dark"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_category_currency" />
         </LinearLayout>
 
     </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>

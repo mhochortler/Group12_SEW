@@ -1,77 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_conversionItem_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clickable="true">
 
-    <Spinner
-        android:id="@+id/input_unit"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill"
-        android:layout_marginStart="5dp"
-        android:background="@android:drawable/btn_default"
-        android:dropDownWidth="match_parent"
-        android:focusableInTouchMode="true"
-        app:layout_constraintStart_toEndOf="@+id/ptxt_input"
-        app:layout_constraintTop_toTopOf="@+id/ptxt_input" />
-
-    <Spinner
-        android:id="@+id/output_unit"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="fill"
-        android:layout_marginEnd="5dp"
-        android:background="@android:drawable/btn_default"
-        android:dropDownWidth="match_parent"
-        android:focusableInTouchMode="true"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toStartOf="@+id/ptxt_result"
-        app:layout_constraintTop_toTopOf="@+id/ptxt_result" />
-
-    <EditText
-        android:id="@+id/ptxt_input"
-        android:imeOptions="actionDone"
-        android:layout_width="97dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:nestedScrollingEnabled="false"
-        android:selectAllOnFocus="false"
-        android:singleLine="true"
-        android:textAlignment="center"
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#2d2d2d"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/ptxt_result"
-        android:layout_width="97dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"
-        android:inputType="numberDecimal"
-        android:paddingTop="13dp"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textIsSelectable="false"
-        android:textSize="16sp"
-        android:textStyle="bold"
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_deleteIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_conversionLine">
+
+            <ImageView
+                android:id="@+id/icon_delete"
+                android:layout_width="80dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="-2dp"
+                android:layout_marginStart="337dp"
+                android:background="@android:color/holo_red_light"
+                android:foreground="@android:drawable/ic_menu_delete"
+                android:scaleType="centerCrop"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_conversionLine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Spinner
+                android:id="@+id/input_unit"
+                android:layout_width="75dp"
+                android:layout_height="45dp"
+                android:layout_gravity="fill"
+                android:layout_marginStart="5dp"
+                android:background="@android:drawable/btn_default"
+                android:dropDownWidth="match_parent"
+                android:focusableInTouchMode="true"
+                android:spinnerMode="dropdown"
+                app:layout_constraintStart_toEndOf="@+id/ptxt_input"
+                app:layout_constraintTop_toTopOf="@+id/ptxt_input" />
+
+            <Spinner
+                android:id="@+id/output_unit"
+                android:layout_width="75dp"
+                android:layout_height="45dp"
+                android:layout_gravity="fill"
+                android:layout_marginEnd="5dp"
+                android:background="@android:drawable/btn_default"
+                android:dropDownWidth="match_parent"
+                android:focusableInTouchMode="true"
+                android:spinnerMode="dropdown"
+                app:layout_constraintEnd_toStartOf="@+id/ptxt_result"
+                app:layout_constraintTop_toTopOf="@+id/ptxt_result" />
+
+            <EditText
+                android:id="@+id/ptxt_input"
+                android:layout_width="97dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:nestedScrollingEnabled="false"
+                android:selectAllOnFocus="false"
+                android:singleLine="true"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/ptxt_result"
+                android:layout_width="97dp"
+                android:layout_height="45dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:paddingTop="13dp"
+                android:singleLine="true"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider2"
         android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:layout_marginTop="12dp"
-        android:background="@android:color/darker_gray"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/ptxt_result"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/ptxt_input"
-        app:layout_constraintTop_toBottomOf="@+id/ptxt_input" />
+        android:layout_height="1dp"
+        android:background="#2d2d2d"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
 </android.support.constraint.ConstraintLayout>
