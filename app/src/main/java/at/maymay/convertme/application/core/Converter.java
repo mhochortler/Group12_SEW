@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -14,6 +15,9 @@ import java.util.List;
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.ui.CategorySelectionToolbar;
 import at.maymay.convertme.application.core.ui.ConversionListElement;
+
+import static android.text.Selection.selectAll;
+import static android.text.Selection.setSelection;
 
 public class Converter extends AppCompatActivity implements View.OnClickListener{
 
