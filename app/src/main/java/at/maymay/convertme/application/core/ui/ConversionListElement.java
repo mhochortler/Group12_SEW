@@ -5,22 +5,22 @@ import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import at.maymay.convertme.R;
-import at.maymay.convertme.application.core.Category;
+import at.maymay.convertme.application.core.model.Category;
 import at.maymay.convertme.application.core.Converter;
-import at.maymay.convertme.application.core.Unit;
+import at.maymay.convertme.application.core.model.Unit;
 
-public class ConversionListElement extends ConstraintLayout{
+public class ConversionListElement{
 
     private View view_;
 
@@ -37,8 +37,6 @@ public class ConversionListElement extends ConstraintLayout{
     private float x1, x2;
 
     public ConversionListElement(final Context context, Category category) {
-        super(context);
-
         LayoutInflater inflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert inflater != null;
         view_ = inflater.inflate(R.layout.convert_list_item, null);
@@ -98,7 +96,7 @@ public class ConversionListElement extends ConstraintLayout{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(getRightTextViewInput().getText().length() != 0)
                 {
-                    setOutput(getRightInput());
+                    setLeftOutput(getInput());
                 }
             }
 
@@ -106,12 +104,11 @@ public class ConversionListElement extends ConstraintLayout{
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
         spinner_input.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(getTextViewInput().getText().length() != 0)
                 {
-                    setLeftOutput(getInput());
+                    setOutput(getRightInput());
                 }
             }
 

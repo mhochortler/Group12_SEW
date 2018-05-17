@@ -2,20 +2,19 @@ package at.maymay.convertme.application.core.ui;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
 import at.maymay.convertme.R;
-import at.maymay.convertme.application.core.Category;
+import at.maymay.convertme.application.core.model.Category;
 import at.maymay.convertme.application.core.Converter;
-import at.maymay.convertme.application.core.Currency;
-import at.maymay.convertme.application.core.Length;
-import at.maymay.convertme.application.core.Speed;
-import at.maymay.convertme.application.core.Temperature;
-import at.maymay.convertme.application.core.Volume;
-import at.maymay.convertme.application.core.Weight;
+import at.maymay.convertme.application.core.model.Currency;
+import at.maymay.convertme.application.core.model.Length;
+import at.maymay.convertme.application.core.model.Speed;
+import at.maymay.convertme.application.core.model.Temperature;
+import at.maymay.convertme.application.core.model.Volume;
+import at.maymay.convertme.application.core.model.Weight;
 
 public class CategorySelectionToolbar implements View.OnClickListener{
 

@@ -100,7 +100,10 @@
                 android:singleLine="true"
                 android:textAlignment="center"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <requestFocus />
+            </EditText>
 
             <EditText
                 android:id="@+id/ptxt_result"

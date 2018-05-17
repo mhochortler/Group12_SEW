@@ -3,15 +3,12 @@ package at.maymay.convertme;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-import at.maymay.convertme.application.core.Category;
 import at.maymay.convertme.application.core.Converter;
-import at.maymay.convertme.application.core.CurrencyExchangeAPI;
-import at.maymay.convertme.application.core.Length;
-import at.maymay.convertme.application.core.Unit;
-import at.maymay.convertme.application.core.Weight;
+import at.maymay.convertme.application.dal.CurrencyExchangeAPI;
+import at.maymay.convertme.application.core.model.Length;
+import at.maymay.convertme.application.core.model.Unit;
 
 import static org.junit.Assert.*;
 

@@ -1,15 +1,11 @@
 package at.maymay.convertme.core;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import at.maymay.convertme.application.core.Converter;
-import at.maymay.convertme.application.core.CurrencyExchangeAPI;
-import at.maymay.convertme.application.core.Length;
-import at.maymay.convertme.application.core.Unit;
-import at.maymay.convertme.application.core.Weight;
+import at.maymay.convertme.application.core.model.Unit;
+import at.maymay.convertme.application.core.model.Weight;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
