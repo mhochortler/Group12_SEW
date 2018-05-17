@@ -17,6 +17,8 @@ import at.maymay.convertme.application.core.ui.ConversionListElement;
 
 public class Converter extends AppCompatActivity implements View.OnClickListener{
 
+    private static Context context;
+
     FloatingActionButton btn_fabtoolbar;
     CategorySelectionToolbar fabtoolbar;
 
@@ -25,6 +27,7 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Converter.context = getApplicationContext();
         setContentView(R.layout.activity_converter);
 
         btn_fabtoolbar = (FloatingActionButton) findViewById(R.id.btn_fabtoolbar);
@@ -81,5 +84,10 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
 
         LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
         llayout.addView(new_element.getView());
+    }
+
+    public static Context getAppContext()
+    {
+        return Converter.context;
     }
 }

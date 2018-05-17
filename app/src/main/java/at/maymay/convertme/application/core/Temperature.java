@@ -8,7 +8,7 @@ public class Temperature extends Category {
 
     @Override
     protected void init() {
-        Unit c = new Unit("Celsius", "°C", 1);
+        Unit c = new Unit("Celsius", "°C", 1.0);
         Unit f = new Unit("Fahrenheit", "F°", 1.8);
         Unit k = new Unit ("Kelvin", "K", 274.15);
         unit_list_.add(c);

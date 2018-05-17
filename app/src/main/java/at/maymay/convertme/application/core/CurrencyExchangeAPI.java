@@ -8,8 +8,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import android.content.Context;
 import android.os.AsyncTask;
-
+import android.widget.Toast;
 
 
 public class CurrencyExchangeAPI extends AsyncTask<Currency, Void, JSONObject> {
@@ -44,10 +45,9 @@ public class CurrencyExchangeAPI extends AsyncTask<Currency, Void, JSONObject> {
         this.obj = jsonObject;
         return jsonObject;
     }
+
     protected void onPostExecute(JSONObject obj) {
         obj = this.obj;
-        if(obj != null) {
-            curr.setExchangeRates(obj);
-        }
+        curr.loadExchangeRates(obj);
     }
 }

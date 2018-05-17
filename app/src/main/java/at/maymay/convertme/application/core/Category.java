@@ -22,4 +22,12 @@ public abstract class Category {
 
         return result.toArray(new String[result.size()]);
     }
+
+    public void saveUnitListToDB()
+    {
+        for (Unit unit: unit_list_) {
+            if(unit != null)
+                unit.save();
+        }
+    }
 }

@@ -8,7 +8,7 @@ public class Volume extends Category {
 
     @Override
     protected void init() {
-        Unit l = new Unit("Litre", "l", 1);
+        Unit l = new Unit("Litre", "l", 1.0);
         Unit uslg = new Unit("US liquid gallon", "USlg", 3.78541);
         Unit uslq = new Unit("US liquid quart", "uslq", 0.946353);
         Unit uslp = new Unit("US liquid pint", "uslp", 0.473176);
