@@ -1,12 +1,11 @@
 package at.maymay.convertme.core;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import at.maymay.convertme.application.core.Unit;
-import at.maymay.convertme.application.core.Temperature;
+import at.maymay.convertme.application.core.model.Unit;
+import at.maymay.convertme.application.core.model.Temperature;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

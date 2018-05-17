@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import at.maymay.convertme.application.core.Speed;
-import at.maymay.convertme.application.core.Unit;
+import at.maymay.convertme.application.core.model.Speed;
+import at.maymay.convertme.application.core.model.Unit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

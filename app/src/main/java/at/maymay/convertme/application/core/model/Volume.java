@@ -1,4 +1,4 @@
-package at.maymay.convertme.application.core;
+package at.maymay.convertme.application.core.model;
 
 public class Volume extends Category {
 

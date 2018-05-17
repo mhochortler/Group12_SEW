@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import java.util.Arrays;
 
 import at.maymay.convertme.R;
+import at.maymay.convertme.application.core.model.Category;
+import at.maymay.convertme.application.core.model.Temperature;
+import at.maymay.convertme.application.core.model.Unit;
 import at.maymay.convertme.application.core.ui.CategorySelectionToolbar;
 import at.maymay.convertme.application.core.ui.ConversionListElement;
 
@@ -77,6 +80,13 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
 
         LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
         llayout.addView(new_element.getView());
+
+        if(new_element.getView() != null)
+        {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.showSoftInput(new_element.getView().findFocus(), InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
     public void deleteConversionLine(View view)

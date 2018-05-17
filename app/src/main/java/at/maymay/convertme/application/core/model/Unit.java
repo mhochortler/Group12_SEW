@@ -1,4 +1,4 @@
-package at.maymay.convertme.application.core;
+package at.maymay.convertme.application.core.model;
 
 import java.io.Serializable;
 

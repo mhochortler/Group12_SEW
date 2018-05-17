@@ -1,4 +1,4 @@
-package at.maymay.convertme.application.core;
+package at.maymay.convertme.application.dal;
 
 import com.github.sarxos.xchange.ExchangeCache;
 import com.github.sarxos.xchange.ExchangeRate;
