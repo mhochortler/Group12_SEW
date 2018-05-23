@@ -18,7 +18,7 @@ public class Weight extends Category {
         Unit lb = new Unit("Pound", "lb", 453.592);
         Unit st = new Unit("Stone", "st", 6350.29);
         Unit ust = new Unit("US Ton", "ust", 907184.28568);
-        Unit it = new Unit ("Imperial Ton", "it", 1016050);
+        Unit it = new Unit ("Imperial Ton", "it", 1016050.0);
 
         unit_list_.add(kg);
         unit_list_.add(dag);

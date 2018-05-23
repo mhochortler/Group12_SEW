@@ -12,7 +12,7 @@ public class Volume extends Category {
 
     @Override
     protected void init() {
-        Unit l = new Unit("Litre", "l", 1);
+        Unit l = new Unit("Litre", "l", 1.0);
         Unit uslg = new Unit("US liquid gallon", "uslg", 3.78541);
         Unit uslq = new Unit("US liquid quart", "uslq", 0.946353);
         Unit uslp = new Unit("US liquid pint", "uslp", 0.473176);
@@ -27,7 +27,7 @@ public class Volume extends Category {
         Unit ifo = new Unit("Imperial fluid ounce", "ifo", 0.0284131);
         Unit itap = new Unit("Imperial tablespoon", "itap", 0.0177582);
         Unit its = new Unit("Imperial teaspoon", "its", 0.00591939);
-        Unit m3 = new Unit("Cubic metre", "m³", 1000);
+        Unit m3 = new Unit("Cubic metre", "m³", 1000.0);
         Unit ft3 = new Unit("Cubic foot", "ft³", 28.3168);
         Unit in3 = new Unit("Cubic inch", "in³", 0.0163871);
 
