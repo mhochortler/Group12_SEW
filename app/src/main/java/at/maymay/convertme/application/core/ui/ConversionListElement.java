@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.model.Category;
 import at.maymay.convertme.application.core.Converter;
+import at.maymay.convertme.application.core.Currency;
+import at.maymay.convertme.application.core.CurrencyExchangeAPI;
 import at.maymay.convertme.application.core.model.Unit;
 
 public class ConversionListElement{
@@ -32,6 +34,7 @@ public class ConversionListElement{
     private Category category;
     private Boolean text_already_changed = false;
 
+    public ConversionListElement(Context context, final Category category) {
     private ConstraintLayout main_layout;
 
     private float x1, x2;
@@ -127,7 +130,12 @@ public class ConversionListElement{
                 if(getTextViewInput().getText().length() != 0 && !text_already_changed)
                 {
                     text_already_changed = true;
+                    if(category.getClass() == Currency.class){
+                        CurrencyExchangeAPI api = new CurrencyExchangeAPI();
+                        api.execute((Currency)category);
+                    }
                     double result = Converter.convert(getSelectedInputUnit(), getSelectedOutputUnit(), getInput());
+
                     setOutput(result);
                 }
                 else if(getTextViewInput().getText().length() == 0 && !text_already_changed)
@@ -151,6 +159,10 @@ public class ConversionListElement{
                 if(getRightTextViewInput().getText().length() != 0 && !text_already_changed)
                 {
                     text_already_changed = true;
+                    if(category.getClass() == Currency.class){
+                        CurrencyExchangeAPI api = new CurrencyExchangeAPI();
+                        api.execute((Currency)category);
+                    }
                     double result = Converter.convert(getSelectedOutputUnit(), getSelectedInputUnit(), getRightInput());
                     setLeftOutput(result);
                 }
@@ -180,11 +192,17 @@ public class ConversionListElement{
     }
     private EditText getRightTextViewInput() { return textview_output; }
 
-    private double getInput() {
-        return Double.parseDouble(textview_input.getText().toString());
+    public double getInput(){
+        if(textview_input.getText().toString().matches("\\d+(?:\\.\\d+)?"))
+            return Double.parseDouble(textview_input.getText().toString());
+        else
+            return 0.0;
     }
-    private double getRightInput() {
-        return Double.parseDouble(textview_output.getText().toString());
+    public double getRightInput() {
+        if(textview_output.getText().toString().matches("\\d+(?:\\.\\d+)?"))
+            return Double.parseDouble(textview_output.getText().toString());
+        else
+            return 0.0;
     }
 
     private void setOutput(double output_value){

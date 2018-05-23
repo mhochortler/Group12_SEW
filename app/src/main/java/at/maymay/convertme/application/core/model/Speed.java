@@ -11,7 +11,7 @@ public class Speed extends Category {
 
     @Override
     protected void init() {
-        Unit kmh = new Unit ("KilometersHours", "km/h", 1);
+        Unit kmh = new Unit ("KilometersHours", "km/h", 1.0);
         Unit mileh = new Unit ("MilesHours", "mile/h", 1.6093445);
         Unit fts = new Unit ("FootSeconds", "ft/s", 1.0972805);
         Unit ms = new Unit ("MeterSeconds", "m/s", 3.6);
