@@ -50,10 +50,12 @@ public class ConversionListElement{
 
         this.category = category;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.spinner_style, category.getStringifytUnitList());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_input.setAdapter(adapter);
-        spinner_output.setAdapter(adapter);
+        ArrayAdapter<String> adapter_in = new ArrayAdapter<>(context, R.layout.spinner_style, category.getStringifytUnitList());
+        adapter_in.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter_out = new ArrayAdapter<>(context, R.layout.spinner_style, category.getStringifytOutputUnitList());
+        adapter_out.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_input.setAdapter(adapter_in);
+        spinner_output.setAdapter(adapter_out);
 
         main_layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -150,7 +152,7 @@ public class ConversionListElement{
                 {
                     text_already_changed = true;
                     double result = Converter.convert(getSelectedOutputUnit(), getSelectedInputUnit(), getRightInput());
-                    setLeftOutput(result);
+                    setLeftResult(result);
                 }
                 else if(getRightTextViewInput().getText().length() == 0 && !text_already_changed)
                 {
@@ -188,11 +190,14 @@ public class ConversionListElement{
     private void setOutput(double output_value){
         textview_output.setText(String.format("%.3f", output_value));
     }
-    private void setLeftOutput(double output_value){
-        textview_input.setText(String.format("%.3f", output_value));
+
+    public void setLeftOutput(double output_value){
+        textview_input.setText(String.format("%.5f", output_value));
     }
 
-    private Unit getSelectedInputUnit() {
+
+    public Unit getSelectedInputUnit()
+    {
         String shortcut = spinner_input.getSelectedItem().toString();
 
         for(Unit unit : category.getUnitList())

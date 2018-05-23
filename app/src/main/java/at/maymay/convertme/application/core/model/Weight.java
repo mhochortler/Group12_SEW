@@ -1,5 +1,7 @@
 package at.maymay.convertme.application.core.model;
 
+import java.util.ArrayList;
+
 public class Weight extends Category {
 
     public Weight(){
@@ -23,5 +25,25 @@ public class Weight extends Category {
         unit_list_.add(st);
         unit_list_.add(ust);
         unit_list_.add(it);
+
+        unit_output_list_ = new ArrayList<>(unit_list_);
     }
+
+    public void changeList(Profile profile) {
+        unit_list_.remove(profile.getDefault_weight());
+        unit_list_.add(0, profile.getDefault_weight());
+    }
+
+    public void changeOutputList(Profile profile) {
+        unit_output_list_.remove(profile.getDefault_weight());
+        unit_output_list_.add(0, profile.getDefault_weight());
+    }
+
+    public Unit getKilogramm() { return unit_list_.get(0); }
+    public Unit getDecagramm() { return unit_list_.get(1); }
+    public Unit getOunce() { return unit_list_.get(2); }
+    public Unit getPound() { return unit_list_.get(3); }
+    public Unit getStone() { return unit_list_.get(4); }
+    public Unit getUSTon() { return unit_list_.get(5); }
+    public Unit getImperialTon() { return unit_list_.get(6); }
 }
