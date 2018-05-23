@@ -1,34 +1,36 @@
 package at.maymay.convertme.application.core;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import at.maymay.convertme.R;
+import at.maymay.convertme.application.core.model.Category;
+import at.maymay.convertme.application.core.model.Temperature;
+import at.maymay.convertme.application.core.model.Unit;
 import at.maymay.convertme.application.core.ui.CategorySelectionToolbar;
 import at.maymay.convertme.application.core.ui.ConversionListElement;
 
-import static java.lang.Math.round;
-
 public class Converter extends AppCompatActivity implements View.OnClickListener{
+
+    private static Context context;
 
     FloatingActionButton btn_fabtoolbar;
     CategorySelectionToolbar fabtoolbar;
     ToggleButton tb_shortcut_settings;
     Boolean tb_state= false;
 
-    private List<ConversionListElement> list_elements = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Converter.context = getApplicationContext();
         setContentView(R.layout.activity_converter);
 
         btn_fabtoolbar = (FloatingActionButton) findViewById(R.id.btn_fabtoolbar);
@@ -40,9 +42,6 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
     public static double convert(Unit from, Unit to, double value) {
         Category cat = new Temperature();
         String[] strings = cat.getStringifytUnitList();
-        if(Arrays.asList(strings).contains(from.getName()))
-            return convertTemperature(from, to, value);
-        else
         if(Arrays.asList(strings).contains(from.getShortcut()))
             return convertTemperature(from, to, value);
         return (value * from.getFactor()) / to.getFactor();
@@ -50,24 +49,22 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
 
     public static double convertTemperature(Unit from, Unit to, double value)
     {
-        if(from.getName().equals("Kelvin"))
+        if(from.getShortcut().equals("K"))
             value -= from.getFactor();
-        switch (to.getName()) {
-            case "Celsius":
-                if (from.getName().equals("Fahrenheit"))
+        switch (to.getShortcut()){
+            case "°C":
+                if(from.getShortcut().equals("°F"))
                     return (value - 32.0) / 1.8;
                 break;
-            case "Fahrenheit":
+            case "°F":
                 value = value * 1.8 + 32.0;
                 break;
-            case "Kelvin":
-                if (from.getName().equals("Fahrenheit"))
-                    value = ((value - 32.0) / from.getFactor());
+            case "K":
+                if(from.getShortcut().equals("°F"))
+                    value =  ((value - 32.0)/from.getFactor());
                 value += to.getFactor();
             default:
                 return value;
-
-
         }
         return value;
     }
@@ -104,9 +101,33 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
     public void addNewConversionLine(Category category)
     {
         ConversionListElement new_element = new ConversionListElement(this, category);
-        list_elements.add(new_element);
 
         LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
         llayout.addView(new_element.getView());
+
+        if(new_element.getView() != null)
+        {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.showSoftInput(new_element.getView().findFocus(), InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    public void deleteConversionLine(View view)
+    {
+        LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
+        llayout.removeView(view);
+
+        if(view != null)
+        {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public static Context getAppContext()
+    {
+        return Converter.context;
     }
 }
