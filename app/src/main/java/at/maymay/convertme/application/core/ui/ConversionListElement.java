@@ -25,6 +25,7 @@ import at.maymay.convertme.application.core.model.Unit;
 public class ConversionListElement{
 
     private View view_;
+    private Context context_;
 
     private EditText textview_output;
     private EditText textview_input;
@@ -36,12 +37,17 @@ public class ConversionListElement{
 
     private ConstraintLayout main_layout;
 
+    private ConversionListElement self;
+
     private float x1, x2;
 
     public ConversionListElement(final Context context, final Category category) {
         LayoutInflater inflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert inflater != null;
         view_ = inflater.inflate(R.layout.convert_list_item, null);
+
+        self = this;
+        context_ = context;
 
         this.textview_input = (EditText) view_.findViewById(R.id.ptxt_input);
         this.textview_output = (EditText) view_.findViewById(R.id.ptxt_result);
@@ -82,7 +88,7 @@ public class ConversionListElement{
                         x2 = motionEvent.getX();
 
                         if(x1 > x2 && (x1 - x2 >= 200)){
-                            ((Converter)context).deleteConversionLine(view_);
+                            ((Converter)context).deleteConversionLine(self);
                         }
                         else if(x1 > x2)
                         {
@@ -238,5 +244,27 @@ public class ConversionListElement{
         }
 
         return null;
+    }
+
+    public void changeUnitList(Boolean state) {
+
+        ArrayAdapter<String> adapter_in;
+        ArrayAdapter<String> adapter_out;
+
+        if(state)
+        {
+            adapter_in = new ArrayAdapter<>(context_, R.layout.spinner_style, category.getStringifytUnitList());
+            adapter_out = new ArrayAdapter<>(context_, R.layout.spinner_style, category.getStringifytOutputUnitList());
+        }
+        else
+        {
+            adapter_in = new ArrayAdapter<>(context_, R.layout.spinner_style, category.getStringifytUnitListFullname());
+            adapter_out = new ArrayAdapter<>(context_, R.layout.spinner_style, category.getStringifytOutputUnitListFullname());
+        }
+
+        adapter_in.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter_out.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_input.setAdapter(adapter_in);
+        spinner_output.setAdapter(adapter_out);
     }
 }

@@ -9,7 +9,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.model.Category;
@@ -22,10 +24,12 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
 
     private static Context context;
 
+    private List<ConversionListElement> conversion_collection;
+
     FloatingActionButton btn_fabtoolbar;
     CategorySelectionToolbar fabtoolbar;
     ToggleButton tb_shortcut_settings;
-    Boolean tb_state= false;
+    Boolean tb_state= true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +39,12 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
 
         btn_fabtoolbar = (FloatingActionButton) findViewById(R.id.btn_fabtoolbar);
         fabtoolbar = new CategorySelectionToolbar(this);
+        tb_shortcut_settings = (ToggleButton) findViewById(R.id.tb_shortcut_setting);
+
+        conversion_collection = new ArrayList<>();
 
         btn_fabtoolbar.setOnClickListener(this);
+        tb_shortcut_settings.setOnClickListener(this);
     }
 
     public static double convert(Unit from, Unit to, double value) {
@@ -84,16 +92,12 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    public void changeshortcut()
+    public void changeshortcut() {
+        tb_state = !tb_state;
 
-    {
-        if (tb_state== false)
+        for (ConversionListElement element : conversion_collection)
         {
-            tb_state= true;
-        }else
-        {
-            tb_state= false;
-
+            element.changeUnitList(tb_state);
         }
     }
 
@@ -104,6 +108,7 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
 
         LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
         llayout.addView(new_element.getView());
+        conversion_collection.add(new_element);
 
         if(new_element.getView() != null)
         {
@@ -113,16 +118,17 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    public void deleteConversionLine(View view)
+    public void deleteConversionLine(ConversionListElement element)
     {
         LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
-        llayout.removeView(view);
+        llayout.removeView(element.getView());
+        conversion_collection.remove(element);
 
-        if(view != null)
+        if(element.getView() != null)
         {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             assert imm != null;
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(element.getView().getWindowToken(), 0);
         }
     }
 

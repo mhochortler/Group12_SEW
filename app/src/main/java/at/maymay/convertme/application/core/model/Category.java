@@ -38,6 +38,26 @@ public abstract class Category {
         return result.toArray(new String[result.size()]);
     }
 
+    public String[] getStringifytUnitListFullname() {
+        List<String> result = new ArrayList<>();
+
+        for(Unit u : unit_list_) {
+            result.add(u.getName());
+        }
+
+        return result.toArray(new String[result.size()]);
+    }
+
+    public String[] getStringifytOutputUnitListFullname() {
+        List<String> result = new ArrayList<>();
+
+        for(Unit u : unit_output_list_) {
+            result.add(u.getName());
+        }
+
+        return result.toArray(new String[result.size()]);
+    }
+
     public Unit GetUnitByShortcut(String shortcut)
     {
         Unit result = null;
@@ -54,6 +74,7 @@ public abstract class Category {
     public double convert(Unit from, Unit to, double value) {
         if(from == null || to == null)
             throw new NullPointerException("One unit is a Null-Ptr!");
+
 
         String shortcutFrom = from.getShortcut();
         String shortcutTo = to.getShortcut();
