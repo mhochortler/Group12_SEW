@@ -13,6 +13,21 @@ public abstract class Category {
         return unit_list_;
     }
 
+    public double convert(Unit from, Unit to, double value) {
+        if(from == null || to == null)
+            throw new NullPointerException("One unit is a Null-Ptr!");
+
+        String shortcutFrom = from.getShortcut();
+        String shortcutTo = to.getShortcut();
+        Unit validUnitFrom = GetUnitByShortcut(shortcutFrom);
+        Unit validUnitTo = GetUnitByShortcut(shortcutTo);
+
+        if(validUnitFrom == null || validUnitTo == null)
+            throw new IllegalArgumentException("Unit is not part of the category!");
+
+        return (value * validUnitFrom.getFactor()) / validUnitTo.getFactor();
+    }
+
     public String[] getStringifytUnitList() {
         List<String> result = new ArrayList<>();
 
