@@ -282,4 +282,121 @@ public class SpeedUnitTest {
 
         assertEquals(1.8519993, factor, 0.1);
     }
+
+
+
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertSpeedUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Speed speeds = new Speed();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("KilometersHours", "km/h");
+        int value = 1;
+
+        speeds.convert(corruptUnit, unit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertSpeedUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Speed speeds = new Speed();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("KilometersHours", "km/h");
+        int value = 1;
+
+        speeds.convert(unit, corruptUnit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertSpeedUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Speed speeds = new Speed();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        int value = 1;
+
+        speeds.convert(corruptUnit, corruptUnit, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertSpeedUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Speed speeds = new Speed();
+        Unit unit = new Unit("KilometersHours", "km/h");
+        int value = 1;
+
+        speeds.convert(null, unit, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertSpeedUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Speed speeds = new Speed();
+        Unit unit = new Unit("KilometersHours", "km/h");
+        int value = 1;
+
+        speeds.convert(unit, null, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertSpeedUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
+        Speed speeds = new Speed();
+        int value = 1;
+
+        speeds.convert(null, null, value);
+    }
+
+
+
+
+    @Test
+    public void convertSpeedUnits_twoUnitsOfSameType_ReturnsImputValue() throws Exception {
+        Speed speeds = new Speed();
+        Unit unit1 = new Unit("KilometersHours", "km/h");
+        Unit unit2 = new Unit("KilometersHours", "km/h");
+        double value = 1.5;
+
+        double retValue = speeds.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.0001);
+    }
+
+    @Test
+    public void convertSpeedUnits_twoUnitsOfSameTypeWithZeroValue_ReturnsImputValue() throws Exception {
+        Speed speeds = new Speed();
+        Unit unit1 = new Unit("KilometersHours", "km/h");
+        Unit unit2 = new Unit("KilometersHours", "km/h");
+        double value = 0;
+
+        double retValue = speeds.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.0001);
+    }
+
+    @Test
+    public void convertSpeedUnits_baseUnitToNonBaseUnit_ReturnsConvertedValue() throws Exception {
+        Speed speeds = new Speed();
+        Unit unit1 = new Unit("KilometersHours", "km/h");
+        Unit unit2 = new Unit("MilesHours", "mile/h");
+        double value = 1;
+
+        double retValue = speeds.convert(unit1, unit2, value);
+        assertEquals(0.62137, retValue, 0.0001);
+    }
+
+    @Test
+    public void convertSpeedUnits_noneBaseUnitToBaseUnit_ReturnsConvertedValue() throws Exception {
+        Speed speeds = new Speed();
+        Unit unit1 = new Unit("MilesHours", "mile/h");
+        Unit unit2 = new Unit("KilometersHours", "km/h");
+        double value = 1;
+
+        double retValue = speeds.convert(unit1, unit2, value);
+        assertEquals(1.6093, retValue, 0.0001);
+    }
+
+    @Test
+    public void convertSpeedUnits_noneBaseUnitToNoneBaseUnit_ReturnsConvertedValue() throws Exception {
+        Speed speeds = new Speed();
+        Unit unit1 = new Unit("MilesHours", "mile/h");
+        Unit unit2 = new Unit("Knot", "kn");
+        double value = 1;
+
+        double retValue = speeds.convert(unit1, unit2, value);
+        assertEquals(0.86897, retValue, 0.0001);
+    }
 }

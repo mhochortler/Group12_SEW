@@ -322,4 +322,120 @@ public class LengthUnitTest {
 
         assertEquals(1852, factor, 0.1);
     }
+
+
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertLengthUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Length lengths = new Length();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("Meter", "m");
+        int value = 1;
+
+        lengths.convert(corruptUnit, unit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertLengthUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Length lengths = new Length();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("Meter", "m");
+        int value = 1;
+
+        lengths.convert(unit, corruptUnit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertLengthUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Length lengths = new Length();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        int value = 1;
+
+        lengths.convert(corruptUnit, corruptUnit, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertLengthUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Length lengths = new Length();
+        Unit unit = new Unit("Meter", "m");
+        int value = 1;
+
+        lengths.convert(null, unit, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertLengthUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Length lengths = new Length();
+        Unit unit = new Unit("Meter", "m");
+        int value = 1;
+
+        lengths.convert(unit, null, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertLengthUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
+        Length lengths = new Length();
+        int value = 1;
+
+        lengths.convert(null, null, value);
+    }
+
+
+
+
+    @Test
+    public void convertLengthUnits_twoUnitsOfSameType_ReturnsImputValue() throws Exception {
+        Length lengths = new Length();
+        Unit unit1 = new Unit("Meter", "m");
+        Unit unit2 = new Unit("Meter", "m");
+        double value = 1.5;
+
+        double retValue = lengths.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.0001);
+    }
+
+    @Test
+    public void convertLengthUnits_twoUnitsOfSameTypeWithZeroValue_ReturnsImputValue() throws Exception {
+        Length lengths = new Length();
+        Unit unit1 = new Unit("Meter", "m");
+        Unit unit2 = new Unit("Meter", "m");
+        double value = 0;
+
+        double retValue = lengths.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.0001);
+    }
+
+    @Test
+    public void convertLengthUnits_baseUnitToNonBaseUnit_ReturnsConvertedValue() throws Exception {
+        Length lengths = new Length();
+        Unit unit1 = new Unit("Meter", "m");
+        Unit unit2 = new Unit("Foot", "ft");
+        double value = 1;
+
+        double retValue = lengths.convert(unit1, unit2, value);
+        assertEquals(3.2808, retValue, 0.0001);
+    }
+
+    @Test
+    public void convertLengthUnits_noneBaseUnitToBaseUnit_ReturnsConvertedValue() throws Exception {
+        Length lengths = new Length();
+        Unit unit1 = new Unit("Foot", "ft");
+        Unit unit2 = new Unit("Meter", "m");
+        double value = 1;
+
+        double retValue = lengths.convert(unit1, unit2, value);
+        assertEquals(0.3048, retValue, 0.0001);
+    }
+
+    @Test
+    public void convertLengthUnits_noneBaseUnitToNoneBaseUnit_ReturnsConvertedValue() throws Exception {
+        Length lengths = new Length();
+        Unit unit1 = new Unit("Foot", "ft");
+        Unit unit2 = new Unit("Yard", "yd");
+        double value = 1;
+
+        double retValue = lengths.convert(unit1, unit2, value);
+        assertEquals(0.333333, retValue, 0.0001);
+    }
 }

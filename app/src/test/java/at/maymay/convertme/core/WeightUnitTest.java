@@ -364,4 +364,124 @@ public class WeightUnitTest {
 
         assertEquals(1016050, factor, 0.0001);
     }
+
+
+
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertWeightUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Weight weights = new Weight();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("Kilogram", "kg");
+        int value = 1;
+
+        weights.convert(corruptUnit, unit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertWeightUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Weight weights = new Weight();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("Kilogram", "kg");
+        int value = 1;
+
+        weights.convert(unit, corruptUnit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertWeightUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Weight weights = new Weight();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        int value = 1;
+
+        weights.convert(corruptUnit, corruptUnit, value);
+    }
+
+
+
+
+    @Test(expected = NullPointerException.class)
+    public void convertWeightUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Weight weights = new Weight();
+        Unit unit = new Unit("Kilogram", "kg");
+        int value = 1;
+
+        weights.convert(null, unit, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertWeightUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Weight weights = new Weight();
+        Unit unit = new Unit("Kilogram", "kg");
+        int value = 1;
+
+        weights.convert(unit, null, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertWeightUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
+        Weight weights = new Weight();
+        int value = 1;
+
+        weights.convert(null, null, value);
+    }
+
+
+
+
+    @Test
+    public void convertWeightUnits_twoUnitsOfSameType_ReturnsImputValue() throws Exception {
+        Weight weights = new Weight();
+        Unit unit1 = new Unit("Kilogram", "kg");
+        Unit unit2 = new Unit("Kilogram", "kg");
+        double value = 1.5;
+
+        double retValue = weights.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.0001);
+    }
+
+    @Test
+    public void convertWeightUnits_twoUnitsOfSameTypeWithZeroValue_ReturnsImputValue() throws Exception {
+        Weight weights = new Weight();
+        Unit unit1 = new Unit("Kilogram", "kg");
+        Unit unit2 = new Unit("Kilogram", "kg");
+        double value = 0;
+
+        double retValue = weights.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.0001);
+    }
+
+    @Test
+    public void convertWeightUnits_baseUnitToNonBaseUnit_ReturnsConvertedValue() throws Exception {
+        Weight weights = new Weight();
+        Unit unit1 = new Unit("Kilogram", "kg");
+        Unit unit2 = new Unit("Decagram", "dag");
+        double value = 1;
+
+        double retValue = weights.convert(unit1, unit2, value);
+        assertEquals(100, retValue, 0.0001);
+    }
+
+    @Test
+    public void convertWeightUnits_noneBaseUnitToBaseUnit_ReturnsConvertedValue() throws Exception {
+        Weight weights = new Weight();
+        Unit unit1 = new Unit("Decagram", "dag");
+        Unit unit2 = new Unit("Kilogram", "kg");
+        double value = 1;
+
+        double retValue = weights.convert(unit1, unit2, value);
+        assertEquals(0.01, retValue, 0.0001);
+    }
+
+    @Test
+    public void convertWeightUnits_noneBaseUnitToNoneBaseUnit_ReturnsConvertedValue() throws Exception {
+        Weight weights = new Weight();
+        Unit unit1 = new Unit("Decagram", "dag");
+        Unit unit2 = new Unit("Ounce", "oz");
+        double value = 1;
+
+        double retValue = weights.convert(unit1, unit2, value);
+        assertEquals(0.35274, retValue, 0.0001);
+    }
 }

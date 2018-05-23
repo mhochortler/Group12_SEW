@@ -279,4 +279,63 @@ public class CurrencyUnitTest {
 
         assertEquals(-1, factor, 0.1);
     }
+
+
+
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertCurrencyUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Currency currencies = new Currency();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("U.S. Dollar", "USD");
+        int value = 1;
+
+        currencies.convert(corruptUnit, unit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertCurrencyUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Currency currencies = new Currency();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("U.S. Dollar", "USD");
+        int value = 1;
+
+        currencies.convert(unit, corruptUnit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertCurrencyUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Currency currencies = new Currency();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        int value = 1;
+
+        currencies.convert(corruptUnit, corruptUnit, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertCurrencyUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Currency currencies = new Currency();
+        Unit unit = new Unit("U.S. Dollar", "USD");
+        int value = 1;
+
+        currencies.convert(null, unit, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertCurrencyUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Currency currencies = new Currency();
+        Unit unit = new Unit("U.S. Dollar", "USD");
+        int value = 1;
+
+        currencies.convert(unit, null, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertCurrencyUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
+        Currency currencies = new Currency();
+        int value = 1;
+
+        currencies.convert(null, null, value);
+    }
 }

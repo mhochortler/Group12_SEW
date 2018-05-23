@@ -840,4 +840,120 @@ public class VolumeUnitTest {
 
         assertEquals(0.0163871, factor, 0.000001);
     }
+
+
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertVolumeUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Volume volumes = new Volume();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("Litre", "l");
+        int value = 1;
+
+        volumes.convert(corruptUnit, unit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertVolumeUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Volume volumes = new Volume();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        Unit unit = new Unit("Litre", "l");
+        int value = 1;
+
+        volumes.convert(unit, corruptUnit, value);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertVolumeUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
+        Volume volumes = new Volume();
+        Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
+        int value = 1;
+
+        volumes.convert(corruptUnit, corruptUnit, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertVolumeUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Volume volumes = new Volume();
+        Unit unit = new Unit("Litre", "l");
+        int value = 1;
+
+        volumes.convert(null, unit, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertVolumeUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
+        Volume volumes = new Volume();
+        Unit unit = new Unit("Litre", "l");
+        int value = 1;
+
+        volumes.convert(unit, null, value);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void convertVolumeUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
+        Volume volumes = new Volume();
+        int value = 1;
+
+        volumes.convert(null, null, value);
+    }
+
+
+
+
+    @Test
+    public void convertVolumeUnits_twoUnitsOfSameType_ReturnsImputValue() throws Exception {
+        Volume volumes = new Volume();
+        Unit unit1 = new Unit("Litre", "l");
+        Unit unit2 = new Unit("Litre", "l");
+        double value = 1.5;
+
+        double retValue = volumes.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.0001);
+    }
+
+    @Test
+    public void convertVolumeUnits_twoUnitsOfSameTypeWithZeroValue_ReturnsImputValue() throws Exception {
+        Volume volumes = new Volume();
+        Unit unit1 = new Unit("Litre", "l");
+        Unit unit2 = new Unit("Litre", "l");
+        double value = 0;
+
+        double retValue = volumes.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.0001);
+    }
+
+    @Test
+    public void convertVolumeUnits_baseUnitToNonBaseUnit_ReturnsConvertedValue() throws Exception {
+        Volume volumes = new Volume();
+        Unit unit1 = new Unit("Litre", "l");
+        Unit unit2 = new Unit("US liquid gallon", "uslg");
+        double value = 1;
+
+        double retValue = volumes.convert(unit1, unit2, value);
+        assertEquals(0.264172, retValue, 0.0001);
+    }
+
+    @Test
+    public void convertVolumeUnits_noneBaseUnitToBaseUnit_ReturnsConvertedValue() throws Exception {
+        Volume volumes = new Volume();
+        Unit unit1 = new Unit("US liquid gallon", "uslg");
+        Unit unit2 = new Unit("Litre", "l");
+        double value = 1;
+
+        double retValue = volumes.convert(unit1, unit2, value);
+        assertEquals(3.78541, retValue, 0.0001);
+    }
+
+    @Test
+    public void convertVolumeUnits_noneBaseUnitToNoneBaseUnit_ReturnsConvertedValue() throws Exception {
+        Volume volumes = new Volume();
+        Unit unit1 = new Unit("US liquid gallon", "uslg");
+        Unit unit2 = new Unit("Imperial teaspoon", "its");
+        double value = 1;
+
+        double retValue = volumes.convert(unit1, unit2, value);
+        assertEquals(639.493, retValue, 0.001);
+    }
 }
