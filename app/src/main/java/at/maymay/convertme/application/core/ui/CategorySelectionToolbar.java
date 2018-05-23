@@ -20,14 +20,14 @@ import java.util.ListIterator;
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.model.Category;
 import at.maymay.convertme.application.core.Converter;
-import at.maymay.convertme.application.core.Currency;
-import at.maymay.convertme.application.core.Length;
+import at.maymay.convertme.application.core.model.Currency;
+import at.maymay.convertme.application.core.model.Length;
 import at.maymay.convertme.application.core.Profile;
-import at.maymay.convertme.application.core.Speed;
-import at.maymay.convertme.application.core.Temperature;
-import at.maymay.convertme.application.core.Unit;
-import at.maymay.convertme.application.core.Volume;
-import at.maymay.convertme.application.core.Weight;
+import at.maymay.convertme.application.core.model.Speed;
+import at.maymay.convertme.application.core.model.Temperature;
+import at.maymay.convertme.application.core.model.Unit;
+import at.maymay.convertme.application.core.model.Volume;
+import at.maymay.convertme.application.core.model.Weight;
 
 public class CategorySelectionToolbar implements View.OnClickListener{
 

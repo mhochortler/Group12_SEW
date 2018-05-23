@@ -2,6 +2,8 @@ package at.maymay.convertme.application.core;
 
 import java.util.List;
 
+import at.maymay.convertme.application.core.model.Unit;
+
 public class Profile {
 
     public Profile(String name, String shortcut)

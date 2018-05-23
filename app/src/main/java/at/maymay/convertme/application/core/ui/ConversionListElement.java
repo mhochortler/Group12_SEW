@@ -152,7 +152,7 @@ public class ConversionListElement{
                 {
                     text_already_changed = true;
                     double result = Converter.convert(getSelectedOutputUnit(), getSelectedInputUnit(), getRightInput());
-                    setLeftResult(result);
+                    setLeftOutput(result);
                 }
                 else if(getRightTextViewInput().getText().length() == 0 && !text_already_changed)
                 {

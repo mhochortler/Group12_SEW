@@ -2,6 +2,8 @@ package at.maymay.convertme.application.core.model;
 
 import java.util.ArrayList;
 
+import at.maymay.convertme.application.core.Profile;
+
 public class Volume extends Category {
 
     public Volume(){
