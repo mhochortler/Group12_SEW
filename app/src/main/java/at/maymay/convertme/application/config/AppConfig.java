@@ -5,7 +5,7 @@ import android.app.Application;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 
-import at.maymay.convertme.application.core.Unit;
+import at.maymay.convertme.application.core.model.Unit;
 
 public class AppConfig extends Application {
 
@@ -16,7 +16,7 @@ public class AppConfig extends Application {
     }
 
     private void initDb() {
-        //deleteDatabase("Database_ConvertMe.db");
+        deleteDatabase("Database_ConvertMe.db");
 
         Configuration.Builder dbConfiguration = new Configuration.Builder(this);
 

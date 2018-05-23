@@ -18,8 +18,8 @@ import android.widget.Spinner;
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.core.model.Category;
 import at.maymay.convertme.application.core.Converter;
-import at.maymay.convertme.application.core.Currency;
-import at.maymay.convertme.application.core.CurrencyExchangeAPI;
+import at.maymay.convertme.application.core.model.Currency;
+import at.maymay.convertme.application.dal.CurrencyExchangeAPI;
 import at.maymay.convertme.application.core.model.Unit;
 
 public class ConversionListElement{
@@ -34,12 +34,11 @@ public class ConversionListElement{
     private Category category;
     private Boolean text_already_changed = false;
 
-    public ConversionListElement(Context context, final Category category) {
     private ConstraintLayout main_layout;
 
     private float x1, x2;
 
-    public ConversionListElement(final Context context, Category category) {
+    public ConversionListElement(final Context context, final Category category) {
         LayoutInflater inflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert inflater != null;
         view_ = inflater.inflate(R.layout.convert_list_item, null);

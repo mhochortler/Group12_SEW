@@ -12,6 +12,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import at.maymay.convertme.application.core.model.Currency;
+
 
 public class CurrencyExchangeAPI extends AsyncTask<Currency, Void, JSONObject> {
     static private String url = "https://openexchangerates.org/api/latest.json";

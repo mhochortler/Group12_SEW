@@ -65,4 +65,12 @@ public abstract class Category {
 
         return (value * validUnitFrom.getFactor()) / validUnitTo.getFactor();
     }
+
+    public void saveUnitListToDB()
+    {
+        for (Unit unit: unit_list_) {
+            if(unit != null)
+                unit.save();
+        }
+    }
 }
