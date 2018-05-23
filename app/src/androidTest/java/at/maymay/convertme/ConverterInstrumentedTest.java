@@ -60,6 +60,22 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
         onView(withId(R.id.ptxt_input)).perform(typeText("10"));
-        onView(withId(R.id.ptxt_result)).check(matches(withText("10.0")));
+        onView(withId(R.id.ptxt_result)).check(matches(withText("10.000")));
+    }
+
+    @Test
+    public void test_rightInputField() throws Exception {
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_length)).perform(click());
+        onView(withId(R.id.ptxt_result)).perform(typeText("567"));
+        onView(withText("567")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void test_btn_left_convert() throws Exception {
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_length)).perform(click());
+        onView(withId(R.id.ptxt_result)).perform(typeText("10"));
+        onView(withId(R.id.ptxt_input)).check(matches(withText("10.000")));
     }
 }

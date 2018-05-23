@@ -20,12 +20,14 @@ public class ConversionListElement {
 
     private View view;
 
-    private TextView textview_output;
+    private EditText textview_output;
     private EditText textview_input;
     private Spinner spinner_output;
     private Spinner spinner_input;
 
     private Category category;
+
+    private Boolean text_already_changed = false;
 
     public ConversionListElement(Context context, Category category) {
 
@@ -34,7 +36,7 @@ public class ConversionListElement {
         view = inflater.inflate(R.layout.convert_list_item, null);
 
         this.textview_input = (EditText) view.findViewById(R.id.ptxt_input);
-        this.textview_output = (TextView) view.findViewById(R.id.ptxt_result);
+        this.textview_output = (EditText) view.findViewById(R.id.ptxt_result);
         this.spinner_input = (Spinner) view.findViewById(R.id.input_unit);
         this.spinner_output = (Spinner) view.findViewById(R.id.output_unit);
 
@@ -48,10 +50,9 @@ public class ConversionListElement {
         spinner_output.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(getTextViewInput().getText().length() != 0)
+                if(getRightTextViewInput().getText().length() != 0)
                 {
-                    double result = Converter.convert(getSelectedInputUnit(), getSelectedOutputUnit(), getInput());
-                    setOutput(result);
+                    setLeftOutput(getRightInput());
                 }
             }
 
@@ -66,9 +67,9 @@ public class ConversionListElement {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(getTextViewInput().getText().length() != 0)
                 {
-                    double result = Converter.convert(getSelectedInputUnit(), getSelectedOutputUnit(), getInput());
-                    setOutput(result);
+                    setLeftOutput(getInput());
                 }
+
             }
 
             @Override
@@ -85,16 +86,53 @@ public class ConversionListElement {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                if(getTextViewInput().getText().length() != 0)
+                if(getTextViewInput().getText().length() != 0 && !text_already_changed)
                 {
+                    text_already_changed = true;
                     double result = Converter.convert(getSelectedInputUnit(), getSelectedOutputUnit(), getInput());
                     setOutput(result);
                 }
-                else
+                else if(getTextViewInput().getText().length() == 0 && !text_already_changed)
                 {
-                    textview_output.setText(String.valueOf(""));
+                    text_already_changed = true;
+                    textview_output.setText("");
                 }
+                else text_already_changed = false;
+
             }
+
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+
+            }
+        });
+
+        textview_output.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if(getRightTextViewInput().getText().length() != 0 && !text_already_changed)
+                {
+                    text_already_changed = true;
+                    double result = Converter.convert(getSelectedOutputUnit(), getSelectedInputUnit(), getRightInput());
+                    setLeftOutput(result);
+                }
+                else if(getRightTextViewInput().getText().length() == 0 && !text_already_changed)
+                {
+                    text_already_changed = true;
+                    textview_input.setText("");
+                }
+                else text_already_changed = false;
+
+            }
+
 
             @Override
             public void afterTextChanged(Editable editable) {
@@ -115,13 +153,18 @@ public class ConversionListElement {
     public EditText getTextViewInput(){
         return textview_input;
     }
+    public EditText getRightTextViewInput() { return textview_output; }
 
     public double getInput(){
         return Double.parseDouble(textview_input.getText().toString());
     }
+    public double getRightInput() { return Double.parseDouble(textview_output.getText().toString()); }
 
     public void setOutput(double output_value){
-        textview_output.setText(String.valueOf(output_value));
+        textview_output.setText(String.format("%.5f", output_value));
+    }
+    public void setLeftOutput(double output_value){
+        textview_input.setText(String.format("%.5f", getInput()));
     }
 
     public Unit getSelectedInputUnit()

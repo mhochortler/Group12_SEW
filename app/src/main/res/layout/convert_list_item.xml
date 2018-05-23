@@ -40,24 +40,26 @@
         android:ems="10"
         android:inputType="numberDecimal"
         android:nestedScrollingEnabled="false"
-        android:selectAllOnFocus="false"
         android:singleLine="true"
         android:textAlignment="center"
+        android:selectAllOnFocus = "true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/ptxt_result"
         android:layout_width="97dp"
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="16dp"
+        android:inputType="numberDecimal"
         android:paddingTop="13dp"
         android:singleLine="true"
         android:textAlignment="center"
         android:textIsSelectable="false"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:selectAllOnFocus = "true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
