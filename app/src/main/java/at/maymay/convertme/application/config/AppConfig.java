@@ -16,7 +16,7 @@ public class AppConfig extends Application {
     }
 
     private void initDb() {
-        deleteDatabase("Database_ConvertMe.db");
+        //deleteDatabase("Database_ConvertMe.db");
 
         Configuration.Builder dbConfiguration = new Configuration.Builder(this);
 

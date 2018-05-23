@@ -16,10 +16,10 @@ public class Currency extends Category {
     protected void init() {
         remoteID = 1;
         Unit usd = new Unit("U.S. Dollar", "USD", remoteID++,  1.0);
-        Unit eur = new Unit("Euro", "EUR", remoteID++);
-        Unit yen = new Unit("Yen", "JPY", remoteID++);
-        Unit pound = new Unit("British Pound", "GBP", remoteID++);
-        Unit frank = new Unit("Swiss Franc", "CHF",remoteID++);
+        Unit eur = new Unit("Euro", "EUR", remoteID++, 0.0);
+        Unit yen = new Unit("Yen", "JPY", remoteID++, 0.0);
+        Unit pound = new Unit("British Pound", "GBP", remoteID++, 0.0);
+        Unit frank = new Unit("Swiss Franc", "CHF",remoteID++, 0.0);
         unit_list_.add(usd);
         unit_list_.add(eur);
         unit_list_.add(yen);
@@ -47,8 +47,9 @@ public class Currency extends Category {
                 System.out.println(e.getMessage());
             }
         }
-        else {
+        else if(!checkFactorsUnitList()){
             Context context = Converter.getAppContext();
+
             Toast toast = Toast.makeText(context, "Couldn't load ExchangeRates, trying to load from database.", Toast.LENGTH_LONG);
             toast.show();
             for (Unit unit: unit_list_) {
@@ -59,11 +60,20 @@ public class Currency extends Category {
                 }
                 else {
                     context = Converter.getAppContext();
-                    toast = Toast.makeText(context, "Couldn't load ExchangeRates", Toast.LENGTH_LONG);
+                    toast = Toast.makeText(context, "Couldn't load ExchangeRates from database.", Toast.LENGTH_LONG);
                     toast.show();
                     break;
                 }
             }
         }
+    }
+
+    private boolean checkFactorsUnitList()
+    {
+        for(Unit unit: unit_list_) {
+            if(unit != null && unit.getFactor() == 0.0)
+                return false;
+        }
+        return true;
     }
 }
