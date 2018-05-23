@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.Arrays;
@@ -16,6 +17,9 @@ import at.maymay.convertme.application.core.model.Temperature;
 import at.maymay.convertme.application.core.model.Unit;
 import at.maymay.convertme.application.core.ui.CategorySelectionToolbar;
 import at.maymay.convertme.application.core.ui.ConversionListElement;
+
+import static android.text.Selection.selectAll;
+import static android.text.Selection.setSelection;
 
 public class Converter extends AppCompatActivity implements View.OnClickListener{
 
