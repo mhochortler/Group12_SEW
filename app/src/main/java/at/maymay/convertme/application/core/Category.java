@@ -16,10 +16,10 @@ public abstract class Category {
     public String[] getStringifytUnitList() {
         List<String> result = new ArrayList<>();
 
-        for(Unit u : unit_list_) {
-            result.add(u.getShortcut());
-        }
+            for (Unit u : unit_list_) {
+                result.add(u.getName());
 
+        }
         return result.toArray(new String[result.size()]);
     }
 }

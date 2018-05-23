@@ -42,7 +42,7 @@ public class ConversionListElement {
 
         this.category = category;
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.spinner_style, category.getStringifytUnitList());
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.spinner_style, category.getStringifytUnitList());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_input.setAdapter(adapter);
         spinner_output.setAdapter(adapter);
@@ -53,6 +53,7 @@ public class ConversionListElement {
                 if(getRightTextViewInput().getText().length() != 0)
                 {
                     setLeftOutput(getRightInput());
+
                 }
             }
 
@@ -68,6 +69,7 @@ public class ConversionListElement {
                 if(getTextViewInput().getText().length() != 0)
                 {
                     setLeftOutput(getInput());
+
                 }
 
             }
@@ -169,11 +171,11 @@ public class ConversionListElement {
 
     public Unit getSelectedInputUnit()
     {
-        String shortcut = spinner_input.getSelectedItem().toString();
+        String name = spinner_input.getSelectedItem().toString();
 
         for(Unit unit : category.getUnitList())
         {
-            if (unit.getShortcut().equals(shortcut))
+            if (unit.getName().equals(name))
             {
                 return unit;
             }
@@ -184,11 +186,11 @@ public class ConversionListElement {
 
     public Unit getSelectedOutputUnit()
     {
-        String shortcut = spinner_output.getSelectedItem().toString();
+        String name = spinner_output.getSelectedItem().toString();
 
         for(Unit unit : category.getUnitList())
         {
-            if (unit.getShortcut().equals(shortcut))
+            if (unit.getName().equals(name))
             {
                 return unit;
             }
