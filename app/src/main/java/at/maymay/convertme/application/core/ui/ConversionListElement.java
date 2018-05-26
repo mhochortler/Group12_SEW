@@ -100,8 +100,7 @@ public class ConversionListElement{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(getRightTextViewInput().getText().length() != 0)
                 {
-                    //1 setLeftOutput(getInput());
-                    setLeftOutput(getRightInput());
+                    setLeftOutput(getInput());
                 }
             }
 
@@ -205,15 +204,12 @@ public class ConversionListElement{
             return 0.0;
     }
 
-//1    private void setOutput(double output_value){
-//        textview_output.setText(String.format("%.3f", output_value));
-    public void setOutput(double output_value){
-        textview_output.setText(String.format("%.5f", output_value));
+    private void setOutput(double output_value){
+        textview_output.setText(String.format("%.3f", output_value));
     }
 
     public void setLeftOutput(double output_value){
-        //1 textview_input.setText(String.format("%.5f", output_value));
-        2 textview_input.setText(String.format("%.5f", getInput()));
+        textview_input.setText(String.format("%.5f", output_value));
     }
 
 
