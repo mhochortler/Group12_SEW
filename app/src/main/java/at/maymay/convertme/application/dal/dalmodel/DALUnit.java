@@ -1,16 +1,14 @@
 package at.maymay.convertme.application.dal.dalmodel;
 
-/*
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import java.io.Serializable;
 
-import at.maymay.convertme.application.core.model.Unit;
-
 @Table(name = "Unit")
-public class DALUnit extends DALEntity
+public class DALUnit extends Model implements Serializable
 {
     @Column(name = "Name")
     private String name_;
@@ -21,13 +19,45 @@ public class DALUnit extends DALEntity
     @Column(name = "Factor")
     private double factor_;
 
+    @Column(name = "REMOTE_ID", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public long remote_id_;
 
-    public DALUnit(String name, String shortcut, long remoteId, double factor)
+    public DALUnit()
     {
-        super(remoteId);
+        super();
+    }
+
+    public DALUnit(String name, String shortcut)
+    {
+        super();
+        name_ = name;
+        shortcut_ = shortcut;
+        factor_ = 0.0;
+    }
+
+    public DALUnit(String name, String shortcut, long remoteId)
+    {
+        super();
+        name_ = name;
+        shortcut_ = shortcut;
+        remote_id_ = remoteId;
+    }
+
+    public DALUnit(String name, String shortcut, double factor)
+    {
+        super();
         name_ = name;
         shortcut_ = shortcut;
         factor_ = factor;
+    }
+
+    public DALUnit(String name, String shortcut, long remoteId, double factor)
+    {
+        super();
+        name_ = name;
+        shortcut_ = shortcut;
+        factor_ = factor;
+        remote_id_ = remoteId;
     }
 
     public String getName() {
@@ -47,4 +77,3 @@ public class DALUnit extends DALEntity
     }
     public void setFactor(double factor) { this.factor_ = factor; }
 }
-*/

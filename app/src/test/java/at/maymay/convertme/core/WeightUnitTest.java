@@ -1,9 +1,12 @@
 package at.maymay.convertme.core;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import at.maymay.convertme.application.core.dao.IDAOWeight;
 import at.maymay.convertme.application.core.model.Unit;
 import at.maymay.convertme.application.core.model.Weight;
 
@@ -18,221 +21,130 @@ import static org.junit.Assert.assertNotEquals;
 public class WeightUnitTest {
     /**
      Naming-Convention: UnitOfWork_StateUnderTest_ExpectedBehavior
-     Methode-Construction: AAA -> Arrange-Act-Assert
+     Method-Construction: AAA -> Arrange-Act-Assert
      */
+    private class DAOWeightMock implements IDAOWeight {
+        @Override
+        public Weight load()
+        {
+            Weight weight = new Weight();
+            List<Unit> units = weight.getUnitList();
+            units.clear();
 
-    @Test
-    public void createWeightCategory_standardConstructor_ReturnsNonEmptyListOfUnits() throws Exception {
-        Weight weights = new Weight();
+            units.add(new Unit("Name1", "Shortcut1", 1));
+            units.add(new Unit("Name2", "Shortcut2", 2));
+            units.add(new Unit("Name3", "Shortcut3", 0.5));
 
-        List<Unit> weightList = weights.getUnitList();
-        boolean isEmpty = weightList.isEmpty();
-
-        assertEquals(false, isEmpty);
+            return weight;
+        }
     }
 
-    @Test
-    public void createWeightCategory_standardConstructor_ReturnsListOfUnitsWithCorrectSize() throws Exception {
-        Weight weights = new Weight();
+    private class DAOWeightMockEmpty implements IDAOWeight {
+        @Override
+        public Weight load()
+        {
+            Weight weight = new Weight();
+            List<Unit> units = weight.getUnitList();
+            units.clear();
 
-        List<Unit> weightList = weights.getUnitList();
-        int size = weightList.size();
-
-        assertEquals(7, size);
+            return weight;
+        }
     }
 
-    @Test
-    public void createWeightCategory_standardConstructor_ReturnsListOfUnitsWithCorrectShortcuts() throws Exception {
-        Weight weights = new Weight();
-        String[] expectedShortcuts = new String[] {"kg", "dag", "oz", "lb", "st", "ust", "it" };
+    IDAOWeight dao;
+    IDAOWeight emptyDao;
 
-        List<Unit> weightList = weights.getUnitList();
-
-        for(int i=0; i<expectedShortcuts.length; i++)
-            assertEquals(expectedShortcuts[i], weightList.get(i).getShortcut());
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_ReturnsStringifytUnitList() throws Exception {
-        Weight weights = new Weight();
-        String[] expectedList = new String[] {"kg", "dag", "oz", "lb", "st", "ust", "it" };
-
-        String[] stringifytList = weights.getStringifytUnitList();
-
-        for(int i=0; i<expectedList.length; i++)
-            assertEquals(expectedList[i], stringifytList[i]);
+    @Before
+    public void init()
+    {
+        dao = new DAOWeightMock();
+        emptyDao = new DAOWeightMockEmpty();
     }
 
 
 
 
     @Test
-    public void createWeightCategory_standardConstructor_ReturnsKilogramUnit() throws Exception {
-        Weight weights = new Weight();
+    public void getUnitList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Weight weights = emptyDao.load();
+        List<Unit> units;
 
-        Unit kg = weights.GetUnitByShortcut("kg");
+        units = weights.getUnitList();
 
-        assertNotEquals(null, kg);
+        assertEquals(0, units.size());
     }
 
     @Test
-    public void createWeightCategory_standardConstructor_RefKilogramUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
-        Weight weights = new Weight();
-        List<Unit> weightList = weights.getUnitList();
+    public void getUnitList_unitsFromDaoMock_returnsListOfUnitsWithCorrectSize() throws Exception {
+        Weight weights = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit kg = weights.GetUnitByShortcut("kg");
-        Unit kgFromList = weightList.get(0);
+        actualSize = weights.getUnitList().size();
 
-        assertEquals(kgFromList, kg);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createWeightCategory_standardConstructor_KilogramUnitHasRightName() throws Exception {
-        Weight weights = new Weight();
-
-        Unit kg = weights.GetUnitByShortcut("kg");
-        String name = kg.getName();
-
-        assertEquals("Kilogram", name);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_KilogramUnitHasRightFactor() throws Exception {
-        Weight weights = new Weight();
-
-        Unit kg = weights.GetUnitByShortcut("kg");
-        double factor = kg.getFactor();
-
-        assertEquals(1000.0, factor, 0.001);
-    }
+    public void getUnitList_unitsFromDaoMock_returnsCorrectListOfUnits() throws Exception {
+        Weight weights = dao.load();
+        List<Unit> actualWeightList;
+        List<Unit> expectedWeightList = new ArrayList<>();
+        expectedWeightList.add(new Unit("Name1", "Shortcut1", 1));
+        expectedWeightList.add(new Unit("Name2", "Shortcut2", 2));
+        expectedWeightList.add(new Unit("Name3", "Shortcut3", 0.5));
 
 
+        actualWeightList = weights.getUnitList();
 
 
-    @Test
-    public void createWeightCategory_standardConstructor_ReturnsDecagramUnit() throws Exception {
-        Weight weights = new Weight();
+        for(int i=0; i<expectedWeightList.size(); i++)
+            assertEquals(expectedWeightList.get(i).getShortcut(),
+                    actualWeightList.get(i).getShortcut());
 
-        Unit dag = weights.GetUnitByShortcut("dag");
+        for(int i=0; i<expectedWeightList.size(); i++)
+            assertEquals(expectedWeightList.get(i).getName(),
+                    actualWeightList.get(i).getName());
 
-        assertNotEquals(null, dag);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_RefDecagramUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
-        Weight weights = new Weight();
-        List<Unit> weightList = weights.getUnitList();
-
-        Unit weight = weights.GetUnitByShortcut("dag");
-        Unit weightFromList = weightList.get(1);
-
-        assertEquals(weight, weightFromList);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_DecagramUnitHasRightName() throws Exception {
-        Weight weights = new Weight();
-
-        Unit dag =weights.GetUnitByShortcut("dag");
-        String name = dag.getName();
-
-        assertEquals("Decagram", name);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_DecagramUnitHasRightFactor() throws Exception {
-        Weight weights = new Weight();
-
-        Unit dag = weights.GetUnitByShortcut("dag");
-        double factor = dag.getFactor();
-
-        assertEquals(10.0, factor, 0.001);
+        for(int i=0; i<expectedWeightList.size(); i++)
+            assertEquals(expectedWeightList.get(i).getFactor(),
+                    actualWeightList.get(i).getFactor(), 0.1);
     }
 
 
 
 
     @Test
-    public void createWeightCategory_standardConstructor_ReturnsOunceUnit() throws Exception {
-        Weight weights = new Weight();
+    public void getStringifytList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Weight weights = emptyDao.load();
+        String[] actualStringifytList;
 
-        Unit oz = weights.GetUnitByShortcut("oz");
+        actualStringifytList = weights.getStringifytUnitList();
 
-        assertNotEquals(null, oz);
+        assertEquals(0, actualStringifytList.length);
     }
 
     @Test
-    public void createWeightCategory_standardConstructor_RefOunceUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
-        Weight weights = new Weight();
-        List<Unit> weightList = weights.getUnitList();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectLength() throws Exception {
+        Weight weights = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit weight = weights.GetUnitByShortcut("oz");
-        Unit weightFromList = weightList.get(2);
+        actualSize = weights.getStringifytUnitList().length;
 
-        assertEquals(weight, weightFromList);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createWeightCategory_standardConstructor_OunceUnitHasRightName() throws Exception {
-        Weight weights = new Weight();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectStrings() throws Exception {
+        Weight weights = dao.load();
+        String[] expectedStringifytList = new String[] {"Shortcut1", "Shortcut2", "Shortcut3" };
+        String[] actualStringifytList;
 
-        Unit oz = weights.GetUnitByShortcut("oz");
-        String name = oz.getName();
+        actualStringifytList = weights.getStringifytUnitList();
 
-        assertEquals("Ounce", name);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_OunceUnitHasRightFactor() throws Exception {
-        Weight weights = new Weight();
-
-        Unit oz = weights.GetUnitByShortcut("oz");
-        double factor = oz.getFactor();
-
-        assertEquals(28.349, factor, 0.001);
-    }
-
-
-
-
-    @Test
-    public void createWeightCategory_standardConstructor_ReturnsPoundUnit() throws Exception {
-        Weight weights = new Weight();
-
-        Unit lb =weights.GetUnitByShortcut("lb");
-
-        assertNotEquals(null, lb);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_RefPoundUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
-        Weight weights = new Weight();
-        List<Unit> weightList = weights.getUnitList();
-
-        Unit weight = weights.GetUnitByShortcut("lb");
-        Unit weightFromList = weightList.get(3);
-
-        assertEquals(weight, weightFromList);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_PoundUnitHasRightName() throws Exception {
-        Weight weights = new Weight();
-
-        Unit lb = weights.GetUnitByShortcut("lb");
-        String name = lb.getName();
-
-        assertEquals("Pound", name);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_PoundUnitHasRightFactor() throws Exception {
-        Weight weights = new Weight();
-
-        Unit lb = weights.GetUnitByShortcut("lb");
-        double factor = lb.getFactor();
-
-        assertEquals(453.592, factor, 0.001);
+        for(int i=0; i<expectedStringifytList.length; i++)
+            assertEquals(expectedStringifytList[i], actualStringifytList[i]);
     }
 
 
@@ -240,188 +152,131 @@ public class WeightUnitTest {
 
 
     @Test
-    public void createWeightCategory_standardConstructor_ReturnsStoneUnit() throws Exception {
-        Weight weights = new Weight();
+    public void getUnitByShortcut_unitsFromEmptyDaoMock_returnsNullPointer() throws Exception {
+        Weight weights = emptyDao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
 
-        Unit st = weights.GetUnitByShortcut("st");
+        actualUnit = weights.GetUnitByShortcut("Shortcut1");
 
-        assertNotEquals(null, st);
+        assertEquals(expectedUnit, actualUnit);
     }
 
     @Test
-    public void createWeightCategory_standardConstructor_RefStoneUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
-        Weight weights = new Weight();
-        List<Unit> weightList = weights.getUnitList();
+    public void getFirstUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Weight weights = dao.load();
+        Unit expectedUnit = new Unit("Name1", "Shortcut1", 1);
+        Unit actualUnit;
 
-        Unit weight = weights.GetUnitByShortcut("st");
-        Unit weightFromList = weightList.get(4);
+        actualUnit = weights.GetUnitByShortcut("Shortcut1");
 
-        assertEquals(weight, weightFromList);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createWeightCategory_standardConstructor_StoneUnitHasRightName() throws Exception {
-        Weight weights = new Weight();
+    public void getSecondUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Weight weights = dao.load();
+        Unit expectedUnit = new Unit("Name2", "Shortcut2", 2);
+        Unit actualUnit;
 
-        Unit st = weights.GetUnitByShortcut("st");
-        String name = st.getName();
+        actualUnit = weights.GetUnitByShortcut("Shortcut2");
 
-        assertEquals("Stone", name);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createWeightCategory_standardConstructor_StoneUnitHasRightFactor() throws Exception {
-        Weight weights = new Weight();
+    public void getThirdUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Weight weights = dao.load();
+        Unit expectedUnit = new Unit("Name3", "Shortcut3", 0.5);
+        Unit actualUnit;
 
-        Unit st = weights.GetUnitByShortcut("st");
-        double factor = st.getFactor();
+        actualUnit = weights.GetUnitByShortcut("Shortcut3");
 
-        assertEquals(6350.29, factor, 0.001);
-    }
-
-
-
-
-
-    @Test
-    public void createWeightCategory_standardConstructor_ReturnsUSTonUnit() throws Exception {
-        Weight weights = new Weight();
-
-        Unit ust = weights.GetUnitByShortcut("ust");
-
-        assertNotEquals(null, ust);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createWeightCategory_standardConstructor_RefUSTonUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
-        Weight weights = new Weight();
-        List<Unit> weightList = weights.getUnitList();
+    public void getNonExistingUnitByShortcut_unitIsNotCreatedViaDaoMock_returnsNull() throws Exception {
+        Weight weights = dao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
 
-        Unit weight = weights.GetUnitByShortcut("ust");
-        Unit weightFromList = weightList.get(5);
+        actualUnit = weights.GetUnitByShortcut("NonExisting");
 
-        assertEquals(weight, weightFromList);
+        assertEquals(expectedUnit, actualUnit);
     }
 
-    @Test
-    public void createWeightCategory_standardConstructor_USTonUnitHasRightName() throws Exception {
-        Weight weights = new Weight();
-
-        Unit ust = weights.GetUnitByShortcut("ust");
-        String name = ust.getName();
-
-        assertEquals("US Ton", name);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_USTonUnitHasRightFactor() throws Exception {
-        Weight weights = new Weight();
-
-        Unit ust = weights.GetUnitByShortcut("ust");
-        double factor = ust.getFactor();
-
-        assertEquals(907184.28568, factor, 0.0001);
-    }
-
-
-
-    @Test
-    public void createWeightCategory_standardConstructor_ReturnsImperialTonUnit() throws Exception {
-        Weight weights = new Weight();
-
-        Unit it = weights.GetUnitByShortcut("it");
-
-        assertNotEquals(null, it);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_RefImperialTonUnitByShortcutAndRefByWeightUnitListIsEqual() throws Exception {
-        Weight weights = new Weight();
-        List<Unit> weightList = weights.getUnitList();
-
-        Unit weight = weights.GetUnitByShortcut("it");
-        Unit weightFromList = weightList.get(6);
-
-        assertEquals(weight, weightFromList);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_ImperialTonUnitHasRightName() throws Exception {
-        Weight weights = new Weight();
-
-        Unit it = weights.GetUnitByShortcut("it");
-        String name = it.getName();
-
-        assertEquals("Imperial Ton", name);
-    }
-
-    @Test
-    public void createWeightCategory_standardConstructor_ImperialTonUnitHasRightFactor() throws Exception {
-        Weight weights = new Weight();
-
-        Unit it = weights.GetUnitByShortcut("it");
-        double factor = it.getFactor();
-
-        assertEquals(1016050, factor, 0.0001);
-    }
 
 
 
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertWeightUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Weight weights = new Weight();
+    public void convertWeightUnits_unitFirstArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Weight weights = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("Kilogram", "kg");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         weights.convert(corruptUnit, unit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertWeightUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Weight weights = new Weight();
+    public void convertWeightUnits_unitSecondArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Weight weights = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("Kilogram", "kg");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         weights.convert(unit, corruptUnit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertWeightUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Weight weights = new Weight();
+    public void convertWeightUnits_unitBothArgumentsAreCorrupt_throwsIllegalArgumentException() throws Exception {
+        Weight weights = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
         int value = 1;
 
         weights.convert(corruptUnit, corruptUnit, value);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void convertWeightUnits_withEmptyDAO_throwsIllegalArgumentException() throws Exception {
+        Weight weights = emptyDao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        int value = 1;
 
-
+        weights.convert(unit1, unit2, value);
+    }
 
     @Test(expected = NullPointerException.class)
-    public void convertWeightUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Weight weights = new Weight();
-        Unit unit = new Unit("Kilogram", "kg");
+    public void convertWeightUnits_unitFirstArgumentIsNull_throwsNullPointerException() throws Exception {
+        Weight weights = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         weights.convert(null, unit, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertWeightUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Weight weights = new Weight();
-        Unit unit = new Unit("Kilogram", "kg");
+    public void convertWeightUnits_unitSecondArgumentIsNull_throwsNullPointerException() throws Exception {
+        Weight weights = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         weights.convert(unit, null, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertWeightUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
-        Weight weights = new Weight();
+    public void convertWeightUnits_unitBothArgumentsAreNull_throwsNullPointerException() throws Exception {
+        Weight weights = dao.load();
         int value = 1;
 
         weights.convert(null, null, value);
@@ -430,58 +285,93 @@ public class WeightUnitTest {
 
 
 
+
     @Test
-    public void convertWeightUnits_twoUnitsOfSameType_ReturnsImputValue() throws Exception {
-        Weight weights = new Weight();
-        Unit unit1 = new Unit("Kilogram", "kg");
-        Unit unit2 = new Unit("Kilogram", "kg");
+    public void convertWeightUnits_twoUnitsOfSameType_returnsInputValue() throws Exception {
+        Weight weights = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
         double value = 1.5;
 
         double retValue = weights.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertWeightUnits_twoUnitsOfSameTypeWithZeroValue_ReturnsImputValue() throws Exception {
-        Weight weights = new Weight();
-        Unit unit1 = new Unit("Kilogram", "kg");
-        Unit unit2 = new Unit("Kilogram", "kg");
+    public void convertWeightUnits_twoUnitsOfSameTypeWithZeroValue_returnsInputValue() throws Exception {
+        Weight weights = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
         double value = 0;
 
         double retValue = weights.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertWeightUnits_baseUnitToNonBaseUnit_ReturnsConvertedValue() throws Exception {
-        Weight weights = new Weight();
-        Unit unit1 = new Unit("Kilogram", "kg");
-        Unit unit2 = new Unit("Decagram", "dag");
-        double value = 1;
+    public void convertWeightUnits_firstUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Weight weights = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
 
         double retValue = weights.convert(unit1, unit2, value);
-        assertEquals(100, retValue, 0.0001);
+        assertEquals(0.75, retValue, 0.01);
     }
 
     @Test
-    public void convertWeightUnits_noneBaseUnitToBaseUnit_ReturnsConvertedValue() throws Exception {
-        Weight weights = new Weight();
-        Unit unit1 = new Unit("Decagram", "dag");
-        Unit unit2 = new Unit("Kilogram", "kg");
-        double value = 1;
+    public void convertWeightUnits_secondUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Weight weights = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
 
         double retValue = weights.convert(unit1, unit2, value);
-        assertEquals(0.01, retValue, 0.0001);
+        assertEquals(3, retValue, 0.01);
     }
 
     @Test
-    public void convertWeightUnits_noneBaseUnitToNoneBaseUnit_ReturnsConvertedValue() throws Exception {
-        Weight weights = new Weight();
-        Unit unit1 = new Unit("Decagram", "dag");
-        Unit unit2 = new Unit("Ounce", "oz");
-        double value = 1;
+    public void convertWeightUnits_firstUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Weight weights = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
 
         double retValue = weights.convert(unit1, unit2, value);
-        assertEquals(0.35274, retValue, 0.0001);
+        assertEquals(3, retValue, 0.01);
     }
+
+    @Test
+    public void convertWeightUnits_thirdUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Weight weights = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
+
+        double retValue = weights.convert(unit1, unit2, value);
+        assertEquals(0.75, retValue, 0.01);
+    }
+
+    @Test
+    public void convertWeightUnits_secondUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Weight weights = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
+
+        double retValue = weights.convert(unit1, unit2, value);
+        assertEquals(6, retValue, 0.01);
+    }
+
+    @Test
+    public void convertWeightUnits_thirdUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Weight weights = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
+
+        double retValue = weights.convert(unit1, unit2, value);
+        assertEquals(0.375, retValue, 0.01);
+    }
+
 }

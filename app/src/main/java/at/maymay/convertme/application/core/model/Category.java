@@ -68,9 +68,11 @@ public abstract class Category {
 
     public void saveUnitListToDB()
     {
+        /*
         for (Unit unit: unit_list_) {
             if(unit != null)
                 unit.save();
         }
+        */
     }
 }

@@ -1,14 +1,16 @@
 package at.maymay.convertme.core;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import at.maymay.convertme.application.core.dao.IDAOCurrency;
 import at.maymay.convertme.application.core.model.Currency;
 import at.maymay.convertme.application.core.model.Unit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,324 +20,363 @@ import static org.junit.Assert.assertNotEquals;
 public class CurrencyUnitTest {
     /**
      Naming-Convention: UnitOfWork_StateUnderTest_ExpectedBehavior
-     Methode-Construction: AAA -> Arrange-Act-Assert
+     Method-Construction: AAA -> Arrange-Act-Assert
      */
 
-    @Test
-    public void createCurrencyCategory_standardConstructor_ReturnsNonEmptyListOfUnits() throws Exception {
-        Currency currencies = new Currency();
+    private class DAOCurrencyMock implements IDAOCurrency {
+        @Override
+        public Currency load()
+        {
+            Currency currency = new Currency();
+            List<Unit> units = currency.getUnitList();
+            units.clear();
 
-        List<Unit> currencyList = currencies.getUnitList();
-        boolean isEmpty = currencyList.isEmpty();
+            units.add(new Unit("Name1", "Shortcut1", 1));
+            units.add(new Unit("Name2", "Shortcut2", 2));
+            units.add(new Unit("Name3", "Shortcut3", 0.5));
 
-        assertEquals(false, isEmpty);
+            return currency;
+        }
+
+        @Override
+        public void save(Currency currency){}
     }
 
-    @Test
-    public void createCurrencyCategory_standardConstructor_ReturnsListOfUnitsWithCorrectSize() throws Exception {
-        Currency currencies = new Currency();
+    private class DAOCurrencyMockEmpty implements IDAOCurrency {
+        @Override
+        public Currency load()
+        {
+            Currency currency = new Currency();
+            List<Unit> units = currency.getUnitList();
+            units.clear();
 
-        List<Unit> currencyList = currencies.getUnitList();
-        int size = currencyList.size();
+            return currency;
+        }
 
-        assertEquals(5, size);
+        @Override
+        public void save(Currency currency){}
     }
 
-    @Test
-    public void createCurrencyCategory_standardConstructor_ReturnsListOfUnitsWithCorrectShortcuts() throws Exception {
-        Currency currencies = new Currency();
-        String[] expectedShortcuts = new String[] {"USD", "EUR", "JPY", "GBP", "CHF"};
+    IDAOCurrency dao;
+    IDAOCurrency emptyDao;
 
-        List<Unit> currencyList = currencies.getUnitList();
-
-        for(int i=0; i<expectedShortcuts.length; i++)
-            assertEquals(expectedShortcuts[i], currencyList.get(i).getShortcut());
-    }
-
-    @Test
-    public void createCurrencyCategory_standardConstructor_ReturnsStringifytUnitList() throws Exception {
-        Currency currencies = new Currency();
-        String[] expectedList = new String[] {"USD", "EUR", "JPY", "GBP", "CHF"};
-
-        String[] stringifytList = currencies.getStringifytUnitList();
-
-        for(int i=0; i<expectedList.length; i++)
-            assertEquals(expectedList[i], stringifytList[i]);
-    }
-
-
-
-
-
-    @Test
-    public void createCurrencyCategory_standardConstructor_ReturnsUSDollarUnit() throws Exception {
-        Currency currencies = new Currency();
-
-        Unit unit =  currencies.GetUnitByShortcut("USD");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createCurrencyCategory_standardConstructor_RefUSDollarUnitByShortcutAndRefByCurrencyUnitListIsEqual() throws Exception {
-        Currency currencies = new Currency();
-        List<Unit> currencyList = currencies.getUnitList();
-
-        Unit currency = currencies.GetUnitByShortcut("USD");
-        Unit currencyFromList = currencyList.get(0);
-
-        assertEquals(currency, currencyFromList);
-    }
-
-    @Test
-    public void createCurrencyCategory_standardConstructor_USDollarUnitHasRightName() throws Exception {
-        Currency currencies = new Currency();
-
-        Unit unit = currencies.GetUnitByShortcut("USD");
-        String name = unit.getName();
-
-        assertEquals("U.S. Dollar", name);
-    }
-
-    @Test
-    public void createCurrencyTemperatureCategory_standardConstructor_USDollarUnitHasRightFactor() throws Exception {
-        Currency currencies = new Currency();
-
-        //TODO, Implement Interface for dummy
-        Unit unit =  currencies.GetUnitByShortcut("USD");
-        double factor = unit.getFactor();
-
-        assertEquals(-1, factor, 0.1);
-    }
-
-
-
-    @Test
-    public void createCurrencyCategory_standardConstructor_ReturnsEuroUnit() throws Exception {
-        Currency currencies = new Currency();
-
-        Unit unit =  currencies.GetUnitByShortcut("EUR");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createCurrencyCategory_standardConstructor_RefEuroUnitByShortcutAndRefByCurrencyUnitListIsEqual() throws Exception {
-        Currency currencies = new Currency();
-        List<Unit> currencyList = currencies.getUnitList();
-
-        Unit currency = currencies.GetUnitByShortcut("EUR");
-        Unit currencyFromList = currencyList.get(1);
-
-        assertEquals(currency, currencyFromList);
-    }
-
-    @Test
-    public void createCurrencyCategory_standardConstructor_EuroUnitHasRightName() throws Exception {
-        Currency currencies = new Currency();
-
-        Unit unit = currencies.GetUnitByShortcut("EUR");
-        String name = unit.getName();
-
-        assertEquals("Euro", name);
-    }
-
-    @Test
-    public void createCurrencyTemperatureCategory_standardConstructor_EuroUnitHasRightFactor() throws Exception {
-        Currency currencies = new Currency();
-
-        //TODO, Implement Interface for dummy
-        Unit unit =  currencies.GetUnitByShortcut("EUR");
-        double factor = unit.getFactor();
-
-        assertEquals(-1, factor, 0.1);
+    @Before
+    public void init()
+    {
+        dao = new CurrencyUnitTest.DAOCurrencyMock();
+        emptyDao = new CurrencyUnitTest.DAOCurrencyMockEmpty();
     }
 
 
 
 
     @Test
-    public void createCurrencyCategory_standardConstructor_ReturnsYenUnit() throws Exception {
-        Currency currencies = new Currency();
+    public void getUnitList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Currency currencies = emptyDao.load();
+        List<Unit> units;
 
-        Unit unit =  currencies.GetUnitByShortcut("JPY");
+        units = currencies.getUnitList();
 
-        assertNotEquals(null, unit);
-    }
-
-    public void createCurrencyCategory_standardConstructor_RefYenUnitByShortcutAndRefByCurrencyUnitListIsEqual() throws Exception {
-        Currency currencies = new Currency();
-        List<Unit> currencyList = currencies.getUnitList();
-
-        Unit currency = currencies.GetUnitByShortcut("JPY");
-        Unit currencyFromList = currencyList.get(2);
-
-        assertEquals(currency, currencyFromList);
+        assertEquals(0, units.size());
     }
 
     @Test
-    public void createCurrencyCategory_standardConstructor_YenUnitHasRightName() throws Exception {
-        Currency currencies = new Currency();
+    public void getUnitList_unitsFromDaoMock_returnsListOfUnitsWithCorrectSize() throws Exception {
+        Currency currencies = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit unit = currencies.GetUnitByShortcut("JPY");
-        String name = unit.getName();
+        actualSize = currencies.getUnitList().size();
 
-        assertEquals("Yen", name);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createCurrencyTemperatureCategory_standardConstructor_YenUnitHasRightFactor() throws Exception {
-        Currency currencies = new Currency();
-
-        //TODO, Implement Interface for dummy
-        Unit unit =  currencies.GetUnitByShortcut("JPY");
-        double factor = unit.getFactor();
-
-        assertEquals(-1, factor, 0.1);
-    }
+    public void getUnitList_unitsFromDaoMock_returnsCorrectListOfUnits() throws Exception {
+        Currency currencies = dao.load();
+        List<Unit> actualCurrencyList;
+        List<Unit> expectedCurrencyList = new ArrayList<>();
+        expectedCurrencyList.add(new Unit("Name1", "Shortcut1", 1));
+        expectedCurrencyList.add(new Unit("Name2", "Shortcut2", 2));
+        expectedCurrencyList.add(new Unit("Name3", "Shortcut3", 0.5));
 
 
+        actualCurrencyList = currencies.getUnitList();
 
 
-    @Test
-    public void createCurrencyCategory_standardConstructor_ReturnsBritishPoundUnit() throws Exception {
-        Currency currencies = new Currency();
+        for(int i=0; i<expectedCurrencyList.size(); i++)
+            assertEquals(expectedCurrencyList.get(i).getShortcut(),
+                    actualCurrencyList.get(i).getShortcut());
 
-        Unit unit =  currencies.GetUnitByShortcut("GBP");
+        for(int i=0; i<expectedCurrencyList.size(); i++)
+            assertEquals(expectedCurrencyList.get(i).getName(),
+                    actualCurrencyList.get(i).getName());
 
-        assertNotEquals(null, unit);
-    }
-
-    public void createCurrencyCategory_standardConstructor_RefBritishPoundUnitByShortcutAndRefByCurrencyUnitListIsEqual() throws Exception {
-        Currency currencies = new Currency();
-        List<Unit> currencyList = currencies.getUnitList();
-
-        Unit currency = currencies.GetUnitByShortcut("GBP");
-        Unit currencyFromList = currencyList.get(3);
-
-        assertEquals(currency, currencyFromList);
-    }
-
-    @Test
-    public void createCurrencyCategory_standardConstructor_BritishPoundUnitHasRightName() throws Exception {
-        Currency currencies = new Currency();
-
-        Unit unit = currencies.GetUnitByShortcut("GBP");
-        String name = unit.getName();
-
-        assertEquals("British Pound", name);
-    }
-
-    @Test
-    public void createCurrencyTemperatureCategory_standardConstructor_BritishPoundUnitHasRightFactor() throws Exception {
-        Currency currencies = new Currency();
-
-        //TODO, Implement Interface for dummy
-        Unit unit =  currencies.GetUnitByShortcut("GBP");
-        double factor = unit.getFactor();
-
-        assertEquals(-1, factor, 0.1);
+        for(int i=0; i<expectedCurrencyList.size(); i++)
+            assertEquals(expectedCurrencyList.get(i).getFactor(),
+                    actualCurrencyList.get(i).getFactor(), 0.1);
     }
 
 
 
 
     @Test
-    public void createCurrencyCategory_standardConstructor_ReturnsSwissFrancUnit() throws Exception {
-        Currency currencies = new Currency();
+    public void getStringifytList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Currency currencies = emptyDao.load();
+        String[] actualStringifytList;
 
-        Unit unit =  currencies.GetUnitByShortcut("CHF");
+        actualStringifytList = currencies.getStringifytUnitList();
 
-        assertNotEquals(null, unit);
-    }
-
-    public void createCurrencyCategory_standardConstructor_RefSwissFrancUnitByShortcutAndRefByCurrencyUnitListIsEqual() throws Exception {
-        Currency currencies = new Currency();
-        List<Unit> currencyList = currencies.getUnitList();
-
-        Unit currency = currencies.GetUnitByShortcut("CHF");
-        Unit currencyFromList = currencyList.get(4);
-
-        assertEquals(currency, currencyFromList);
+        assertEquals(0, actualStringifytList.length);
     }
 
     @Test
-    public void createCurrencyCategory_standardConstructor_SwissFrancUnitHasRightName() throws Exception {
-        Currency currencies = new Currency();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectCurrency() throws Exception {
+        Currency currencies = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit unit = currencies.GetUnitByShortcut("CHF");
-        String name = unit.getName();
+        actualSize = currencies.getStringifytUnitList().length;
 
-        assertEquals("Swiss Franc", name);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createCurrencyTemperatureCategory_standardConstructor_SwissFrancUnitHasRightFactor() throws Exception {
-        Currency currencies = new Currency();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectStrings() throws Exception {
+        Currency currencies = dao.load();
+        String[] expectedStringifytList = new String[] {"Shortcut1", "Shortcut2", "Shortcut3" };
+        String[] actualStringifytList;
 
-        //TODO, Implement Interface for dummy
-        Unit unit =  currencies.GetUnitByShortcut("CHF");
-        double factor = unit.getFactor();
+        actualStringifytList = currencies.getStringifytUnitList();
 
-        assertEquals(-1, factor, 0.1);
+        for(int i=0; i<expectedStringifytList.length; i++)
+            assertEquals(expectedStringifytList[i], actualStringifytList[i]);
     }
+
+
+
+
+
+    @Test
+    public void getUnitByShortcut_unitsFromEmptyDaoMock_returnsNullPointer() throws Exception {
+        Currency currencies = emptyDao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
+
+        actualUnit = currencies.GetUnitByShortcut("Shortcut1");
+
+        assertEquals(expectedUnit, actualUnit);
+    }
+
+    @Test
+    public void getFirstUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Currency currencies = dao.load();
+        Unit expectedUnit = new Unit("Name1", "Shortcut1", 1);
+        Unit actualUnit;
+
+        actualUnit = currencies.GetUnitByShortcut("Shortcut1");
+
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
+    }
+
+    @Test
+    public void getSecondUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Currency currencies = dao.load();
+        Unit expectedUnit = new Unit("Name2", "Shortcut2", 2);
+        Unit actualUnit;
+
+        actualUnit = currencies.GetUnitByShortcut("Shortcut2");
+
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
+    }
+
+    @Test
+    public void getThirdUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Currency currencies = dao.load();
+        Unit expectedUnit = new Unit("Name3", "Shortcut3", 0.5);
+        Unit actualUnit;
+
+        actualUnit = currencies.GetUnitByShortcut("Shortcut3");
+
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
+    }
+
+    @Test
+    public void getNonExistingUnitByShortcut_unitIsNotCreatedViaDaoMock_returnsNull() throws Exception {
+        Currency currencies = dao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
+
+        actualUnit = currencies.GetUnitByShortcut("NonExisting");
+
+        assertEquals(expectedUnit, actualUnit);
+    }
+
 
 
 
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertCurrencyUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Currency currencies = new Currency();
+    public void convertCurrencyUnits_unitFirstArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Currency currencies = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("U.S. Dollar", "USD");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         currencies.convert(corruptUnit, unit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertCurrencyUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Currency currencies = new Currency();
+    public void convertCurrencyUnits_unitSecondArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Currency currencies = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("U.S. Dollar", "USD");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         currencies.convert(unit, corruptUnit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertCurrencyUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Currency currencies = new Currency();
+    public void convertCurrencyUnits_unitBothArgumentsAreCorrupt_throwsIllegalArgumentException() throws Exception {
+        Currency currencies = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
         int value = 1;
 
         currencies.convert(corruptUnit, corruptUnit, value);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void convertCurrencyUnits_withEmptyDAO_throwsIllegalArgumentException() throws Exception {
+        Currency currencies = emptyDao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        int value = 1;
+
+        currencies.convert(unit1, unit2, value);
+    }
+
     @Test(expected = NullPointerException.class)
-    public void convertCurrencyUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Currency currencies = new Currency();
-        Unit unit = new Unit("U.S. Dollar", "USD");
+    public void convertCurrencyUnits_unitFirstArgumentIsNull_throwsNullPointerException() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         currencies.convert(null, unit, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertCurrencyUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Currency currencies = new Currency();
-        Unit unit = new Unit("U.S. Dollar", "USD");
+    public void convertCurrencyUnits_unitSecondArgumentIsNull_throwsNullPointerException() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         currencies.convert(unit, null, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertCurrencyUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
-        Currency currencies = new Currency();
+    public void convertCurrencyUnits_unitBothArgumentsAreNull_throwsNullPointerException() throws Exception {
+        Currency currencies = dao.load();
         int value = 1;
 
         currencies.convert(null, null, value);
+    }
+
+
+
+
+
+    @Test
+    public void convertCurrencyUnits_twoUnitsOfSameType_returnsInputValue() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
+
+        double retValue = currencies.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.1);
+    }
+
+    @Test
+    public void convertCurrencyUnits_twoUnitsOfSameTypeWithZeroValue_returnsInputValue() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 0;
+
+        double retValue = currencies.convert(unit1, unit2, value);
+        assertEquals(retValue, value, 0.1);
+    }
+
+    @Test
+    public void convertCurrencyUnits_firstUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
+
+        double retValue = currencies.convert(unit1, unit2, value);
+        assertEquals(0.75, retValue, 0.01);
+    }
+
+    @Test
+    public void convertCurrencyUnits_secondUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
+
+        double retValue = currencies.convert(unit1, unit2, value);
+        assertEquals(3, retValue, 0.01);
+    }
+
+    @Test
+    public void convertCurrencyUnits_firstUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
+
+        double retValue = currencies.convert(unit1, unit2, value);
+        assertEquals(3, retValue, 0.01);
+    }
+
+    @Test
+    public void convertCurrencyUnits_thirdUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
+
+        double retValue = currencies.convert(unit1, unit2, value);
+        assertEquals(0.75, retValue, 0.01);
+    }
+
+    @Test
+    public void convertCurrencyUnits_secondUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
+
+        double retValue = currencies.convert(unit1, unit2, value);
+        assertEquals(6, retValue, 0.01);
+    }
+
+    @Test
+    public void convertCurrencyUnits_thirdUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Currency currencies = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
+
+        double retValue = currencies.convert(unit1, unit2, value);
+        assertEquals(0.375, retValue, 0.01);
     }
 }
