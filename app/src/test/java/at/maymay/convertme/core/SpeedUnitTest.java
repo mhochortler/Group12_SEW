@@ -1,14 +1,16 @@
 package at.maymay.convertme.core;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import at.maymay.convertme.application.core.dao.IDAOSpeed;
 import at.maymay.convertme.application.core.model.Speed;
 import at.maymay.convertme.application.core.model.Unit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,137 +20,131 @@ import static org.junit.Assert.assertNotEquals;
 public class SpeedUnitTest {
     /**
      Naming-Convention: UnitOfWork_StateUnderTest_ExpectedBehavior
-     Methode-Construction: AAA -> Arrange-Act-Assert
+     Method-Construction: AAA -> Arrange-Act-Assert
      */
 
-    @Test
-    public void createSpeedCategory_standardConstructor_ReturnsNonEmptyListOfUnits() throws Exception {
-        Speed speeds = new Speed();
+    private class DAOSpeedMock implements IDAOSpeed {
+        @Override
+        public Speed load()
+        {
+            Speed speed = new Speed();
+            List<Unit> units = speed.getUnitList();
+            units.clear();
 
-        List<Unit> speedList = speeds.getUnitList();
-        boolean isEmpty = speedList.isEmpty();
+            units.add(new Unit("Name1", "Shortcut1", 1));
+            units.add(new Unit("Name2", "Shortcut2", 2));
+            units.add(new Unit("Name3", "Shortcut3", 0.5));
 
-        assertEquals(false, isEmpty);
+            return speed;
+        }
     }
 
-    @Test
-    public void createSpeedCategory_standardConstructor_ReturnsListOfUnitsWithCorrectSize() throws Exception {
-        Speed speeds = new Speed();
+    private class DAOSpeedMockEmpty implements IDAOSpeed {
+        @Override
+        public Speed load()
+        {
+            Speed speed = new Speed();
+            List<Unit> units = speed.getUnitList();
+            units.clear();
 
-        List<Unit> speedList = speeds.getUnitList();
-        int size = speedList.size();
-
-        assertEquals(5, size);
+            return speed;
+        }
     }
 
-    @Test
-    public void createSpeedCategory_standardConstructor_ReturnsListOfUnitsWithCorrectShortcuts() throws Exception {
-        Speed speeds = new Speed();
-        String[] expectedShortcuts = new String[] {"km/h", "mile/h", "ft/s", "m/s", "kn"};
+    IDAOSpeed dao;
+    IDAOSpeed emptyDao;
 
-        List<Unit> speedList = speeds.getUnitList();
-
-        for(int i=0; i<expectedShortcuts.length; i++)
-            assertEquals(expectedShortcuts[i], speedList.get(i).getShortcut());
-    }
-
-    @Test
-    public void createSpeedCategory_standardConstructor_ReturnsStringifytUnitList() throws Exception {
-        Speed speeds = new Speed();
-        String[] expectedList = new String[] {"km/h", "mile/h", "ft/s", "m/s", "kn"};
-
-        String[] stringifytList = speeds.getStringifytUnitList();
-
-        for(int i=0; i<expectedList.length; i++)
-            assertEquals(expectedList[i], stringifytList[i]);
+    @Before
+    public void init()
+    {
+        dao = new SpeedUnitTest.DAOSpeedMock();
+        emptyDao = new SpeedUnitTest.DAOSpeedMockEmpty();
     }
 
 
 
 
-
     @Test
-    public void createSpeedCategory_standardConstructor_ReturnsKilometersHoursUnit() throws Exception {
-        Speed speeds = new Speed();
+    public void getUnitList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Speed speeds = emptyDao.load();
+        List<Unit> units;
 
-        Unit unit =  speeds.GetUnitByShortcut("km/h");
+        units = speeds.getUnitList();
 
-        assertNotEquals(null, unit);
+        assertEquals(0, units.size());
     }
 
     @Test
-    public void createSpeedCategory_standardConstructor_RefKilometersHoursUnitByShortcutAndRefBySpeedUnitListIsEqual() throws Exception {
-        Speed speeds = new Speed();
-        List<Unit> speedList = speeds.getUnitList();
+    public void getUnitList_unitsFromDaoMock_returnsListOfUnitsWithCorrectSize() throws Exception {
+        Speed speeds = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit speed = speeds.GetUnitByShortcut("km/h");
-        Unit speedFromList = speedList.get(0);
+        actualSize = speeds.getUnitList().size();
 
-        assertEquals(speed, speedFromList);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createSpeedCategory_standardConstructor_KilometersHoursUnitHasRightName() throws Exception {
-        Speed speeds = new Speed();
+    public void getUnitList_unitsFromDaoMock_returnsCorrectListOfUnits() throws Exception {
+        Speed speeds = dao.load();
+        List<Unit> actualSpeedList;
+        List<Unit> expectedSpeedList = new ArrayList<>();
+        expectedSpeedList.add(new Unit("Name1", "Shortcut1", 1));
+        expectedSpeedList.add(new Unit("Name2", "Shortcut2", 2));
+        expectedSpeedList.add(new Unit("Name3", "Shortcut3", 0.5));
 
-        Unit unit =  speeds.GetUnitByShortcut("km/h");
-        String name = unit.getName();
 
-        assertEquals("KilometersHours", name);
+        actualSpeedList = speeds.getUnitList();
+
+
+        for(int i=0; i<expectedSpeedList.size(); i++)
+            assertEquals(expectedSpeedList.get(i).getShortcut(),
+                    actualSpeedList.get(i).getShortcut());
+
+        for(int i=0; i<expectedSpeedList.size(); i++)
+            assertEquals(expectedSpeedList.get(i).getName(),
+                    actualSpeedList.get(i).getName());
+
+        for(int i=0; i<expectedSpeedList.size(); i++)
+            assertEquals(expectedSpeedList.get(i).getFactor(),
+                    actualSpeedList.get(i).getFactor(), 0.1);
+    }
+
+
+
+
+    @Test
+    public void getStringifytList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Speed speeds = emptyDao.load();
+        String[] actualStringifytList;
+
+        actualStringifytList = speeds.getStringifytUnitList();
+
+        assertEquals(0, actualStringifytList.length);
     }
 
     @Test
-    public void createSpeedTemperatureCategory_standardConstructor_KilometersHoursUnitHasRightFactor() throws Exception {
-        Speed speeds = new Speed();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectSpeed() throws Exception {
+        Speed speeds = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit unit =  speeds.GetUnitByShortcut("km/h");
-        double factor = unit.getFactor();
+        actualSize = speeds.getStringifytUnitList().length;
 
-        assertEquals(1, factor, 0.1);
-    }
-
-
-
-
-
-    @Test
-    public void createSpeedCategory_standardConstructor_ReturnsMilesHoursUnit() throws Exception {
-        Speed speeds = new Speed();
-
-        Unit unit =  speeds.GetUnitByShortcut("mile/h");
-
-        assertNotEquals(null, unit);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createSpeedCategory_standardConstructor_RefMilesHoursUnitByShortcutAndRefBySpeedUnitListIsEqual() throws Exception {
-        Speed speeds = new Speed();
-        List<Unit> speedList = speeds.getUnitList();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectStrings() throws Exception {
+        Speed speeds = dao.load();
+        String[] expectedStringifytList = new String[] {"Shortcut1", "Shortcut2", "Shortcut3" };
+        String[] actualStringifytList;
 
-        Unit speed = speeds.GetUnitByShortcut("mile/h");
-        Unit speedFromList = speedList.get(1);
+        actualStringifytList = speeds.getStringifytUnitList();
 
-        assertEquals(speed, speedFromList);
-    }
-
-    @Test
-    public void createSpeedCategory_standardConstructor_MilesHoursUnitHasRightName() throws Exception {
-        Speed speeds = new Speed();
-
-        Unit unit =  speeds.GetUnitByShortcut("mile/h");
-        String name = unit.getName();
-
-        assertEquals("MilesHours", name);
-    }
-
-    @Test
-    public void createSpeedTemperatureCategory_standardConstructor_MilesHoursUnitHasRightFactor() throws Exception {
-        Speed speeds = new Speed();
-
-        Unit unit =  speeds.GetUnitByShortcut("mile/h");
-        double factor = unit.getFactor();
-
-        assertEquals(1.6093445, factor, 0.0000001);
+        for(int i=0; i<expectedStringifytList.length; i++)
+            assertEquals(expectedStringifytList[i], actualStringifytList[i]);
     }
 
 
@@ -156,187 +152,131 @@ public class SpeedUnitTest {
 
 
     @Test
-    public void createSpeedCategory_standardConstructor_ReturnsFootSecondsUnit() throws Exception {
-        Speed speeds = new Speed();
+    public void getUnitByShortcut_unitsFromEmptyDaoMock_returnsNullPointer() throws Exception {
+        Speed speeds = emptyDao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
 
-        Unit unit =  speeds.GetUnitByShortcut("ft/s");
+        actualUnit = speeds.GetUnitByShortcut("Shortcut1");
 
-        assertNotEquals(null, unit);
+        assertEquals(expectedUnit, actualUnit);
     }
 
     @Test
-    public void createSpeedCategory_standardConstructor_RefFootSecondsUnitByShortcutAndRefBySpeedUnitListIsEqual() throws Exception {
-        Speed speeds = new Speed();
-        List<Unit> speedList = speeds.getUnitList();
+    public void getFirstUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Speed speeds = dao.load();
+        Unit expectedUnit = new Unit("Name1", "Shortcut1", 1);
+        Unit actualUnit;
 
-        Unit speed = speeds.GetUnitByShortcut("ft/s");
-        Unit speedFromList = speedList.get(2);
+        actualUnit = speeds.GetUnitByShortcut("Shortcut1");
 
-        assertEquals(speed, speedFromList);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createSpeedCategory_standardConstructor_FootSecondsUnitHasRightName() throws Exception {
-        Speed speeds = new Speed();
+    public void getSecondUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Speed speeds = dao.load();
+        Unit expectedUnit = new Unit("Name2", "Shortcut2", 2);
+        Unit actualUnit;
 
-        Unit unit =  speeds.GetUnitByShortcut("ft/s");
-        String name = unit.getName();
+        actualUnit = speeds.GetUnitByShortcut("Shortcut2");
 
-        assertEquals("FootSeconds", name);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createSpeedTemperatureCategory_standardConstructor_FootSecondsUnitHasRightFactor() throws Exception {
-        Speed speeds = new Speed();
+    public void getThirdUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Speed speeds = dao.load();
+        Unit expectedUnit = new Unit("Name3", "Shortcut3", 0.5);
+        Unit actualUnit;
 
-        Unit unit =  speeds.GetUnitByShortcut("ft/s");
-        double factor = unit.getFactor();
+        actualUnit = speeds.GetUnitByShortcut("Shortcut3");
 
-        assertEquals(1.0972805, factor, 0.0000001);
-    }
-
-
-
-
-
-    @Test
-    public void createSpeedCategory_standardConstructor_ReturnsMeterSecondsUnit() throws Exception {
-        Speed speeds = new Speed();
-
-        Unit unit =  speeds.GetUnitByShortcut("m/s");
-
-        assertNotEquals(null, unit);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createSpeedCategory_standardConstructor_RefMeterSecondsUnitByShortcutAndRefBySpeedUnitListIsEqual() throws Exception {
-        Speed speeds = new Speed();
-        List<Unit> speedList = speeds.getUnitList();
+    public void getNonExistingUnitByShortcut_unitIsNotCreatedViaDaoMock_returnsNull() throws Exception {
+        Speed speeds = dao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
 
-        Unit speed = speeds.GetUnitByShortcut("m/s");
-        Unit speedFromList = speedList.get(3);
+        actualUnit = speeds.GetUnitByShortcut("NonExisting");
 
-        assertEquals(speed, speedFromList);
+        assertEquals(expectedUnit, actualUnit);
     }
 
-    @Test
-    public void createSpeedCategory_standardConstructor_MeterSecondsUnitHasRightName() throws Exception {
-        Speed speeds = new Speed();
-
-        Unit unit =  speeds.GetUnitByShortcut("m/s");
-        String name = unit.getName();
-
-        assertEquals("MeterSeconds", name);
-    }
-
-    @Test
-    public void createSpeedTemperatureCategory_standardConstructor_MeterSecondsUnitHasRightFactor() throws Exception {
-        Speed speeds = new Speed();
-
-        Unit unit =  speeds.GetUnitByShortcut("m/s");
-        double factor = unit.getFactor();
-
-        assertEquals(3.6, factor, 0.1);
-    }
-
-
-
-
-
-    @Test
-    public void createSpeedCategory_standardConstructor_ReturnsKnotUnit() throws Exception {
-        Speed speeds = new Speed();
-
-        Unit unit =  speeds.GetUnitByShortcut("kn");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createSpeedCategory_standardConstructor_RefKnotUnitByShortcutAndRefBySpeedUnitListIsEqual() throws Exception {
-        Speed speeds = new Speed();
-        List<Unit> speedList = speeds.getUnitList();
-
-        Unit speed = speeds.GetUnitByShortcut("kn");
-        Unit speedFromList = speedList.get(4);
-
-        assertEquals(speed, speedFromList);
-    }
-
-    @Test
-    public void createSpeedCategory_standardConstructor_KnotUnitHasRightName() throws Exception {
-        Speed speeds = new Speed();
-
-        Unit unit =  speeds.GetUnitByShortcut("kn");
-        String name = unit.getName();
-
-        assertEquals("Knot", name);
-    }
-
-    @Test
-    public void createSpeedTemperatureCategory_standardConstructor_KnotUnitHasRightFactor() throws Exception {
-        Speed speeds = new Speed();
-
-        Unit unit =  speeds.GetUnitByShortcut("kn");
-        double factor = unit.getFactor();
-
-        assertEquals(1.8519993, factor, 0.1);
-    }
 
 
 
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertSpeedUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Speed speeds = new Speed();
+    public void convertSpeedUnits_unitFirstArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Speed speeds = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("KilometersHours", "km/h");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         speeds.convert(corruptUnit, unit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertSpeedUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Speed speeds = new Speed();
+    public void convertSpeedUnits_unitSecondArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Speed speeds = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("KilometersHours", "km/h");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         speeds.convert(unit, corruptUnit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertSpeedUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Speed speeds = new Speed();
+    public void convertSpeedUnits_unitBothArgumentsAreCorrupt_throwsIllegalArgumentException() throws Exception {
+        Speed speeds = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
         int value = 1;
 
         speeds.convert(corruptUnit, corruptUnit, value);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void convertSpeedUnits_withEmptyDAO_throwsIllegalArgumentException() throws Exception {
+        Speed speeds = emptyDao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        int value = 1;
+
+        speeds.convert(unit1, unit2, value);
+    }
+
     @Test(expected = NullPointerException.class)
-    public void convertSpeedUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Speed speeds = new Speed();
-        Unit unit = new Unit("KilometersHours", "km/h");
+    public void convertSpeedUnits_unitFirstArgumentIsNull_throwsNullPointerException() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         speeds.convert(null, unit, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertSpeedUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Speed speeds = new Speed();
-        Unit unit = new Unit("KilometersHours", "km/h");
+    public void convertSpeedUnits_unitSecondArgumentIsNull_throwsNullPointerException() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         speeds.convert(unit, null, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertSpeedUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
-        Speed speeds = new Speed();
+    public void convertSpeedUnits_unitBothArgumentsAreNull_throwsNullPointerException() throws Exception {
+        Speed speeds = dao.load();
         int value = 1;
 
         speeds.convert(null, null, value);
@@ -345,58 +285,92 @@ public class SpeedUnitTest {
 
 
 
+
     @Test
-    public void convertSpeedUnits_twoUnitsOfSameType_ReturnsImputValue() throws Exception {
-        Speed speeds = new Speed();
-        Unit unit1 = new Unit("KilometersHours", "km/h");
-        Unit unit2 = new Unit("KilometersHours", "km/h");
+    public void convertSpeedUnits_twoUnitsOfSameType_returnsInputValue() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
         double value = 1.5;
 
         double retValue = speeds.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertSpeedUnits_twoUnitsOfSameTypeWithZeroValue_ReturnsImputValue() throws Exception {
-        Speed speeds = new Speed();
-        Unit unit1 = new Unit("KilometersHours", "km/h");
-        Unit unit2 = new Unit("KilometersHours", "km/h");
+    public void convertSpeedUnits_twoUnitsOfSameTypeWithZeroValue_returnsInputValue() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
         double value = 0;
 
         double retValue = speeds.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertSpeedUnits_baseUnitToNonBaseUnit_ReturnsConvertedValue() throws Exception {
-        Speed speeds = new Speed();
-        Unit unit1 = new Unit("KilometersHours", "km/h");
-        Unit unit2 = new Unit("MilesHours", "mile/h");
-        double value = 1;
+    public void convertSpeedUnits_firstUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
 
         double retValue = speeds.convert(unit1, unit2, value);
-        assertEquals(0.62137, retValue, 0.0001);
+        assertEquals(0.75, retValue, 0.01);
     }
 
     @Test
-    public void convertSpeedUnits_noneBaseUnitToBaseUnit_ReturnsConvertedValue() throws Exception {
-        Speed speeds = new Speed();
-        Unit unit1 = new Unit("MilesHours", "mile/h");
-        Unit unit2 = new Unit("KilometersHours", "km/h");
-        double value = 1;
+    public void convertSpeedUnits_secondUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
 
         double retValue = speeds.convert(unit1, unit2, value);
-        assertEquals(1.6093, retValue, 0.0001);
+        assertEquals(3, retValue, 0.01);
     }
 
     @Test
-    public void convertSpeedUnits_noneBaseUnitToNoneBaseUnit_ReturnsConvertedValue() throws Exception {
-        Speed speeds = new Speed();
-        Unit unit1 = new Unit("MilesHours", "mile/h");
-        Unit unit2 = new Unit("Knot", "kn");
-        double value = 1;
+    public void convertSpeedUnits_firstUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
 
         double retValue = speeds.convert(unit1, unit2, value);
-        assertEquals(0.86897, retValue, 0.0001);
+        assertEquals(3, retValue, 0.01);
+    }
+
+    @Test
+    public void convertSpeedUnits_thirdUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
+
+        double retValue = speeds.convert(unit1, unit2, value);
+        assertEquals(0.75, retValue, 0.01);
+    }
+
+    @Test
+    public void convertSpeedUnits_secondUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
+
+        double retValue = speeds.convert(unit1, unit2, value);
+        assertEquals(6, retValue, 0.01);
+    }
+
+    @Test
+    public void convertSpeedUnits_thirdUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Speed speeds = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
+
+        double retValue = speeds.convert(unit1, unit2, value);
+        assertEquals(0.375, retValue, 0.01);
     }
 }

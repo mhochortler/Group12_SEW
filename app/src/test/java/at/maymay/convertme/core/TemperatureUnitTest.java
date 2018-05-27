@@ -1,9 +1,12 @@
 package at.maymay.convertme.core;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import at.maymay.convertme.application.core.dao.IDAOTemperature;
 import at.maymay.convertme.application.core.model.Unit;
 import at.maymay.convertme.application.core.model.Temperature;
 
@@ -18,189 +21,202 @@ import static org.junit.Assert.assertNotEquals;
 public class TemperatureUnitTest {
     /**
      Naming-Convention: UnitOfWork_StateUnderTest_ExpectedBehavior
-     Methode-Construction: AAA -> Arrange-Act-Assert
+     Method-Construction: AAA -> Arrange-Act-Assert
      */
+    private class DAOTemperatureMock implements IDAOTemperature {
+        @Override
+        public Temperature load()
+        {
+            Temperature temperature = new Temperature();
+            List<Unit> units = temperature.getUnitList();
+            units.clear();
 
-    @Test
-    public void createTemperatureCategory_standardConstructor_ReturnsNonEmptyListOfUnits() throws Exception {
-        Temperature temperatures = new Temperature();
+            units.add(new Unit("Celsius", "°C", 1));
+            units.add(new Unit("Fahrenheit", "°F", 1.8));
+            units.add(new Unit("Kelvin", "K", 273.15));
 
-        List<Unit> temperatureList = temperatures.getUnitList();
-        boolean isEmpty = temperatureList.isEmpty();
+            return temperature;
+        }
+    }
 
-        assertEquals(false, isEmpty);
+    private class DAOTemperatureMockEmpty implements IDAOTemperature {
+        @Override
+        public Temperature load()
+        {
+            Temperature temperature = new Temperature();
+            List<Unit> units = temperature.getUnitList();
+            units.clear();
+
+            return temperature;
+        }
+    }
+
+    IDAOTemperature dao;
+    IDAOTemperature emptyDao;
+
+    @Before
+    public void init()
+    {
+        dao = new DAOTemperatureMock();
+        emptyDao = new DAOTemperatureMockEmpty();
     }
 
     @Test
-    public void createTemperatureCategory_standardConstructor_ReturnsListOfUnitsWithCorrectSize() throws Exception {
-        Temperature temperatures = new Temperature();
+    public void getUnitList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Temperature temperatures = emptyDao.load();
+        List<Unit> units;
 
-        List<Unit> temperatureList = temperatures.getUnitList();
-        int size = temperatureList.size();
+        units = temperatures.getUnitList();
 
-        assertEquals(3, size);
+        assertEquals(0, units.size());
     }
 
     @Test
-    public void createTemperatureCategory_standardConstructor_ReturnsListOfUnitsWithCorrectShortcuts() throws Exception {
-        Temperature temperatures = new Temperature();
-        String[] expectedShortcuts = new String[] {"°C", "°F", "K"};
+    public void getUnitList_unitsFromDaoMock_returnsListOfUnitsWithCorrectSize() throws Exception {
+        Temperature temperatures = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        List<Unit> temperatureList = temperatures.getUnitList();
+        actualSize = temperatures.getUnitList().size();
 
-        for(int i=0; i<expectedShortcuts.length; i++)
-            assertEquals(expectedShortcuts[i], temperatureList.get(i).getShortcut());
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createTemperatureCategory_standardConstructor_ReturnsStringifytUnitList() throws Exception {
-        Temperature temperatures = new Temperature();
-        String[] expectedList = new String[] {"°C", "°F", "K"};
-
-        String[] stringifytList = temperatures.getStringifytUnitList();
-
-        for(int i=0; i<expectedList.length; i++)
-            assertEquals(expectedList[i], stringifytList[i]);
-    }
+    public void getUnitList_unitsFromDaoMock_returnsCorrectListOfUnits() throws Exception {
+        Temperature temperatures = dao.load();
+        List<Unit> actualTemperatureList;
+        List<Unit> expectedTemperatureList = new ArrayList<>();
+        expectedTemperatureList.add(new Unit("Celsius", "°C", 1));
+        expectedTemperatureList.add(new Unit("Fahrenheit", "°F", 1.8));
+        expectedTemperatureList.add(new Unit("Kelvin", "K", 273.15));
 
 
+        actualTemperatureList = temperatures.getUnitList();
 
 
-    @Test
-    public void createTemperatureCategory_standardConstructor_ReturnsCelsiusUnit() throws Exception {
-        Temperature temperatures = new Temperature();
+        for(int i=0; i<expectedTemperatureList.size(); i++)
+            assertEquals(expectedTemperatureList.get(i).getShortcut(),
+                    actualTemperatureList.get(i).getShortcut());
 
-        Unit c =  temperatures.GetUnitByShortcut("°C");
+        for(int i=0; i<expectedTemperatureList.size(); i++)
+            assertEquals(expectedTemperatureList.get(i).getName(),
+                    actualTemperatureList.get(i).getName());
 
-        assertNotEquals(null, c);
-    }
-
-    @Test
-    public void createTemperatureCategory_standardConstructor_RefCelsiusUnitByShortcutAndRefByTemperatureUnitListIsEqual() throws Exception {
-        Temperature temperatures = new Temperature();
-        List<Unit> temperatureList = temperatures.getUnitList();
-
-        Unit temperature = temperatures.GetUnitByShortcut("°C");
-        Unit temperatureFromList = temperatureList.get(0);
-
-        assertEquals(temperature, temperatureFromList);
-    }
-
-    @Test
-    public void createTemperatureCategory_standardConstructor_CelsiusUnitHasRightName() throws Exception {
-        Temperature temperatures = new Temperature();
-
-        Unit c = temperatures.GetUnitByShortcut("°C");
-        String name = c.getName();
-
-        assertEquals("Celsius", name);
-    }
-
-    @Test
-    public void createTemperatureCategory_standardConstructor_CelsiusUnitHasRightFactor() throws Exception {
-        Temperature temperatures = new Temperature();
-
-        Unit c = temperatures.GetUnitByShortcut("°C");
-        double factor = c.getFactor();
-
-        assertEquals(1, factor, 0.001);
-    }
-
-
-
-
-    @Test
-    public void createTemperatureCategory_standardConstructor_ReturnsFahrenheitUnit() throws Exception {
-        Temperature temperatures = new Temperature();
-
-        Unit f = temperatures.GetUnitByShortcut("°F");
-
-        assertNotEquals(null, f);
-    }
-
-    @Test
-    public void createTemperatureCategory_standardConstructor_RefFahrenheitUnitByShortcutAndRefByTemperatureUnitListIsEqual() throws Exception {
-        Temperature temperatures = new Temperature();
-        List<Unit> temperatureList = temperatures.getUnitList();
-
-        Unit temperature = temperatures.GetUnitByShortcut("°F");
-        Unit temperatureFromList = temperatureList.get(1);
-
-        assertEquals(temperature, temperatureFromList);
-    }
-
-    @Test
-    public void createTemperatureCategory_standardConstructor_FahrenheitUnitHasRightName() throws Exception {
-        Temperature temperatures = new Temperature();
-
-        Unit f = temperatures.GetUnitByShortcut("°F");
-        String name = f.getName();
-
-        assertEquals("Fahrenheit", name);
-    }
-
-    @Test
-    public void createTemperatureCategory_standardConstructor_FahrenheitUnitHasRightFactor() throws Exception {
-        Temperature temperatures = new Temperature();
-
-        Unit f = temperatures.GetUnitByShortcut("°F");
-        double factor = f.getFactor();
-
-        assertEquals(1.8, factor, 0.001);
+        for(int i=0; i<expectedTemperatureList.size(); i++)
+            assertEquals(expectedTemperatureList.get(i).getFactor(),
+                    actualTemperatureList.get(i).getFactor(), 0.1);
     }
 
 
 
 
     @Test
-    public void createTemperatureCategory_standardConstructor_ReturnsKelvinUnit() throws Exception {
-        Temperature temperatures = new Temperature();
+    public void getStringifytList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Temperature temperatures = emptyDao.load();
+        String[] actualStringifytList;
 
-        Unit k = temperatures.GetUnitByShortcut("K");
+        actualStringifytList = temperatures.getStringifytUnitList();
 
-        assertNotEquals(null, k);
+        assertEquals(0, actualStringifytList.length);
     }
 
     @Test
-    public void createTemperatureCategory_standardConstructor_RefKelvinUnitByShortcutAndRefByTemperatureUnitListIsEqual() throws Exception {
-        Temperature temperatures = new Temperature();
-        List<Unit> temperatureList = temperatures.getUnitList();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectLength() throws Exception {
+        Temperature temperatures = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit temperature = temperatures.GetUnitByShortcut("K");
-        Unit temperatureFromList = temperatureList.get(2);
+        actualSize = temperatures.getStringifytUnitList().length;
 
-        assertEquals(temperature, temperatureFromList);
-    }
-
-
-    @Test
-    public void createTemperatureCategory_standardConstructor_KelvinUnitHasRightName() throws Exception {
-        Temperature temperatures = new Temperature();
-
-        Unit k = temperatures.GetUnitByShortcut("K");
-        String name = k.getName();
-
-        assertEquals("Kelvin", name);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createTemperatureCategory_standardConstructor_KelvinUnitHasRightFactor() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectStrings() throws Exception {
+        Temperature temperatures = dao.load();
+        String[] expectedStringifytList = new String[] {"°C", "°F", "K" };
+        String[] actualStringifytList;
 
+        actualStringifytList = temperatures.getStringifytUnitList();
 
-        Unit k = temperatures.GetUnitByShortcut("K");
-        double factor = k.getFactor();
-
-        assertEquals(273.15, factor, 0.001);
+        for(int i=0; i<expectedStringifytList.length; i++)
+            assertEquals(expectedStringifytList[i], actualStringifytList[i]);
     }
+
+
+
+
+
+    @Test
+    public void getUnitByShortcut_unitsFromEmptyDaoMock_returnsNullPointer() throws Exception {
+        Temperature temperatures = emptyDao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
+
+        actualUnit = temperatures.GetUnitByShortcut("°C");
+
+        assertEquals(expectedUnit, actualUnit);
+    }
+
+    @Test
+    public void getFirstUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Temperature temperatures = dao.load();
+        Unit expectedUnit = new Unit("Celsius", "°C", 1);
+        Unit actualUnit;
+
+        actualUnit = temperatures.GetUnitByShortcut("°C");
+
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
+    }
+
+    @Test
+    public void getSecondUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Temperature temperatures = dao.load();
+        Unit expectedUnit = new Unit("Fahrenheit", "°F", 1.8);
+        Unit actualUnit;
+
+        actualUnit = temperatures.GetUnitByShortcut("°F");
+
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
+    }
+
+    @Test
+    public void getThirdUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Temperature temperatures = dao.load();
+        Unit expectedUnit = new Unit("Kelvin", "K", 273.15);
+        Unit actualUnit;
+
+        actualUnit = temperatures.GetUnitByShortcut("K");
+
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
+    }
+
+    @Test
+    public void getNonExistingUnitByShortcut_unitIsNotCreatedViaDaoMock_returnsNull() throws Exception {
+        Temperature temperatures = dao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
+
+        actualUnit = temperatures.GetUnitByShortcut("NonExisting");
+
+        assertEquals(expectedUnit, actualUnit);
+    }
+
 
 
 
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertTemperatureUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_unitFirstArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Temperature temperatures = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
         Unit unit = new Unit("Celsius", "°C");
         int value = 1;
@@ -209,8 +225,8 @@ public class TemperatureUnitTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertTemperatureUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_unitSecondArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Temperature temperatures = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
         Unit unit = new Unit("Celsius", "°C");
         int value = 1;
@@ -219,17 +235,27 @@ public class TemperatureUnitTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertTemperatureUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_unitBothArgumentsAreCorrupt_throwsIllegalArgumentException() throws Exception {
+        Temperature temperatures = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
         int value = 1;
 
         temperatures.convert(corruptUnit, corruptUnit, value);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void convertTemperatureUnits_withEmptyDAO_throwsIllegalArgumentException() throws Exception {
+        Temperature temperatures = emptyDao.load();
+        Unit unit1 = new Unit("Celsius", "°C");
+        Unit unit2 = new Unit("Fahrenheit", "°F");
+        int value = 1;
+
+        temperatures.convert(unit1, unit2, value);
+    }
+
     @Test(expected = NullPointerException.class)
-    public void convertTemperatureUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_unitFirstArgumentIsNull_throwsNullPointerException() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit = new Unit("Celsius", "°C");
         int value = 1;
 
@@ -237,8 +263,8 @@ public class TemperatureUnitTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertTemperatureUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_unitSecondArgumentIsNull_throwsNullPointerException() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit = new Unit("Celsius", "°C");
         int value = 1;
 
@@ -246,8 +272,8 @@ public class TemperatureUnitTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertTemperatureUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_unitBothArgumentsAreNull_throwsNullPointerException() throws Exception {
+        Temperature temperatures = dao.load();
         int value = 1;
 
         temperatures.convert(null, null, value);
@@ -258,90 +284,90 @@ public class TemperatureUnitTest {
 
 
     @Test
-    public void convertTemperatureUnits_twoUnitsOfSameType_ReturnsImputValue() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_twoUnitsOfSameType_returnsInputValue() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit1 = new Unit("Celsius", "°C");
         Unit unit2 = new Unit("Celsius", "°C");
         double value = 1.5;
 
         double retValue = temperatures.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertTemperatureUnits_twoUnitsOfSameTypeWithZeroValue_ReturnsImputValue() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_twoUnitsOfSameTypeWithZeroValue_returnsInputValue() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit1 = new Unit("Celsius", "°C");
         Unit unit2 = new Unit("Celsius", "°C");
         double value = 0;
 
         double retValue = temperatures.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertTemperatureUnits_celsiusToFahrenheit_ReturnsConvertedValue() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_firstUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit1 = new Unit("Celsius", "°C");
         Unit unit2 = new Unit("Fahrenheit", "°F");
-        double value = 1;
+        double value = 1.5;
 
         double retValue = temperatures.convert(unit1, unit2, value);
-        assertEquals(33.8, retValue, 0.0001);
+        assertEquals(34.7, retValue, 0.01);
     }
 
     @Test
-    public void convertTemperatureUnits_fahrenheitToCelsius_ReturnsConvertedValue() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_secondUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit1 = new Unit("Fahrenheit", "°F");
         Unit unit2 = new Unit("Celsius", "°C");
-        double value = 1;
+        double value = 1.5;
 
         double retValue = temperatures.convert(unit1, unit2, value);
-        assertEquals(-17.2222, retValue, 0.0001);
+        assertEquals(-16.9444, retValue, 0.01);
     }
 
     @Test
-    public void convertTemperatureUnits_celsiusToKelvin_ReturnsConvertedValue() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_firstUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit1 = new Unit("Celsius", "°C");
         Unit unit2 = new Unit("Kelvin", "K");
-        double value = 1;
+        double value = 1.5;
 
         double retValue = temperatures.convert(unit1, unit2, value);
-        assertEquals(274.15, retValue, 0.01);
+        assertEquals(274.65, retValue, 0.01);
     }
 
     @Test
-    public void convertTemperatureUnits_kelvinToCelsius_ReturnsConvertedValue() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_thirdUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit1 = new Unit("Kelvin", "K");
         Unit unit2 = new Unit("Celsius", "°C");
-        double value = 1;
+        double value = 1.5;
 
         double retValue = temperatures.convert(unit1, unit2, value);
-        assertEquals(-272.15, retValue, 0.01);
+        assertEquals(-271.65, retValue, 0.01);
     }
 
     @Test
-    public void convertTemperatureUnits_fahrenheitToKelvin_ReturnsConvertedValue() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_secondUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit1 = new Unit("Fahrenheit", "°F");
         Unit unit2 = new Unit("Kelvin", "K");
-        double value = 1;
+        double value = 1.5;
 
         double retValue = temperatures.convert(unit1, unit2, value);
-        assertEquals(255.92, retValue, 0.01);
+        assertEquals(256.206, retValue, 0.01);
     }
 
     @Test
-    public void convertTemperatureUnits_kelvinToFahrenheit_ReturnsConvertedValue() throws Exception {
-        Temperature temperatures =  new Temperature();
+    public void convertTemperatureUnits_thirdUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Temperature temperatures = dao.load();
         Unit unit1 = new Unit("Kelvin", "K");
         Unit unit2 = new Unit("Fahrenheit", "°F");
-        double value = 1;
+        double value = 1.5;
 
         double retValue = temperatures.convert(unit1, unit2, value);
-        assertEquals(-457.87, retValue, 0.01);
+        assertEquals(-456.97, retValue, 0.01);
     }
 }

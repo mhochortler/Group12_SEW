@@ -1,14 +1,16 @@
 package at.maymay.convertme.core;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import at.maymay.convertme.application.core.dao.IDAOLength;
 import at.maymay.convertme.application.core.model.Length;
 import at.maymay.convertme.application.core.model.Unit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,179 +20,131 @@ import static org.junit.Assert.assertNotEquals;
 public class LengthUnitTest {
     /**
      Naming-Convention: UnitOfWork_StateUnderTest_ExpectedBehavior
-     Methode-Construction: AAA -> Arrange-Act-Assert
+     Method-Construction: AAA -> Arrange-Act-Assert
      */
 
-    @Test
-    public void createLengthCategory_standardConstructor_ReturnsNonEmptyListOfUnits() throws Exception {
-        Length lengths = new Length();
+    private class DAOLengthMock implements IDAOLength {
+        @Override
+        public Length load()
+        {
+            Length length = new Length();
+            List<Unit> units = length.getUnitList();
+            units.clear();
 
-        List<Unit> lengthList = lengths.getUnitList();
-        boolean isEmpty = lengthList.isEmpty();
+            units.add(new Unit("Name1", "Shortcut1", 1));
+            units.add(new Unit("Name2", "Shortcut2", 2));
+            units.add(new Unit("Name3", "Shortcut3", 0.5));
 
-        assertEquals(false, isEmpty);
+            return length;
+        }
     }
 
-    @Test
-    public void createLengthCategory_standardConstructor_ReturnsListOfUnitsWithCorrectSize() throws Exception {
-        Length lengths = new Length();
+    private class DAOLengthMockEmpty implements IDAOLength {
+        @Override
+        public Length load()
+        {
+            Length length = new Length();
+            List<Unit> units = length.getUnitList();
+            units.clear();
 
-        List<Unit> lengthList = lengths.getUnitList();
-        int size = lengthList.size();
-
-        assertEquals(6, size);
+            return length;
+        }
     }
 
-    @Test
-    public void createLengthCategory_standardConstructor_ReturnsListOfUnitsWithCorrectShortcuts() throws Exception {
-        Length lengths = new Length();
-        String[] expectedShortcuts = new String[] {"m", "ft", "in", "yd", "mile", "nmi"};
+    IDAOLength dao;
+    IDAOLength emptyDao;
 
-        List<Unit> lengthList = lengths.getUnitList();
-
-        for(int i=0; i<expectedShortcuts.length; i++)
-            assertEquals(expectedShortcuts[i], lengthList.get(i).getShortcut());
-    }
-
-    @Test
-    public void createLengthCategory_standardConstructor_ReturnsStringifytUnitList() throws Exception {
-        Length lengths = new Length();
-        String[] expectedList = new String[] {"m", "ft", "in", "yd", "mile", "nmi"};
-
-        String[] stringifytList = lengths.getStringifytUnitList();
-
-        for(int i=0; i<expectedList.length; i++)
-            assertEquals(expectedList[i], stringifytList[i]);
-    }
-
-
-
-
-
-    @Test
-    public void createLengthCategory_standardConstructor_ReturnsMeterUnit() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("m");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createLengthCategory_standardConstructor_RefMeterUnitByShortcutAndRefByLengthUnitListIsEqual() throws Exception {
-        Length lengths = new Length();
-        List<Unit> lengthList = lengths.getUnitList();
-
-        Unit length = lengths.GetUnitByShortcut("m");
-        Unit lengthFromList = lengthList.get(0);
-
-        assertEquals(length, lengthFromList);
-    }
-
-    @Test
-    public void createLengthCategory_standardConstructor_MeterUnitHasRightName() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("m");
-        String name = unit.getName();
-
-        assertEquals("Meter", name);
-    }
-
-    @Test
-    public void createLengthTemperatureCategory_standardConstructor_MeterUnitHasRightFactor() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("m");
-        double factor = unit.getFactor();
-
-        assertEquals(1, factor, 0.1);
+    @Before
+    public void init()
+    {
+        dao = new LengthUnitTest.DAOLengthMock();
+        emptyDao = new LengthUnitTest.DAOLengthMockEmpty();
     }
 
 
 
 
     @Test
-    public void createLengthCategory_standardConstructor_ReturnsFootUnit() throws Exception {
-        Length lengths = new Length();
+    public void getUnitList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Length lengths = emptyDao.load();
+        List<Unit> units;
 
-        Unit unit =  lengths.GetUnitByShortcut("ft");
+        units = lengths.getUnitList();
 
-        assertNotEquals(null, unit);
+        assertEquals(0, units.size());
     }
 
     @Test
-    public void createLengthCategory_standardConstructor_RefFootUnitByShortcutAndRefByLengthUnitListIsEqual() throws Exception {
-        Length lengths = new Length();
-        List<Unit> lengthList = lengths.getUnitList();
+    public void getUnitList_unitsFromDaoMock_returnsListOfUnitsWithCorrectSize() throws Exception {
+        Length lengths = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit length = lengths.GetUnitByShortcut("ft");
-        Unit lengthFromList = lengthList.get(1);
+        actualSize = lengths.getUnitList().size();
 
-        assertEquals(length, lengthFromList);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createLengthCategory_standardConstructor_FootUnitHasRightName() throws Exception {
-        Length lengths = new Length();
+    public void getUnitList_unitsFromDaoMock_returnsCorrectListOfUnits() throws Exception {
+        Length lengths = dao.load();
+        List<Unit> actualLengthList;
+        List<Unit> expectedLengthList = new ArrayList<>();
+        expectedLengthList.add(new Unit("Name1", "Shortcut1", 1));
+        expectedLengthList.add(new Unit("Name2", "Shortcut2", 2));
+        expectedLengthList.add(new Unit("Name3", "Shortcut3", 0.5));
 
-        Unit unit =  lengths.GetUnitByShortcut("ft");
-        String name = unit.getName();
 
-        assertEquals("Foot", name);
+        actualLengthList = lengths.getUnitList();
+
+
+        for(int i=0; i<expectedLengthList.size(); i++)
+            assertEquals(expectedLengthList.get(i).getShortcut(),
+                    actualLengthList.get(i).getShortcut());
+
+        for(int i=0; i<expectedLengthList.size(); i++)
+            assertEquals(expectedLengthList.get(i).getName(),
+                    actualLengthList.get(i).getName());
+
+        for(int i=0; i<expectedLengthList.size(); i++)
+            assertEquals(expectedLengthList.get(i).getFactor(),
+                    actualLengthList.get(i).getFactor(), 0.1);
+    }
+
+
+
+
+    @Test
+    public void getStringifytList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Length lengths = emptyDao.load();
+        String[] actualStringifytList;
+
+        actualStringifytList = lengths.getStringifytUnitList();
+
+        assertEquals(0, actualStringifytList.length);
     }
 
     @Test
-    public void createLengthTemperatureCategory_standardConstructor_FootUnitHasRightFactor() throws Exception {
-        Length lengths = new Length();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectLength() throws Exception {
+        Length lengths = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit unit =  lengths.GetUnitByShortcut("ft");
-        double factor = unit.getFactor();
+        actualSize = lengths.getStringifytUnitList().length;
 
-        assertEquals(0.3048, factor, 0.0001);
-    }
-
-
-
-
-    @Test
-    public void createLengthCategory_standardConstructor_ReturnsInchUnit() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("in");
-
-        assertNotEquals(null, unit);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createLengthCategory_standardConstructor_RefInchUnitByShortcutAndRefByLengthUnitListIsEqual() throws Exception {
-        Length lengths = new Length();
-        List<Unit> lengthList = lengths.getUnitList();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectStrings() throws Exception {
+        Length lengths = dao.load();
+        String[] expectedStringifytList = new String[] {"Shortcut1", "Shortcut2", "Shortcut3" };
+        String[] actualStringifytList;
 
-        Unit length = lengths.GetUnitByShortcut("in");
-        Unit lengthFromList = lengthList.get(2);
+        actualStringifytList = lengths.getStringifytUnitList();
 
-        assertEquals(length, lengthFromList);
-    }
-
-    @Test
-    public void createLengthCategory_standardConstructor_InchUnitHasRightName() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("in");
-        String name = unit.getName();
-
-        assertEquals("Inch", name);
-    }
-
-    @Test
-    public void createLengthTemperatureCategory_standardConstructor_InchUnitHasRightFactor() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("in");
-        double factor = unit.getFactor();
-
-        assertEquals(0.0254, factor, 0.0001);
+        for(int i=0; i<expectedStringifytList.length; i++)
+            assertEquals(expectedStringifytList[i], actualStringifytList[i]);
     }
 
 
@@ -198,184 +152,131 @@ public class LengthUnitTest {
 
 
     @Test
-    public void createLengthCategory_standardConstructor_ReturnsYardUnit() throws Exception {
-        Length lengths = new Length();
+    public void getUnitByShortcut_unitsFromEmptyDaoMock_returnsNullPointer() throws Exception {
+        Length lengths = emptyDao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
 
-        Unit unit =  lengths.GetUnitByShortcut("yd");
+        actualUnit = lengths.GetUnitByShortcut("Shortcut1");
 
-        assertNotEquals(null, unit);
+        assertEquals(expectedUnit, actualUnit);
     }
 
     @Test
-    public void createLengthCategory_standardConstructor_RefYardUnitByShortcutAndRefByLengthUnitListIsEqual() throws Exception {
-        Length lengths = new Length();
-        List<Unit> lengthList = lengths.getUnitList();
+    public void getFirstUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Length lengths = dao.load();
+        Unit expectedUnit = new Unit("Name1", "Shortcut1", 1);
+        Unit actualUnit;
 
-        Unit length = lengths.GetUnitByShortcut("yd");
-        Unit lengthFromList = lengthList.get(3);
+        actualUnit = lengths.GetUnitByShortcut("Shortcut1");
 
-        assertEquals(length, lengthFromList);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createLengthCategory_standardConstructor_YardUnitHasRightName() throws Exception {
-        Length lengths = new Length();
+    public void getSecondUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Length lengths = dao.load();
+        Unit expectedUnit = new Unit("Name2", "Shortcut2", 2);
+        Unit actualUnit;
 
-        Unit unit =  lengths.GetUnitByShortcut("yd");
-        String name = unit.getName();
+        actualUnit = lengths.GetUnitByShortcut("Shortcut2");
 
-        assertEquals("Yard", name);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createLengthTemperatureCategory_standardConstructor_YardUnitHasRightFactor() throws Exception {
-        Length lengths = new Length();
+    public void getThirdUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Length lengths = dao.load();
+        Unit expectedUnit = new Unit("Name3", "Shortcut3", 0.5);
+        Unit actualUnit;
 
-        Unit unit =  lengths.GetUnitByShortcut("yd");
-        double factor = unit.getFactor();
+        actualUnit = lengths.GetUnitByShortcut("Shortcut3");
 
-        assertEquals(0.9144, factor, 0.0001);
-    }
-
-
-
-
-    @Test
-    public void createLengthCategory_standardConstructor_ReturnsMileUnit() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("mile");
-
-        assertNotEquals(null, unit);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createLengthCategory_standardConstructor_RefMileUnitByShortcutAndRefByLengthUnitListIsEqual() throws Exception {
-        Length lengths = new Length();
-        List<Unit> lengthList = lengths.getUnitList();
+    public void getNonExistingUnitByShortcut_unitIsNotCreatedViaDaoMock_returnsNull() throws Exception {
+        Length lengths = dao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
 
-        Unit length = lengths.GetUnitByShortcut("mile");
-        Unit lengthFromList = lengthList.get(4);
+        actualUnit = lengths.GetUnitByShortcut("NonExisting");
 
-        assertEquals(length, lengthFromList);
-    }
-
-    @Test
-    public void createLengthCategory_standardConstructor_MileUnitHasRightName() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("mile");
-        String name = unit.getName();
-
-        assertEquals("Mile", name);
-    }
-
-    @Test
-    public void createLengthTemperatureCategory_standardConstructor_MileUnitHasRightFactor() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("mile");
-        double factor = unit.getFactor();
-
-        assertEquals(1609.34, factor, 0.01);
+        assertEquals(expectedUnit, actualUnit);
     }
 
 
-
-
-    @Test
-    public void createLengthCategory_standardConstructor_ReturnsNauticalMileUnit() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("nmi");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createLengthCategory_standardConstructor_RefNauticalMileUnitByShortcutAndRefByLengthUnitListIsEqual() throws Exception {
-        Length lengths = new Length();
-        List<Unit> lengthList = lengths.getUnitList();
-
-        Unit length = lengths.GetUnitByShortcut("nmi");
-        Unit lengthFromList = lengthList.get(5);
-
-        assertEquals(length, lengthFromList);
-    }
-
-    @Test
-    public void createLengthCategory_standardConstructor_NauticalMileUnitHasRightName() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("nmi");
-        String name = unit.getName();
-
-        assertEquals("Nautical Mile", name);
-    }
-
-    @Test
-    public void createLengthTemperatureCategory_standardConstructor_NauticalMileUnitHasRightFactor() throws Exception {
-        Length lengths = new Length();
-
-        Unit unit =  lengths.GetUnitByShortcut("nmi");
-        double factor = unit.getFactor();
-
-        assertEquals(1852, factor, 0.1);
-    }
 
 
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertLengthUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Length lengths = new Length();
+    public void convertLengthUnits_unitFirstArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Length lengths = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("Meter", "m");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         lengths.convert(corruptUnit, unit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertLengthUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Length lengths = new Length();
+    public void convertLengthUnits_unitSecondArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Length lengths = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("Meter", "m");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         lengths.convert(unit, corruptUnit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertLengthUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Length lengths = new Length();
+    public void convertLengthUnits_unitBothArgumentsAreCorrupt_throwsIllegalArgumentException() throws Exception {
+        Length lengths = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
         int value = 1;
 
         lengths.convert(corruptUnit, corruptUnit, value);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void convertLengthUnits_withEmptyDAO_throwsIllegalArgumentException() throws Exception {
+        Length lengths = emptyDao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        int value = 1;
+
+        lengths.convert(unit1, unit2, value);
+    }
+
     @Test(expected = NullPointerException.class)
-    public void convertLengthUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Length lengths = new Length();
-        Unit unit = new Unit("Meter", "m");
+    public void convertLengthUnits_unitFirstArgumentIsNull_throwsNullPointerException() throws Exception {
+        Length lengths = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         lengths.convert(null, unit, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertLengthUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Length lengths = new Length();
-        Unit unit = new Unit("Meter", "m");
+    public void convertLengthUnits_unitSecondArgumentIsNull_throwsNullPointerException() throws Exception {
+        Length lengths = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         lengths.convert(unit, null, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertLengthUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
-        Length lengths = new Length();
+    public void convertLengthUnits_unitBothArgumentsAreNull_throwsNullPointerException() throws Exception {
+        Length lengths = dao.load();
         int value = 1;
 
         lengths.convert(null, null, value);
@@ -384,58 +285,92 @@ public class LengthUnitTest {
 
 
 
+
     @Test
-    public void convertLengthUnits_twoUnitsOfSameType_ReturnsImputValue() throws Exception {
-        Length lengths = new Length();
-        Unit unit1 = new Unit("Meter", "m");
-        Unit unit2 = new Unit("Meter", "m");
+    public void convertLengthUnits_twoUnitsOfSameType_returnsInputValue() throws Exception {
+        Length lengths = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
         double value = 1.5;
 
         double retValue = lengths.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertLengthUnits_twoUnitsOfSameTypeWithZeroValue_ReturnsImputValue() throws Exception {
-        Length lengths = new Length();
-        Unit unit1 = new Unit("Meter", "m");
-        Unit unit2 = new Unit("Meter", "m");
+    public void convertLengthUnits_twoUnitsOfSameTypeWithZeroValue_returnsInputValue() throws Exception {
+        Length lengths = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
         double value = 0;
 
         double retValue = lengths.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertLengthUnits_baseUnitToNonBaseUnit_ReturnsConvertedValue() throws Exception {
-        Length lengths = new Length();
-        Unit unit1 = new Unit("Meter", "m");
-        Unit unit2 = new Unit("Foot", "ft");
-        double value = 1;
+    public void convertLengthUnits_firstUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Length lengths = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
 
         double retValue = lengths.convert(unit1, unit2, value);
-        assertEquals(3.2808, retValue, 0.0001);
+        assertEquals(0.75, retValue, 0.01);
     }
 
     @Test
-    public void convertLengthUnits_noneBaseUnitToBaseUnit_ReturnsConvertedValue() throws Exception {
-        Length lengths = new Length();
-        Unit unit1 = new Unit("Foot", "ft");
-        Unit unit2 = new Unit("Meter", "m");
-        double value = 1;
+    public void convertLengthUnits_secondUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Length lengths = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
 
         double retValue = lengths.convert(unit1, unit2, value);
-        assertEquals(0.3048, retValue, 0.0001);
+        assertEquals(3, retValue, 0.01);
     }
 
     @Test
-    public void convertLengthUnits_noneBaseUnitToNoneBaseUnit_ReturnsConvertedValue() throws Exception {
-        Length lengths = new Length();
-        Unit unit1 = new Unit("Foot", "ft");
-        Unit unit2 = new Unit("Yard", "yd");
-        double value = 1;
+    public void convertLengthUnits_firstUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Length lengths = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
 
         double retValue = lengths.convert(unit1, unit2, value);
-        assertEquals(0.333333, retValue, 0.0001);
+        assertEquals(3, retValue, 0.01);
+    }
+
+    @Test
+    public void convertLengthUnits_thirdUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Length lengths = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
+
+        double retValue = lengths.convert(unit1, unit2, value);
+        assertEquals(0.75, retValue, 0.01);
+    }
+
+    @Test
+    public void convertLengthUnits_secondUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Length lengths = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
+
+        double retValue = lengths.convert(unit1, unit2, value);
+        assertEquals(6, retValue, 0.01);
+    }
+
+    @Test
+    public void convertLengthUnits_thirdUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Length lengths = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
+
+        double retValue = lengths.convert(unit1, unit2, value);
+        assertEquals(0.375, retValue, 0.01);
     }
 }

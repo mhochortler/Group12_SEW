@@ -1,14 +1,16 @@
 package at.maymay.convertme.core;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import at.maymay.convertme.application.core.dao.IDAOVolume;
 import at.maymay.convertme.application.core.model.Volume;
 import at.maymay.convertme.application.core.model.Unit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,882 +20,263 @@ import static org.junit.Assert.assertNotEquals;
 public class VolumeUnitTest {
     /**
      Naming-Convention: UnitOfWork_StateUnderTest_ExpectedBehavior
-     Methode-Construction: AAA -> Arrange-Act-Assert
+     Method-Construction: AAA -> Arrange-Act-Assert
      */
 
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsNonEmptyListOfUnits() throws Exception {
-        Volume volumes = new Volume();
-
-        List<Unit> volumeList = volumes.getUnitList();
-        boolean isEmpty = volumeList.isEmpty();
-
-        assertEquals(false, isEmpty);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsListOfUnitsWithCorrectSize() throws Exception {
-        Volume volumes = new Volume();
-
-        List<Unit> volumeList = volumes.getUnitList();
-        int size = volumeList.size();
-
-        assertEquals(18, size);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsListOfUnitsWithCorrectShortcuts() throws Exception {
-        Volume volumes = new Volume();
-        String[] expectedShortcuts = new String[] {"l", "uslg", "uslq", "uslp", "uslc", "usfo", "ustap", "usts",
-                                                   "ig", "iq", "ip", "ic", "ifo", "itap", "its",
-                                                   "m³", "ft³", "in³"};
-
-        List<Unit> volumeList = volumes.getUnitList();
-
-        for(int i=0; i<expectedShortcuts.length; i++)
-            assertEquals(expectedShortcuts[i], volumeList.get(i).getShortcut());
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsStringifytUnitList() throws Exception {
-        Volume volumes = new Volume();
-        String[] expectedList = new String[] {"l", "uslg", "uslq", "uslp", "uslc", "usfo", "ustap", "usts",
-                                              "ig", "iq", "ip", "ic", "ifo", "itap", "its",
-                                              "m³", "ft³", "in³"};
-
-        String[] stringifytList = volumes.getStringifytUnitList();
-
-        for(int i=0; i<expectedList.length; i++)
-            assertEquals(expectedList[i], stringifytList[i]);
-    }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsLitreUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("l");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefLitreUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("l");
-        Unit volumeFromList = volumeList.get(0);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_LitreUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("l");
-        String name = unit.getName();
-
-        assertEquals("Litre", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_LitreUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("l");
-        double factor = unit.getFactor();
-
-        assertEquals(1, factor, 0.001);
-    }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsUSLiquidGallonUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("uslg");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefUSLiquidGallonUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("uslg");
-        Unit volumeFromList = volumeList.get(1);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USLiquidGallonUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("uslg");
-        String name = unit.getName();
-
-        assertEquals("US liquid gallon", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USLiquidGallonUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("uslg");
-        double factor = unit.getFactor();
-
-        assertEquals(3.78541, factor, 0.00001);
-    }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsUSLiquidQuartUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("uslq");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefUSLiquidQuartUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("uslq");
-        Unit volumeFromList = volumeList.get(2);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USLiquidQuartUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("uslq");
-        String name = unit.getName();
-
-        assertEquals("US liquid quart", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USLiquidQuartUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("uslq");
-        double factor = unit.getFactor();
-
-        assertEquals(0.946353, factor, 0.00001);
-    }
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsUSLiquidPintUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("uslp");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefUSLiquidPintUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("uslp");
-        Unit volumeFromList = volumeList.get(3);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USLiquidPintUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("uslp");
-        String name = unit.getName();
-
-        assertEquals("US liquid pint", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USLiquidPintUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("uslp");
-        double factor = unit.getFactor();
-
-        assertEquals(0.473176, factor, 0.00001);
-    }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsUSLiquidCupUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("uslc");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefUSLiquidCupUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("uslc");
-        Unit volumeFromList = volumeList.get(4);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USLiquidCupUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("uslc");
-        String name = unit.getName();
-
-        assertEquals("US liquid cup", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USLiquidCupUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("uslc");
-        double factor = unit.getFactor();
-
-        assertEquals(0.24, factor, 0.01);
-    }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsUSFluidOunceUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("usfo");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefUSFluidOunceUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("usfo");
-        Unit volumeFromList = volumeList.get(5);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USFluidOunceUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("usfo");
-        String name = unit.getName();
-
-        assertEquals("US fluid ounce", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USFluidOunceUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("usfo");
-        double factor = unit.getFactor();
-
-        assertEquals(0.0295735, factor, 0.00001);
-    }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsUSTablespoonUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ustap");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefUSTablespoonUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("ustap");
-        Unit volumeFromList = volumeList.get(6);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USTablespoonUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("ustap");
-        String name = unit.getName();
-
-        assertEquals("US tablespoon", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USTablespoonUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ustap");
-        double factor = unit.getFactor();
+    private class DAOVolumeMock implements IDAOVolume {
+        @Override
+        public Volume load()
+        {
+            Volume volume = new Volume();
+            List<Unit> units = volume.getUnitList();
+            units.clear();
 
-        assertEquals(0.0147868, factor, 0.00001);
-    }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsUSTeaspoonUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("usts");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefUSTeaspoonUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("usts");
-        Unit volumeFromList = volumeList.get(7);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USTeaspoonUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("usts");
-        String name = unit.getName();
-
-        assertEquals("US teaspoon", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_USTeaspoonUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("usts");
-        double factor = unit.getFactor();
-
-        assertEquals(0.00492892, factor, 0.0000001);
-    }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsImperialGallonUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ig");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefImperialGallonUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("ig");
-        Unit volumeFromList = volumeList.get(8);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialGallonUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("ig");
-        String name = unit.getName();
-
-        assertEquals("Imperial gallon", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialGallonUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ig");
-        double factor = unit.getFactor();
-
-        assertEquals(4.54609, factor, 0.00001);
-    }
-
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsImperialQuartUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("iq");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefImperialQuartUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("iq");
-        Unit volumeFromList = volumeList.get(9);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialQuartUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("iq");
-        String name = unit.getName();
-
-        assertEquals("Imperial quart", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialQuartUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("iq");
-        double factor = unit.getFactor();
-
-        assertEquals(1.13652, factor, 0.0001);
-    }
-
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsImperialPintUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ip");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefImperialPintUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("ip");
-        Unit volumeFromList = volumeList.get(10);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialPintUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
+            units.add(new Unit("Name1", "Shortcut1", 1));
+            units.add(new Unit("Name2", "Shortcut2", 2));
+            units.add(new Unit("Name3", "Shortcut3", 0.5));
 
-        Unit unit = volumes.GetUnitByShortcut("ip");
-        String name = unit.getName();
-
-        assertEquals("Imperial pint", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialPintUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ip");
-        double factor = unit.getFactor();
-
-        assertEquals(0.568261, factor, 0.0001);
-    }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsImperialCupUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ic");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefImperialCupUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("ic");
-        Unit volumeFromList = volumeList.get(11);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialCupUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("ic");
-        String name = unit.getName();
-
-        assertEquals("Imperial cup", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialCupUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ic");
-        double factor = unit.getFactor();
-
-        assertEquals(0.284131, factor, 0.0001);
-    }
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsImperialFluidOunceUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ifo");
-
-        assertNotEquals(null, unit);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_RefImperialFluidOunceUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("ifo");
-        Unit volumeFromList = volumeList.get(12);
-
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialFluidOunceUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit = volumes.GetUnitByShortcut("ifo");
-        String name = unit.getName();
-
-        assertEquals("Imperial fluid ounce", name);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialFluidOunceUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ifo");
-        double factor = unit.getFactor();
-
-        assertEquals(0.0284131, factor, 0.00001);
+            return volume;
+        }
     }
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsImperialTablespoonUnit() throws Exception {
-        Volume volumes = new Volume();
 
-        Unit unit =  volumes.GetUnitByShortcut("itap");
+    private class DAOVolumeMockEmpty implements IDAOVolume {
+        @Override
+        public Volume load()
+        {
+            Volume volume = new Volume();
+            List<Unit> units = volume.getUnitList();
+            units.clear();
 
-        assertNotEquals(null, unit);
+            return volume;
+        }
     }
 
-    @Test
-    public void createVolumeCategory_standardConstructor_RefImperialTablespoonUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("itap");
-        Unit volumeFromList = volumeList.get(13);
+    IDAOVolume dao;
+    IDAOVolume emptyDao;
 
-        assertEquals(volume, volumeFromList);
+    @Before
+    public void init()
+    {
+        dao = new VolumeUnitTest.DAOVolumeMock();
+        emptyDao = new VolumeUnitTest.DAOVolumeMockEmpty();
     }
 
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialTablespoonUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
 
-        Unit unit = volumes.GetUnitByShortcut("itap");
-        String name = unit.getName();
 
-        assertEquals("Imperial tablespoon", name);
-    }
 
     @Test
-    public void createVolumeCategory_standardConstructor_ImperialTablespoonUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
+    public void getUnitList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Volume volumes = emptyDao.load();
+        List<Unit> units;
 
-        Unit unit =  volumes.GetUnitByShortcut("itap");
-        double factor = unit.getFactor();
+        units = volumes.getUnitList();
 
-        assertEquals(0.0177582, factor, 0.00001);
+        assertEquals(0, units.size());
     }
-
 
-
-
     @Test
-    public void createVolumeCategory_standardConstructor_ReturnsImperialTeaspoonUnit() throws Exception {
-        Volume volumes = new Volume();
+    public void getUnitList_unitsFromDaoMock_returnsListOfUnitsWithCorrectSize() throws Exception {
+        Volume volumes = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit unit =  volumes.GetUnitByShortcut("its");
+        actualSize = volumes.getUnitList().size();
 
-        assertNotEquals(null, unit);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createVolumeCategory_standardConstructor_RefImperialTeaspoonUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
-
-        Unit volume = volumes.GetUnitByShortcut("its");
-        Unit volumeFromList = volumeList.get(14);
+    public void getUnitList_unitsFromDaoMock_returnsCorrectListOfUnits() throws Exception {
+        Volume volumes = dao.load();
+        List<Unit> actualVolumeList;
+        List<Unit> expectedVolumeList = new ArrayList<>();
+        expectedVolumeList.add(new Unit("Name1", "Shortcut1", 1));
+        expectedVolumeList.add(new Unit("Name2", "Shortcut2", 2));
+        expectedVolumeList.add(new Unit("Name3", "Shortcut3", 0.5));
 
-        assertEquals(volume, volumeFromList);
-    }
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialTeaspoonUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
 
-        Unit unit = volumes.GetUnitByShortcut("its");
-        String name = unit.getName();
+        actualVolumeList = volumes.getUnitList();
 
-        assertEquals("Imperial teaspoon", name);
-    }
 
-    @Test
-    public void createVolumeCategory_standardConstructor_ImperialTeaspoonUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
+        for(int i=0; i<expectedVolumeList.size(); i++)
+            assertEquals(expectedVolumeList.get(i).getShortcut(),
+                    actualVolumeList.get(i).getShortcut());
 
-        Unit unit =  volumes.GetUnitByShortcut("its");
-        double factor = unit.getFactor();
+        for(int i=0; i<expectedVolumeList.size(); i++)
+            assertEquals(expectedVolumeList.get(i).getName(),
+                    actualVolumeList.get(i).getName());
 
-        assertEquals(0.00591939, factor, 0.0000001);
+        for(int i=0; i<expectedVolumeList.size(); i++)
+            assertEquals(expectedVolumeList.get(i).getFactor(),
+                    actualVolumeList.get(i).getFactor(), 0.1);
     }
-
-
-
 
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsCubicMetreUnit() throws Exception {
-        Volume volumes = new Volume();
 
-        Unit unit =  volumes.GetUnitByShortcut("m³");
 
-        assertNotEquals(null, unit);
-    }
 
     @Test
-    public void createVolumeCategory_standardConstructor_RefCubicMetreUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
+    public void getStringifytList_unitsFromEmptyDaoMock_returnsEmptyList() throws Exception {
+        Volume volumes = emptyDao.load();
+        String[] actualStringifytList;
 
-        Unit volume = volumes.GetUnitByShortcut("m³");
-        Unit volumeFromList = volumeList.get(15);
+        actualStringifytList = volumes.getStringifytUnitList();
 
-        assertEquals(volume, volumeFromList);
+        assertEquals(0, actualStringifytList.length);
     }
 
     @Test
-    public void createVolumeCategory_standardConstructor_CubicMetreUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectVolume() throws Exception {
+        Volume volumes = dao.load();
+        int expectedSize = 3;
+        int actualSize;
 
-        Unit unit = volumes.GetUnitByShortcut("m³");
-        String name = unit.getName();
+        actualSize = volumes.getStringifytUnitList().length;
 
-        assertEquals("Cubic metre", name);
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void createVolumeCategory_standardConstructor_CubicMetreUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
+    public void getStringifytList_unitsFromDaoMock_returnsStringifytUnitListWithCorrectStrings() throws Exception {
+        Volume volumes = dao.load();
+        String[] expectedStringifytList = new String[] {"Shortcut1", "Shortcut2", "Shortcut3" };
+        String[] actualStringifytList;
 
-        Unit unit =  volumes.GetUnitByShortcut("m³");
-        double factor = unit.getFactor();
+        actualStringifytList = volumes.getStringifytUnitList();
 
-        assertEquals(1000, factor, 0.1);
+        for(int i=0; i<expectedStringifytList.length; i++)
+            assertEquals(expectedStringifytList[i], actualStringifytList[i]);
     }
-
-
-
-
-    @Test
-    public void createVolumeCategory_standardConstructor_ReturnsCubicFootUnit() throws Exception {
-        Volume volumes = new Volume();
-
-        Unit unit =  volumes.GetUnitByShortcut("ft³");
 
-        assertNotEquals(null, unit);
-    }
 
-    @Test
-    public void createVolumeCategory_standardConstructor_RefCubicFootUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
 
-        Unit volume = volumes.GetUnitByShortcut("ft³");
-        Unit volumeFromList = volumeList.get(16);
 
-        assertEquals(volume, volumeFromList);
-    }
 
     @Test
-    public void createVolumeCategory_standardConstructor_CubicFootUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
+    public void getUnitByShortcut_unitsFromEmptyDaoMock_returnsNullPointer() throws Exception {
+        Volume volumes = emptyDao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
 
-        Unit unit = volumes.GetUnitByShortcut("ft³");
-        String name = unit.getName();
+        actualUnit = volumes.GetUnitByShortcut("Shortcut1");
 
-        assertEquals("Cubic foot", name);
+        assertEquals(expectedUnit, actualUnit);
     }
 
     @Test
-    public void createVolumeCategory_standardConstructor_CubicFootUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
+    public void getFirstUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Volume volumes = dao.load();
+        Unit expectedUnit = new Unit("Name1", "Shortcut1", 1);
+        Unit actualUnit;
 
-        Unit unit =  volumes.GetUnitByShortcut("ft³");
-        double factor = unit.getFactor();
+        actualUnit = volumes.GetUnitByShortcut("Shortcut1");
 
-        assertEquals(28.3168, factor, 0.0001);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
-
-
-
     @Test
-    public void createVolumeCategory_standardConstructor_ReturnsCubicInchUnit() throws Exception {
-        Volume volumes = new Volume();
+    public void getSecondUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Volume volumes = dao.load();
+        Unit expectedUnit = new Unit("Name2", "Shortcut2", 2);
+        Unit actualUnit;
 
-        Unit unit =  volumes.GetUnitByShortcut("in³");
+        actualUnit = volumes.GetUnitByShortcut("Shortcut2");
 
-        assertNotEquals(null, unit);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createVolumeCategory_standardConstructor_RefCubicInchUnitByShortcutAndRefByVolumeUnitListIsEqual() throws Exception {
-        Volume volumes = new Volume();
-        List<Unit> volumeList = volumes.getUnitList();
+    public void getThirdUnitByShortcut_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Volume volumes = dao.load();
+        Unit expectedUnit = new Unit("Name3", "Shortcut3", 0.5);
+        Unit actualUnit;
 
-        Unit volume = volumes.GetUnitByShortcut("in³");
-        Unit volumeFromList = volumeList.get(17);
+        actualUnit = volumes.GetUnitByShortcut("Shortcut3");
 
-        assertEquals(volume, volumeFromList);
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
     }
 
     @Test
-    public void createVolumeCategory_standardConstructor_CubicInchUnitHasRightName() throws Exception {
-        Volume volumes = new Volume();
+    public void getNonExistingUnitByShortcut_unitIsNotCreatedViaDaoMock_returnsNull() throws Exception {
+        Volume volumes = dao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
 
-        Unit unit = volumes.GetUnitByShortcut("in³");
-        String name = unit.getName();
+        actualUnit = volumes.GetUnitByShortcut("NonExisting");
 
-        assertEquals("Cubic inch", name);
+        assertEquals(expectedUnit, actualUnit);
     }
 
-    @Test
-    public void createVolumeCategory_standardConstructor_CubicInchUnitHasRightFactor() throws Exception {
-        Volume volumes = new Volume();
 
-        Unit unit =  volumes.GetUnitByShortcut("in³");
-        double factor = unit.getFactor();
-
-        assertEquals(0.0163871, factor, 0.000001);
-    }
 
 
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertVolumeUnits_unitFirstArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Volume volumes = new Volume();
+    public void convertVolumeUnits_unitFirstArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Volume volumes = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("Litre", "l");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         volumes.convert(corruptUnit, unit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertVolumeUnits_unitSecondArgumentIsCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Volume volumes = new Volume();
+    public void convertVolumeUnits_unitSecondArgumentIsCorrupt_throwsIllegalArgumentException() throws Exception {
+        Volume volumes = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
-        Unit unit = new Unit("Litre", "l");
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         volumes.convert(unit, corruptUnit, value);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void convertVolumeUnits_unitBothArgumentsAreCorrupt_ThrowsIllegalArgumentException() throws Exception {
-        Volume volumes = new Volume();
+    public void convertVolumeUnits_unitBothArgumentsAreCorrupt_throwsIllegalArgumentException() throws Exception {
+        Volume volumes = dao.load();
         Unit corruptUnit = new Unit("ErrorName", "ErrorShortcut");
         int value = 1;
 
         volumes.convert(corruptUnit, corruptUnit, value);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void convertVolumeUnits_withEmptyDAO_throwsIllegalArgumentException() throws Exception {
+        Volume volumes = emptyDao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        int value = 1;
+
+        volumes.convert(unit1, unit2, value);
+    }
+
     @Test(expected = NullPointerException.class)
-    public void convertVolumeUnits_unitFirstArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Volume volumes = new Volume();
-        Unit unit = new Unit("Litre", "l");
+    public void convertVolumeUnits_unitFirstArgumentIsNull_throwsNullPointerException() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         volumes.convert(null, unit, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertVolumeUnits_unitSecondArgumentIsNull_ThrowsNullPointerException() throws Exception {
-        Volume volumes = new Volume();
-        Unit unit = new Unit("Litre", "l");
+    public void convertVolumeUnits_unitSecondArgumentIsNull_throwsNullPointerException() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit = new Unit("Name1", "Shortcut1");
         int value = 1;
 
         volumes.convert(unit, null, value);
     }
 
     @Test(expected = NullPointerException.class)
-    public void convertVolumeUnits_unitBothArgumentsAreNull_ThrowsNullPointerException() throws Exception {
-        Volume volumes = new Volume();
+    public void convertVolumeUnits_unitBothArgumentsAreNull_throwsNullPointerException() throws Exception {
+        Volume volumes = dao.load();
         int value = 1;
 
         volumes.convert(null, null, value);
@@ -902,58 +285,92 @@ public class VolumeUnitTest {
 
 
 
+
     @Test
-    public void convertVolumeUnits_twoUnitsOfSameType_ReturnsImputValue() throws Exception {
-        Volume volumes = new Volume();
-        Unit unit1 = new Unit("Litre", "l");
-        Unit unit2 = new Unit("Litre", "l");
+    public void convertVolumeUnits_twoUnitsOfSameType_returnsInputValue() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
         double value = 1.5;
 
         double retValue = volumes.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertVolumeUnits_twoUnitsOfSameTypeWithZeroValue_ReturnsImputValue() throws Exception {
-        Volume volumes = new Volume();
-        Unit unit1 = new Unit("Litre", "l");
-        Unit unit2 = new Unit("Litre", "l");
+    public void convertVolumeUnits_twoUnitsOfSameTypeWithZeroValue_returnsInputValue() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
         double value = 0;
 
         double retValue = volumes.convert(unit1, unit2, value);
-        assertEquals(retValue, value, 0.0001);
+        assertEquals(retValue, value, 0.1);
     }
 
     @Test
-    public void convertVolumeUnits_baseUnitToNonBaseUnit_ReturnsConvertedValue() throws Exception {
-        Volume volumes = new Volume();
-        Unit unit1 = new Unit("Litre", "l");
-        Unit unit2 = new Unit("US liquid gallon", "uslg");
-        double value = 1;
+    public void convertVolumeUnits_firstUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
 
         double retValue = volumes.convert(unit1, unit2, value);
-        assertEquals(0.264172, retValue, 0.0001);
+        assertEquals(0.75, retValue, 0.01);
     }
 
     @Test
-    public void convertVolumeUnits_noneBaseUnitToBaseUnit_ReturnsConvertedValue() throws Exception {
-        Volume volumes = new Volume();
-        Unit unit1 = new Unit("US liquid gallon", "uslg");
-        Unit unit2 = new Unit("Litre", "l");
-        double value = 1;
+    public void convertVolumeUnits_secondUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
 
         double retValue = volumes.convert(unit1, unit2, value);
-        assertEquals(3.78541, retValue, 0.0001);
+        assertEquals(3, retValue, 0.01);
     }
 
     @Test
-    public void convertVolumeUnits_noneBaseUnitToNoneBaseUnit_ReturnsConvertedValue() throws Exception {
-        Volume volumes = new Volume();
-        Unit unit1 = new Unit("US liquid gallon", "uslg");
-        Unit unit2 = new Unit("Imperial teaspoon", "its");
-        double value = 1;
+    public void convertVolumeUnits_firstUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit1 = new Unit("Name1", "Shortcut1");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
 
         double retValue = volumes.convert(unit1, unit2, value);
-        assertEquals(639.493, retValue, 0.001);
+        assertEquals(3, retValue, 0.01);
+    }
+
+    @Test
+    public void convertVolumeUnits_thirdUnitToFirstUnit_returnsConvertedValue() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name1", "Shortcut1");
+        double value = 1.5;
+
+        double retValue = volumes.convert(unit1, unit2, value);
+        assertEquals(0.75, retValue, 0.01);
+    }
+
+    @Test
+    public void convertVolumeUnits_secondUnitToThirdUnit_returnsConvertedValue() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit1 = new Unit("Name2", "Shortcut2");
+        Unit unit2 = new Unit("Name3", "Shortcut3");
+        double value = 1.5;
+
+        double retValue = volumes.convert(unit1, unit2, value);
+        assertEquals(6, retValue, 0.01);
+    }
+
+    @Test
+    public void convertVolumeUnits_thirdUnitToSecondUnit_returnsConvertedValue() throws Exception {
+        Volume volumes = dao.load();
+        Unit unit1 = new Unit("Name3", "Shortcut3");
+        Unit unit2 = new Unit("Name2", "Shortcut2");
+        double value = 1.5;
+
+        double retValue = volumes.convert(unit1, unit2, value);
+        assertEquals(0.375, retValue, 0.01);
     }
 }

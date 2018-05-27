@@ -1,6 +1,6 @@
 package at.maymay.convertme.application.dal.dalmodel;
 
-/*
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 
@@ -21,4 +21,3 @@ public class DALEntity extends Model implements Serializable
         return remote_id_;
     }
 }
-*/
