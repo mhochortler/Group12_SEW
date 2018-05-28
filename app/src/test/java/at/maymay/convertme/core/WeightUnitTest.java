@@ -157,7 +157,7 @@ public class WeightUnitTest {
         Unit expectedUnit = null;
         Unit actualUnit;
 
-        actualUnit = weights.GetUnitByShortcut("Shortcut1");
+        actualUnit = weights.getUnitByShortcut("Shortcut1");
 
         assertEquals(expectedUnit, actualUnit);
     }
@@ -168,7 +168,7 @@ public class WeightUnitTest {
         Unit expectedUnit = new Unit("Name1", "Shortcut1", 1);
         Unit actualUnit;
 
-        actualUnit = weights.GetUnitByShortcut("Shortcut1");
+        actualUnit = weights.getUnitByShortcut("Shortcut1");
 
         assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
         assertEquals(expectedUnit.getName(), actualUnit.getName());
@@ -181,7 +181,7 @@ public class WeightUnitTest {
         Unit expectedUnit = new Unit("Name2", "Shortcut2", 2);
         Unit actualUnit;
 
-        actualUnit = weights.GetUnitByShortcut("Shortcut2");
+        actualUnit = weights.getUnitByShortcut("Shortcut2");
 
         assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
         assertEquals(expectedUnit.getName(), actualUnit.getName());
@@ -194,7 +194,7 @@ public class WeightUnitTest {
         Unit expectedUnit = new Unit("Name3", "Shortcut3", 0.5);
         Unit actualUnit;
 
-        actualUnit = weights.GetUnitByShortcut("Shortcut3");
+        actualUnit = weights.getUnitByShortcut("Shortcut3");
 
         assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
         assertEquals(expectedUnit.getName(), actualUnit.getName());
@@ -207,7 +207,7 @@ public class WeightUnitTest {
         Unit expectedUnit = null;
         Unit actualUnit;
 
-        actualUnit = weights.GetUnitByShortcut("NonExisting");
+        actualUnit = weights.getUnitByShortcut("NonExisting");
 
         assertEquals(expectedUnit, actualUnit);
     }

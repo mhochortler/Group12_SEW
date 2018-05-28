@@ -43,17 +43,17 @@ public class ConverterInstrumentedTest {
     public void test_add_new_conversion() throws Exception {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_weight)).perform(click());
-        onView(withId(R.id.ptxt_input)).check(matches(isDisplayed()));
-        onView(withId(R.id.ptxt_result)).check(matches(isDisplayed()));
-        onView(withId(R.id.input_unit)).check(matches(isDisplayed()));
-        onView(withId(R.id.output_unit)).check(matches(isDisplayed()));
+        onView(withId(R.id.edittext_conversion_left)).check(matches(isDisplayed()));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(isDisplayed()));
+        onView(withId(R.id.spinner_conversion_left)).check(matches(isDisplayed()));
+        onView(withId(R.id.spinner_conversion_right)).check(matches(isDisplayed()));
     }
 
     @Test
     public void test_inputField() throws Exception {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
-        onView(withId(R.id.ptxt_input)).perform(typeText("567"));
+        onView(withId(R.id.edittext_conversion_left)).perform(typeText("567"));
         onView(withText("567")).check(matches(isDisplayed()));
     }
 
@@ -61,15 +61,15 @@ public class ConverterInstrumentedTest {
     public void test_implicit_conversion() throws Exception {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
-        onView(withId(R.id.ptxt_input)).perform(typeText("10"));
-        onView(withId(R.id.ptxt_result)).check(matches(withText("10.000")));
+        onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("10.000")));
     }
 
     @Test
     public void test_rightInputField() throws Exception {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
-        onView(withId(R.id.ptxt_result)).perform(typeText("567"));
+        onView(withId(R.id.edittext_conversion_right)).perform(typeText("567"));
         onView(withText("567")).check(matches(isDisplayed()));
     }
 
@@ -77,16 +77,16 @@ public class ConverterInstrumentedTest {
     public void test_left_convert() throws Exception {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
-        onView(withId(R.id.ptxt_result)).perform(typeText("10"));
-        onView(withId(R.id.ptxt_input)).check(matches(withText("10.000")));
+        onView(withId(R.id.edittext_conversion_right)).perform(typeText("10"));
+        onView(withId(R.id.edittext_conversion_left)).check(matches(withText("10.000")));
     }
 
     @Test
     public void test_swipe_delete() throws Exception {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
-        onView(withId(R.id.main_conversionItem_layout)).perform(swipeLeft());
-        onView(withId(R.id.output_unit)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.layout_conversion_element)).perform(swipeLeft());
+        onView(withId(R.id.spinner_conversion_right)).check(matches(not(isDisplayed())));
     }
 
 }

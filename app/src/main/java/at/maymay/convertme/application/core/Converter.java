@@ -1,69 +1,37 @@
 package at.maymay.convertme.application.core;
 
-import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
-
-import java.util.Arrays;
 
 import at.maymay.convertme.R;
+import at.maymay.convertme.application.config.AppConfig;
 import at.maymay.convertme.application.core.model.Category;
-import at.maymay.convertme.application.core.model.Temperature;
-import at.maymay.convertme.application.core.model.Unit;
 import at.maymay.convertme.application.core.ui.CategorySelectionToolbar;
-import at.maymay.convertme.application.core.ui.ConversionListElement;
+import at.maymay.convertme.application.core.ui.ConversionCollection;
 
-public class Converter extends AppCompatActivity implements View.OnClickListener{
-
-    private static Context context;
-
+public class Converter extends AppCompatActivity implements View.OnClickListener
+{
     FloatingActionButton btn_fabtoolbar;
     CategorySelectionToolbar fabtoolbar;
+    ConversionCollection c_collection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Converter.context = getApplicationContext();
         setContentView(R.layout.activity_converter);
 
+        c_collection = new ConversionCollection(this, AppConfig.profileContainer().profiles());
         btn_fabtoolbar = (FloatingActionButton) findViewById(R.id.btn_fabtoolbar);
         fabtoolbar = new CategorySelectionToolbar(this);
 
         btn_fabtoolbar.setOnClickListener(this);
     }
 
-    public static double convert(Unit from, Unit to, double value) {
-        Category cat = new Temperature();
-        String[] strings = cat.getStringifytUnitList();
-        if(Arrays.asList(strings).contains(from.getShortcut()))
-            return convertTemperature(from, to, value);
-        return (value * from.getFactor()) / to.getFactor();
-    }
-
-    public static double convertTemperature(Unit from, Unit to, double value)
+    public void newConversion(Category category)
     {
-        if(from.getShortcut().equals("K"))
-            value -= from.getFactor();
-        switch (to.getShortcut()){
-            case "°C":
-                if(from.getShortcut().equals("°F"))
-                    return (value - 32.0) / 1.8;
-                break;
-            case "°F":
-                value = value * 1.8 + 32.0;
-                break;
-            case "K":
-                if(from.getShortcut().equals("°F"))
-                    value =  ((value - 32.0)/from.getFactor());
-                value += to.getFactor();
-            default:
-                return value;
-        }
-        return value;
+        c_collection.addNewConversion(category);
     }
 
     @Override
@@ -75,38 +43,5 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
                 fabtoolbar.show();
                 break;
         }
-    }
-
-    public void addNewConversionLine(Category category)
-    {
-        ConversionListElement new_element = new ConversionListElement(this, category);
-
-        LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
-        llayout.addView(new_element.getView());
-
-        if(new_element.getView() != null)
-        {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            assert imm != null;
-            imm.showSoftInput(new_element.getView().findFocus(), InputMethodManager.SHOW_IMPLICIT);
-        }
-    }
-
-    public void deleteConversionLine(View view)
-    {
-        LinearLayout llayout = (LinearLayout) findViewById(R.id.layout_conversions);
-        llayout.removeView(view);
-
-        if(view != null)
-        {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            assert imm != null;
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    public static Context getAppContext()
-    {
-        return Converter.context;
     }
 }

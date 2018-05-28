@@ -6,32 +6,7 @@ import at.maymay.convertme.application.core.Profile;
 
 public class Temperature extends Category {
 
-    public Temperature(){
-        init();
-    }
-
-    @Override
-    protected void init() {
-        Unit c = new Unit("Celsius", "°C", 1.0);
-        Unit f = new Unit("Fahrenheit", "°F", 1.8);
-        Unit k = new Unit ("Kelvin", "K", 273.15);
-
-        unit_list_.add(c);
-        unit_list_.add(f);
-        unit_list_.add(k);
-
-        unit_output_list_ = new ArrayList<>(unit_list_);
-    }
-
-    public void changeList(Profile profile) {
-        unit_list_.remove(profile.getDefault_temperature());
-        unit_list_.add(0, profile.getDefault_temperature());
-    }
-
-    public void changeOutputList(Profile profile) {
-        unit_output_list_.remove(profile.getDefault_temperature());
-        unit_output_list_.add(0, profile.getDefault_temperature());
-    }
+    public Temperature(){ }
 
     public double convert(Unit from, Unit to, double value) {
         if(from == null || to == null)
@@ -39,8 +14,8 @@ public class Temperature extends Category {
 
         String shortcutFrom = from.getShortcut();
         String shortcutTo = to.getShortcut();
-        Unit validUnitFrom = GetUnitByShortcut(shortcutFrom);
-        Unit validUnitTo = GetUnitByShortcut(shortcutTo);
+        Unit validUnitFrom = getUnitByShortcut(shortcutFrom);
+        Unit validUnitTo = getUnitByShortcut(shortcutTo);
 
         if(validUnitFrom == null || validUnitTo == null)
             throw new IllegalArgumentException("Unit is not part of the category!");

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_conversionItem_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true">
 
     <View
-        android:id="@+id/divider3"
+        android:id="@+id/divider1"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="#2d2d2d"
@@ -17,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/layout_conversion_frame"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,20 +23,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/layout_deleteIcon"
+            android:id="@+id/layout_conversion_delete"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_conversionLine">
+            app:layout_constraintTop_toBottomOf="@+id/layout_conversion_element">
 
             <ImageView
-                android:id="@+id/icon_delete"
+                android:id="@+id/imageview_conversion_delete"
                 android:layout_width="80dp"
                 android:layout_height="0dp"
                 android:layout_marginEnd="-2dp"
                 android:layout_marginStart="337dp"
                 android:background="@android:color/holo_red_light"
+                android:contentDescription="@+string/delete_icon"
                 android:foreground="@android:drawable/ic_menu_delete"
                 android:scaleType="centerCrop"
                 android:visibility="visible"
@@ -50,7 +49,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/layout_conversionLine"
+            android:id="@+id/layout_conversion_element"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/background_light"
@@ -62,7 +61,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Spinner
-                android:id="@+id/input_unit"
+                android:id="@+id/spinner_conversion_left"
                 android:layout_width="75dp"
                 android:layout_height="45dp"
                 android:layout_gravity="fill"
@@ -71,11 +70,11 @@
                 android:dropDownWidth="match_parent"
                 android:focusableInTouchMode="true"
                 android:spinnerMode="dropdown"
-                app:layout_constraintStart_toEndOf="@+id/ptxt_input"
-                app:layout_constraintTop_toTopOf="@+id/ptxt_input" />
+                app:layout_constraintStart_toEndOf="@+id/edittext_conversion_left"
+                app:layout_constraintTop_toTopOf="@+id/edittext_conversion_left" />
 
             <Spinner
-                android:id="@+id/output_unit"
+                android:id="@+id/spinner_conversion_right"
                 android:layout_width="75dp"
                 android:layout_height="45dp"
                 android:layout_gravity="fill"
@@ -84,11 +83,11 @@
                 android:dropDownWidth="match_parent"
                 android:focusableInTouchMode="true"
                 android:spinnerMode="dropdown"
-                app:layout_constraintEnd_toStartOf="@+id/ptxt_result"
-                app:layout_constraintTop_toTopOf="@+id/ptxt_result" />
+                app:layout_constraintEnd_toStartOf="@+id/edittext_conversion_right"
+                app:layout_constraintTop_toTopOf="@+id/edittext_conversion_right" />
 
             <EditText
-                android:id="@+id/ptxt_input"
+                android:id="@+id/edittext_conversion_left"
                 android:layout_width="97dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="8dp"
@@ -106,7 +105,7 @@
             </EditText>
 
             <EditText
-                android:id="@+id/ptxt_result"
+                android:id="@+id/edittext_conversion_right"
                 android:layout_width="97dp"
                 android:layout_height="45dp"
                 android:layout_marginEnd="8dp"
@@ -130,6 +129,6 @@
         android:background="#2d2d2d"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_conversion_frame" />
 
 </android.support.constraint.ConstraintLayout>

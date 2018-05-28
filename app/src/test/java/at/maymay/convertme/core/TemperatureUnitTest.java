@@ -154,7 +154,7 @@ public class TemperatureUnitTest {
         Unit expectedUnit = null;
         Unit actualUnit;
 
-        actualUnit = temperatures.GetUnitByShortcut("°C");
+        actualUnit = temperatures.getUnitByShortcut("°C");
 
         assertEquals(expectedUnit, actualUnit);
     }
@@ -165,7 +165,7 @@ public class TemperatureUnitTest {
         Unit expectedUnit = new Unit("Celsius", "°C", 1);
         Unit actualUnit;
 
-        actualUnit = temperatures.GetUnitByShortcut("°C");
+        actualUnit = temperatures.getUnitByShortcut("°C");
 
         assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
         assertEquals(expectedUnit.getName(), actualUnit.getName());
@@ -178,7 +178,7 @@ public class TemperatureUnitTest {
         Unit expectedUnit = new Unit("Fahrenheit", "°F", 1.8);
         Unit actualUnit;
 
-        actualUnit = temperatures.GetUnitByShortcut("°F");
+        actualUnit = temperatures.getUnitByShortcut("°F");
 
         assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
         assertEquals(expectedUnit.getName(), actualUnit.getName());
@@ -191,7 +191,7 @@ public class TemperatureUnitTest {
         Unit expectedUnit = new Unit("Kelvin", "K", 273.15);
         Unit actualUnit;
 
-        actualUnit = temperatures.GetUnitByShortcut("K");
+        actualUnit = temperatures.getUnitByShortcut("K");
 
         assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
         assertEquals(expectedUnit.getName(), actualUnit.getName());
@@ -204,7 +204,7 @@ public class TemperatureUnitTest {
         Unit expectedUnit = null;
         Unit actualUnit;
 
-        actualUnit = temperatures.GetUnitByShortcut("NonExisting");
+        actualUnit = temperatures.getUnitByShortcut("NonExisting");
 
         assertEquals(expectedUnit, actualUnit);
     }
