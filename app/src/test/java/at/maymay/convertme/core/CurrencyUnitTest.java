@@ -163,7 +163,7 @@ public class CurrencyUnitTest {
         Unit expectedUnit = null;
         Unit actualUnit;
 
-        actualUnit = currencies.GetUnitByShortcut("Shortcut1");
+        actualUnit = currencies.getUnitByShortcut("Shortcut1");
 
         assertEquals(expectedUnit, actualUnit);
     }
@@ -174,7 +174,7 @@ public class CurrencyUnitTest {
         Unit expectedUnit = new Unit("Name1", "Shortcut1", 1);
         Unit actualUnit;
 
-        actualUnit = currencies.GetUnitByShortcut("Shortcut1");
+        actualUnit = currencies.getUnitByShortcut("Shortcut1");
 
         assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
         assertEquals(expectedUnit.getName(), actualUnit.getName());
@@ -187,7 +187,7 @@ public class CurrencyUnitTest {
         Unit expectedUnit = new Unit("Name2", "Shortcut2", 2);
         Unit actualUnit;
 
-        actualUnit = currencies.GetUnitByShortcut("Shortcut2");
+        actualUnit = currencies.getUnitByShortcut("Shortcut2");
 
         assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
         assertEquals(expectedUnit.getName(), actualUnit.getName());
@@ -200,7 +200,7 @@ public class CurrencyUnitTest {
         Unit expectedUnit = new Unit("Name3", "Shortcut3", 0.5);
         Unit actualUnit;
 
-        actualUnit = currencies.GetUnitByShortcut("Shortcut3");
+        actualUnit = currencies.getUnitByShortcut("Shortcut3");
 
         assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
         assertEquals(expectedUnit.getName(), actualUnit.getName());
@@ -213,7 +213,7 @@ public class CurrencyUnitTest {
         Unit expectedUnit = null;
         Unit actualUnit;
 
-        actualUnit = currencies.GetUnitByShortcut("NonExisting");
+        actualUnit = currencies.getUnitByShortcut("NonExisting");
 
         assertEquals(expectedUnit, actualUnit);
     }

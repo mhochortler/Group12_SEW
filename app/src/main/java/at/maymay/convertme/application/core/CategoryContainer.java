@@ -7,7 +7,8 @@ import at.maymay.convertme.application.core.model.Temperature;
 import at.maymay.convertme.application.core.model.Volume;
 import at.maymay.convertme.application.core.model.Weight;
 
-public class CategoryContainer {
+public class CategoryContainer
+{
     private Currency currency_;
     private Length length_;
     private Speed speed_;

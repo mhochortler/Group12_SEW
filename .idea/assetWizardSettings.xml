@@ -19,7 +19,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\mhoch\StudioProjects\Group12_SEW\Images\Categories\vector-union.png" />
+                                      <entry key="imageAsset" value="C:\Users\mhoch\StudioProjects\Group12_SEW\Images\Categories\flask-outline.png" />
                                       <entry key="outputName" value="ic_category_volume" />
                                     </map>
                                   </option>
@@ -33,7 +33,7 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="imageAsset" value="C:\Users\mhoch\StudioProjects\Group12_SEW\Images\AppIcon\app_icon.png" />
-                                      <entry key="outputName" value="app_icon_convertMe" />
+                                      <entry key="outputName" value="ic_convertme" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -43,7 +43,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

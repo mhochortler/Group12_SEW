@@ -5,20 +5,14 @@ import java.util.List;
 
 public abstract class Category {
 
-    protected abstract void init();
-
     protected List<Unit> unit_list_ = new ArrayList<>();
-    protected List<Unit> unit_output_list_;
 
     public List<Unit> getUnitList(){
         return unit_list_;
     }
 
-    public List<Unit> getOutputUnitList(){
-        return unit_output_list_;
-    }
-
-    public String[] getStringifytUnitList() {
+    public String[] getStringifytUnitList()
+    {
         List<String> result = new ArrayList<>();
 
         for(Unit u : unit_list_) {
@@ -28,22 +22,25 @@ public abstract class Category {
         return result.toArray(new String[result.size()]);
     }
 
-    public String[] getStringifytOutputUnitList() {
-        List<String> result = new ArrayList<>();
-
-        for(Unit u : unit_output_list_) {
-            result.add(u.getShortcut());
-        }
-
-        return result.toArray(new String[result.size()]);
-    }
-
-    public Unit GetUnitByShortcut(String shortcut)
+    public Unit getUnitByShortcut(String shortcut)
     {
         Unit result = null;
 
         for (Unit u : unit_list_) {
             if (u.getShortcut().equals(shortcut)) {
+                result = u;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public Unit getUnitByName(String name)
+    {
+        Unit result = null;
+
+        for (Unit u : unit_list_) {
+            if (u.getName().equals(name)) {
                 result = u;
                 break;
             }
@@ -57,8 +54,8 @@ public abstract class Category {
 
         String shortcutFrom = from.getShortcut();
         String shortcutTo = to.getShortcut();
-        Unit validUnitFrom = GetUnitByShortcut(shortcutFrom);
-        Unit validUnitTo = GetUnitByShortcut(shortcutTo);
+        Unit validUnitFrom = getUnitByShortcut(shortcutFrom);
+        Unit validUnitTo = getUnitByShortcut(shortcutTo);
 
         if(validUnitFrom == null || validUnitTo == null)
             throw new IllegalArgumentException("Unit is not part of the category!");

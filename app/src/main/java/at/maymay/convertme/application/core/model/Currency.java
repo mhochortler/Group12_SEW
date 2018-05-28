@@ -13,49 +13,9 @@ import at.maymay.convertme.application.dal.CurrencyExchangeAPI;
 
 public class Currency extends Category {
 
-    public Currency(){
-        init();
-    }
-
-    @Override
-    protected void init() {
-       /*
-        remoteID = 1;
-        Unit usd = new Unit("U.S. Dollar", "USD", remoteID++,  1.0);
-        Unit eur = new Unit("Euro", "EUR", remoteID++, 0.0);
-        Unit yen = new Unit("Yen", "JPY", remoteID++, 0.0);
-        Unit pound = new Unit("British Pound", "GBP", remoteID++, 0.0);
-        Unit frank = new Unit("Swiss Franc", "CHF",remoteID++, 0.0);
-        */
-
-        Unit usd = new Unit("U.S. Dollar", "USD",  1.0);
-        Unit eur = new Unit("Euro", "EUR", 0.0);
-        Unit yen = new Unit("Yen", "JPY", 0.0);
-        Unit pound = new Unit("British Pound", "GBP",  0.0);
-        Unit frank = new Unit("Swiss Franc", "CHF", 0.0);
-        unit_list_.add(usd);
-        unit_list_.add(eur);
-        unit_list_.add(yen);
-        unit_list_.add(pound);
-        unit_list_.add(frank);
-
-        // CurrencyExchangeAPI api = new CurrencyExchangeAPI();
-        // api.execute(this);
-
-        unit_output_list_ = new ArrayList<>(unit_list_);
-    }
+    public Currency(){ }
 
     private long remoteID;
-
-    public void changeList(Profile profile) {
-        unit_list_.remove(profile.getDefault_currency());
-        unit_list_.add(0, profile.getDefault_currency());
-    }
-
-    public void changeOutputList(Profile profile) {
-        unit_output_list_.remove(profile.getDefault_currency());
-        unit_output_list_.add(0, profile.getDefault_currency());
-    }
 
     public Unit getUSD() { return unit_list_.get(0); }
     public Unit getEuro() { return unit_list_.get(1); }

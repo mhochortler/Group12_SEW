@@ -5,7 +5,12 @@ import android.app.Application;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import at.maymay.convertme.application.core.CategoryContainer;
+import at.maymay.convertme.application.core.Profile;
+import at.maymay.convertme.application.core.ProfileContainer;
 import at.maymay.convertme.application.core.dao.IDAOCurrency;
 import at.maymay.convertme.application.core.dao.IDAOLength;
 import at.maymay.convertme.application.core.dao.IDAOSpeed;
@@ -28,7 +33,10 @@ import at.maymay.convertme.application.dal.dao.DAOVolume;
 import at.maymay.convertme.application.dal.dao.DAOWeight;
 
 public class AppConfig extends Application {
-    CategoryContainer container_;
+
+    static CategoryContainer container_;
+    static ProfileContainer profile_container_;
+
     IDAOWeight daoWeight_;
     IDAOVolume daoVolume_;
     IDAOTemperature daoTemperature_;
@@ -40,6 +48,19 @@ public class AppConfig extends Application {
     public void onCreate() {
         super.onCreate();
         initDb();
+        configureDAOInterface();
+        initCategoryContainer();
+        initProfileContainer();
+    }
+
+    static public CategoryContainer categoryContainer()
+    {
+        return container_;
+    }
+
+    static public ProfileContainer profileContainer()
+    {
+        return profile_container_;
     }
 
     private void initDb() {
@@ -64,6 +85,36 @@ public class AppConfig extends Application {
         Weight weight = daoWeight_.load();
 
         container_ = new CategoryContainer(currency, length, speed, temperature, volume, weight);
+    }
+
+    private void initProfileContainer()
+    {
+        List<Profile> profiles = new ArrayList<>();
+
+        List<Unit> units_austria = new ArrayList<>();
+        List<Unit> units_united_states = new ArrayList<>();
+
+        units_austria.add(container_.length().getMeter());
+        units_austria.add(container_.currency().getEuro());
+        units_austria.add(container_.weight().getKilogramm());
+        units_austria.add(container_.volume().getCubicMetre());
+        units_austria.add(container_.speed().getKmh());
+        units_austria.add(container_.temperature().getCelsius());
+
+        units_united_states.add(container_.length().getMile());
+        units_united_states.add(container_.currency().getUSD());
+        units_united_states.add(container_.weight().getPound());
+        units_united_states.add(container_.volume().getCubicMetre());
+        units_united_states.add(container_.speed().getMph());
+        units_united_states.add(container_.temperature().getFahrenheit());
+
+        Profile austria = new Profile("Austria", "AUT", units_austria);
+        Profile usa = new Profile("United States", "USA", units_united_states);
+
+        profiles.add(austria);
+        profiles.add(usa);
+
+        profile_container_ = new ProfileContainer(profiles);
     }
 
     private void configureDAOInterface()
