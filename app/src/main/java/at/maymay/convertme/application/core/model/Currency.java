@@ -15,12 +15,10 @@ public class Currency extends Category {
 
     public Currency(){ }
 
-    private long remoteID;
-
     public Unit getUSD() { return unit_list_.get(0); }
     public Unit getEuro() { return unit_list_.get(1); }
     public Unit getYen() { return unit_list_.get(2); }
-    public Unit getRubel() { return unit_list_.get(3); }
+    public Unit getPound() { return unit_list_.get(3); }
     public Unit getFrank() { return unit_list_.get(4); }
 
     public void loadExchangeRates(JSONObject obj)
@@ -61,7 +59,7 @@ public class Currency extends Category {
         }
         */
     }
-
+/*
     private boolean checkFactorsUnitList()
     {
         for(Unit unit: unit_list_) {
@@ -69,5 +67,5 @@ public class Currency extends Category {
                 return false;
         }
         return true;
-    }
+    }*/
 }

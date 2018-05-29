@@ -36,10 +36,13 @@ public class Profile
 
         for(Unit unit : units)
         {
-            if(standard_units.contains(unit))
+            for(Unit standard_unit_ : standard_units)
             {
-                result = unit;
-                break;
+                if(standard_unit_.getShortcut().equals(unit.getShortcut()))
+                {
+                    result = unit;
+                    break;
+                }
             }
         }
 
