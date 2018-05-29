@@ -27,30 +27,6 @@ public class DALUnit extends Model implements Serializable
         super();
     }
 
-    public DALUnit(String name, String shortcut)
-    {
-        super();
-        name_ = name;
-        shortcut_ = shortcut;
-        factor_ = 0.0;
-    }
-
-    public DALUnit(String name, String shortcut, long remoteId)
-    {
-        super();
-        name_ = name;
-        shortcut_ = shortcut;
-        remote_id_ = remoteId;
-    }
-
-    public DALUnit(String name, String shortcut, double factor)
-    {
-        super();
-        name_ = name;
-        shortcut_ = shortcut;
-        factor_ = factor;
-    }
-
     public DALUnit(String name, String shortcut, long remoteId, double factor)
     {
         super();

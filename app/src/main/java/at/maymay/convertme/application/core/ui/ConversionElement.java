@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 import at.maymay.convertme.R;
+import at.maymay.convertme.application.config.AppConfig;
 import at.maymay.convertme.application.core.model.Category;
 import at.maymay.convertme.application.core.model.Currency;
 import at.maymay.convertme.application.dal.CurrencyExchangeAPI;
@@ -158,9 +159,8 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
 
         if(input.getText().length() > 0)
         {
-            if(category.getClass() == Currency.class){
-                CurrencyExchangeAPI api = new CurrencyExchangeAPI();
-                api.execute((Currency)category);
+            if(category.getClass() == Currency.class) {
+                AppConfig.updateFactors();
             }
             double RESULT = category.convert(from, to, getValueAsDouble(input));
             result.setText(String.format("%.3f", RESULT));

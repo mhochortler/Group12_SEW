@@ -42,7 +42,7 @@ public class AppConfig extends Application {
     IDAOTemperature daoTemperature_;
     IDAOSpeed daoSpeed_;
     IDAOLength daoLength_;
-    IDAOCurrency daoCurrency_;
+    static IDAOCurrency daoCurrency_;
 
     @Override
     public void onCreate() {
@@ -64,7 +64,7 @@ public class AppConfig extends Application {
     }
 
     private void initDb() {
-        deleteDatabase("Database_ConvertMe.db");
+        //deleteDatabase("Database_ConvertMe.db");
 
         Configuration.Builder dbConfiguration = new Configuration.Builder(this);
 
@@ -125,5 +125,10 @@ public class AppConfig extends Application {
         daoSpeed_ = new DAOSpeed();
         daoLength_ = new DAOLength();
         daoCurrency_ = new DAOCurrency();
+    }
+
+    public static void updateFactors()
+    {
+        daoCurrency_.loadFactors();
     }
 }

@@ -8,22 +8,20 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
-import at.maymay.convertme.application.core.model.Currency;
+import at.maymay.convertme.application.dal.dao.DAOCurrency;
 
 
-public class CurrencyExchangeAPI extends AsyncTask<Currency, Void, JSONObject> {
+public class CurrencyExchangeAPI extends AsyncTask<DAOCurrency, Void, JSONObject> {
     static private String url = "https://openexchangerates.org/api/latest.json";
     static private String charset = java.nio.charset.StandardCharsets.UTF_8.name();
     static private String apikey = "4a473f8e307b47d4862f6ab1dfdb269c";
     private static String query = "app_id=" + apikey;
-    private Currency curr = null;
+    private DAOCurrency curr = null;
     private JSONObject obj;
 
-    protected JSONObject doInBackground(Currency... arg0) {
+    protected JSONObject doInBackground(DAOCurrency... arg0) {
         JSONObject jsonObject = null;
         curr = arg0[0];
         try {
