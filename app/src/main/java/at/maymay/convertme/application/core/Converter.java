@@ -36,6 +36,7 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
     {
         c_collection.addNewConversion(category);
     }
+    
 
     @Override
     public void onClick(View view) {
