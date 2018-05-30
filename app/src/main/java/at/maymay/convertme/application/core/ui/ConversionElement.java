@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -163,7 +164,9 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
                 AppConfig.updateFactors();
             }
             double RESULT = category.convert(from, to, getValueAsDouble(input));
-            result.setText(String.format("%.3f", RESULT));
+            DecimalFormat dec_format = new DecimalFormat("0.#####");
+
+            result.setText(dec_format.format(Double.valueOf(RESULT)));
         }
         else result.setText("");
     }
@@ -189,16 +192,22 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
         {
             case R.id.spinner_conversion_left:
                 selected_unit_left = selected_unit;
-                if(edittext_right.getText().length() > 0)
+                if(edittext_left.getText().length() > 0)
                 {
-                    edittext_right.setText(String.format("%.3f", getValueAsDouble(edittext_right)));
+                    double RESULT = getValueAsDouble(edittext_left);
+                    DecimalFormat dec_format = new DecimalFormat("0.#####");
+
+                    edittext_left.setText(dec_format.format(Double.valueOf(RESULT)));
                 }
                 break;
             case R.id.spinner_conversion_right:
                 selected_unit_right = selected_unit;
                 if(edittext_left.getText().length() > 0)
                 {
-                    edittext_left.setText(String.format("%.3f", getValueAsDouble(edittext_left)));
+                    double RESULT = getValueAsDouble(edittext_left);
+                    DecimalFormat dec_format = new DecimalFormat("0.#####");
+
+                    edittext_left.setText(dec_format.format(Double.valueOf(RESULT)));
                 }
                 break;
         }
