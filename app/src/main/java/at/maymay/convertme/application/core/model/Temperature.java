@@ -1,9 +1,5 @@
 package at.maymay.convertme.application.core.model;
 
-import java.util.ArrayList;
-
-import at.maymay.convertme.application.core.Profile;
-
 public class Temperature extends Category {
 
     public Temperature(){ }
@@ -39,8 +35,4 @@ public class Temperature extends Category {
         }
         return value;
     }
-
-    public Unit getCelsius() { return unit_list_.get(0); }
-    public Unit getFahrenheit() { return unit_list_.get(1); }
-    public Unit getKelvin() { return unit_list_.get(2); }
 }

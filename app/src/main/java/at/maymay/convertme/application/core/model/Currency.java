@@ -1,25 +1,10 @@
 package at.maymay.convertme.application.core.model;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import at.maymay.convertme.application.core.Converter;
-import at.maymay.convertme.application.core.Profile;
-import at.maymay.convertme.application.dal.CurrencyExchangeAPI;
 
 public class Currency extends Category {
 
     public Currency(){ }
-
-    public Unit getUSD() { return unit_list_.get(0); }
-    public Unit getEuro() { return unit_list_.get(1); }
-    public Unit getYen() { return unit_list_.get(2); }
-    public Unit getPound() { return unit_list_.get(3); }
-    public Unit getFrank() { return unit_list_.get(4); }
 
     public void loadExchangeRates(JSONObject obj)
     {
