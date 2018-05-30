@@ -9,6 +9,7 @@ import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.config.AppConfig;
 import at.maymay.convertme.application.core.CategoryContainer;
+import at.maymay.convertme.application.core.ICategoryContainer;
 import at.maymay.convertme.application.core.model.Category;
 import at.maymay.convertme.application.core.Converter;
 
@@ -55,7 +56,7 @@ public class CategorySelectionToolbar implements View.OnClickListener
     @Override
     public void onClick(View view) {
 
-        CategoryContainer container = AppConfig.categoryContainer();
+        ICategoryContainer container = AppConfig.categoryContainer();
 
         switch (view.getId()){
             case R.id.btn_length: selected_category = container.length();
