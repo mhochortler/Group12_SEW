@@ -22,6 +22,7 @@ import at.maymay.convertme.application.core.model.Temperature;
 
 import at.maymay.convertme.application.core.model.Volume;
 import at.maymay.convertme.application.core.model.Weight;
+import at.maymay.convertme.application.dal.dalmodel.DALProfile;
 import at.maymay.convertme.application.dal.dalmodel.DALUnit;
 import at.maymay.convertme.application.dal.dao.DAOCurrency;
 import at.maymay.convertme.application.dal.dao.DAOLength;
@@ -71,6 +72,7 @@ public class AppConfig extends Application {
         dbConfiguration.setDatabaseName("Database_ConvertMe.db");
         dbConfiguration.setDatabaseVersion(1);
         dbConfiguration.addModelClasses(DALUnit.class);
+        dbConfiguration.addModelClasses(DALProfile.class);
 
         ActiveAndroid.initialize(dbConfiguration.create());
     }
@@ -104,8 +106,8 @@ public class AppConfig extends Application {
         daoProfile_ = new DAOProfile();
     }
 
-    public static void updateFactors()
+    /*public static void updateFactors()
     {
-        daoCurrency_.loadFactors();
-    }
+        daoCurrency_.update();
+    }*/
 }
