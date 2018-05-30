@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true">
@@ -67,7 +68,6 @@
                 android:layout_gravity="fill"
                 android:layout_marginStart="5dp"
                 android:background="@android:drawable/btn_default"
-                android:dropDownWidth="match_parent"
                 android:focusableInTouchMode="true"
                 android:spinnerMode="dropdown"
                 app:layout_constraintStart_toEndOf="@+id/edittext_conversion_left"
@@ -80,7 +80,6 @@
                 android:layout_gravity="fill"
                 android:layout_marginEnd="5dp"
                 android:background="@android:drawable/btn_default"
-                android:dropDownWidth="match_parent"
                 android:focusableInTouchMode="true"
                 android:spinnerMode="dropdown"
                 app:layout_constraintEnd_toStartOf="@+id/edittext_conversion_right"
