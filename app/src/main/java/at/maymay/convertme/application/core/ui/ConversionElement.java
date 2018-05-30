@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -128,10 +130,55 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
 
     private double getValueAsDouble(EditText field)
     {
-        if(field.getText().toString().matches("\\d+(?:\\.\\d+)?"))
+        if(field.getText().toString().matches("\\d+(?:\\.\\d*)?"))
             return Double.parseDouble(field.getText().toString());
         else
             return 0.0;
+    }
+
+    private double round(double value, int places)
+    {
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    private void setValue(double value, EditText target)
+    {
+        String value_str = String.valueOf(value);
+
+        int dot_pos = 0;
+        for(char c : value_str.toCharArray())
+        {
+            dot_pos++;
+            if(c == '.') break;
+        }
+
+        int b_dot = dot_pos - 1;
+        int a_dot = value_str.length() - dot_pos;
+        int places = 7 - b_dot;
+        double rounded_val;
+
+        if(value_str.length() > 8)
+        {
+            if(b_dot < 8)
+            {
+                rounded_val = round(value, places);
+                DecimalFormat dec_format = new DecimalFormat("0.######");
+                target.setText(dec_format.format(Double.valueOf(rounded_val)));
+            }
+            else {
+                DecimalFormat dec_format = new DecimalFormat("0.#####");
+                target.setText(dec_format.format(Double.valueOf(value)));
+            }
+        }
+        else
+        {
+            DecimalFormat dec_format = new DecimalFormat("0.#####");
+            target.setText(dec_format.format(Double.valueOf(value)));
+        }
+
+
     }
 
     private void setSelectedItem(Spinner spinner, Unit unit)
@@ -164,9 +211,7 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
                 AppConfig.updateFactors();
             }
             double RESULT = category.convert(from, to, getValueAsDouble(input));
-            DecimalFormat dec_format = new DecimalFormat("0.#####");
-
-            result.setText(dec_format.format(Double.valueOf(RESULT)));
+            setValue(RESULT, result);
         }
         else result.setText("");
     }
@@ -195,9 +240,7 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
                 if(edittext_left.getText().length() > 0)
                 {
                     double RESULT = getValueAsDouble(edittext_left);
-                    DecimalFormat dec_format = new DecimalFormat("0.#####");
-
-                    edittext_left.setText(dec_format.format(Double.valueOf(RESULT)));
+                    setValue(RESULT, edittext_left);
                 }
                 break;
             case R.id.spinner_conversion_right:
@@ -205,9 +248,7 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
                 if(edittext_left.getText().length() > 0)
                 {
                     double RESULT = getValueAsDouble(edittext_left);
-                    DecimalFormat dec_format = new DecimalFormat("0.#####");
-
-                    edittext_left.setText(dec_format.format(Double.valueOf(RESULT)));
+                    setValue(RESULT, edittext_left);
                 }
                 break;
         }
