@@ -16,11 +16,27 @@
                             <entry key="actionbar">
                               <value>
                                 <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\mhoch\StudioProjects\Group12_SEW\Images\Categories\flask-outline.png" />
-                                      <entry key="outputName" value="ic_category_volume" />
+                                      <entry key="imageAsset" value="C:\Users\mhoch\StudioProjects\Group12_SEW\Images\Categories\ruler.png" />
+                                      <entry key="outputName" value="ic_category_lenght_holo_dark" />
+                                      <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -5,12 +5,15 @@ import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -28,7 +31,7 @@ import at.maymay.convertme.application.core.model.Currency;
 import at.maymay.convertme.application.dal.CurrencyExchangeAPI;
 import at.maymay.convertme.application.core.model.Unit;
 
-public class ConversionElement implements AdapterView.OnItemSelectedListener, View.OnTouchListener
+public class ConversionElement implements AdapterView.OnItemSelectedListener, View.OnClickListener
 {
     private View view;
 
@@ -47,8 +50,6 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
 
     private ConstraintLayout layout_conversion;
 
-    private float last_x_position;
-
     ConversionElement(Context context, Category category, ConversionCollection collection)
     {
         LayoutInflater inflater = (LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -58,6 +59,7 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
         edittext_right = (EditText) view.findViewById(R.id.edittext_conversion_right);
         spinner_left = (Spinner) view.findViewById(R.id.spinner_conversion_left);
         spinner_right = (Spinner) view.findViewById(R.id.spinner_conversion_right);
+        ImageButton btn_delete = (ImageButton) view.findViewById(R.id.btn_delete);
 
         layout_conversion = (ConstraintLayout) view.findViewById(R.id.layout_conversion_element);
         this.collection = collection;
@@ -72,7 +74,7 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
         spinner_left.setOnItemSelectedListener(this);
         spinner_right.setOnItemSelectedListener(this);
 
-        layout_conversion.setOnTouchListener(this);
+        btn_delete.setOnClickListener(this);
 
         edittext_left.addTextChangedListener(new TextWatcher() {
             @Override
@@ -126,6 +128,11 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
     public Category getCategory()
     {
         return category;
+    }
+
+    public void transition(int x_pos)
+    {
+        layout_conversion.animate().translationX(x_pos);
     }
 
     private double getValueAsDouble(EditText field)
@@ -260,39 +267,13 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent)
-    {
-        float current_x_position;
+    public void onClick(View view) {
 
-        switch(motionEvent.getAction())
+        switch(view.getId())
         {
-            case MotionEvent.ACTION_DOWN:
-                last_x_position = motionEvent.getX();
-                return true;
-
-            case MotionEvent.ACTION_MOVE:
-                current_x_position = motionEvent.getX();
-                if(last_x_position - current_x_position <= 200 && last_x_position - current_x_position >= 0)
-                {
-                    int color = 255 - ((int)(last_x_position - current_x_position) / 6);
-                    layout_conversion.setTranslationX((last_x_position - current_x_position) * -1);
-                    layout_conversion.setBackgroundColor(Color.argb(255,color,color,color));
-                }
-                return true;
-
-            case MotionEvent.ACTION_UP:
-                current_x_position = motionEvent.getX();
-                if(last_x_position > current_x_position && (last_x_position - current_x_position >= 200))
-                {
-                    collection.deleteConversion(this);
-                }
-                else if(last_x_position > current_x_position)
-                {
-                    layout_conversion.setBackgroundColor(Color.argb(255, 255, 255, 255));
-                    layout_conversion.animate().translationX(0);
-                }
-                return true;
+            case R.id.btn_delete:
+                collection.deleteConversion(this);
+                break;
         }
-        return false;
     }
 }

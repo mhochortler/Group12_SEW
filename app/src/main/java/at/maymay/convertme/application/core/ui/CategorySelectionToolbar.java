@@ -74,5 +74,6 @@ public class CategorySelectionToolbar implements View.OnClickListener
 
         main_activity.newConversion(selected_category);
         hide();
+        main_activity.showDeleteButton();
     }
 }

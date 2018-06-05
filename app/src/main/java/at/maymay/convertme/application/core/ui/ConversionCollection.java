@@ -1,7 +1,10 @@
 package at.maymay.convertme.application.core.ui;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -32,6 +35,8 @@ public class ConversionCollection implements AdapterView.OnItemSelectedListener{
 
     private List<Profile> profiles;
     private List<ConversionElement> conversions;
+
+    private Boolean delete_mode_on = false;
 
     public ConversionCollection(Context context, List<Profile> profiles)
     {
@@ -89,6 +94,11 @@ public class ConversionCollection implements AdapterView.OnItemSelectedListener{
         throw new IllegalArgumentException("No profile with this name!");
     }
 
+    public Boolean deleteModeOn()
+    {
+        return delete_mode_on;
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
     {
@@ -143,6 +153,7 @@ public class ConversionCollection implements AdapterView.OnItemSelectedListener{
         updateConversion(new_element);
 
         LinearLayout layout_conversions = (LinearLayout) view.findViewById(R.id.layout_conversions);
+        if(delete_mode_on)new_element.transition(-200);
         layout_conversions.addView(new_element.getView());
 
         displayKeyboardAndSetFocus(new_element.getView());
@@ -156,6 +167,31 @@ public class ConversionCollection implements AdapterView.OnItemSelectedListener{
         llayout.removeView(element.getView());
 
         hideKeyboardFromView(element.getView());
+    }
+
+    public void toggleDeleteMode(FloatingActionButton button)
+    {
+        if(delete_mode_on) {
+            button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ffff4444")));
+
+            for(ConversionElement element : conversions)
+            {
+                element.transition(0);
+            }
+
+            delete_mode_on = false;
+        }
+        else {
+
+            button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ff669900")));
+
+            for(ConversionElement element : conversions)
+            {
+                element.transition(-200);
+            }
+
+            delete_mode_on = true;
+        }
     }
 
     private void displayKeyboardAndSetFocus(View view)
