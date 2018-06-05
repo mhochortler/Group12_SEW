@@ -40,6 +40,11 @@ public class CurrencyUnitTest {
 
         @Override
         public void save(Currency currency){}
+
+        @Override
+        public void loadFactors() {
+
+        }
     }
 
     private class DAOCurrencyMockEmpty implements IDAOCurrency {
@@ -55,6 +60,11 @@ public class CurrencyUnitTest {
 
         @Override
         public void save(Currency currency){}
+
+        @Override
+        public void loadFactors() {
+
+        }
     }
 
     IDAOCurrency dao;

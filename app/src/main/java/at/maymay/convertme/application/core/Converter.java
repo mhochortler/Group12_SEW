@@ -1,6 +1,8 @@
 package at.maymay.convertme.application.core;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import at.maymay.convertme.application.core.ui.ConversionCollection;
 public class Converter extends AppCompatActivity implements View.OnClickListener
 {
     FloatingActionButton btn_fabtoolbar;
+    FloatingActionButton btn_delete;
     CategorySelectionToolbar fabtoolbar;
     ConversionCollection c_collection;
     static Context context;
@@ -27,14 +30,21 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
 
         c_collection = new ConversionCollection(this, AppConfig.profileContainer().profiles());
         btn_fabtoolbar = (FloatingActionButton) findViewById(R.id.btn_fabtoolbar);
+        btn_delete = (FloatingActionButton) findViewById(R.id.fab_delete);
         fabtoolbar = new CategorySelectionToolbar(this);
 
         btn_fabtoolbar.setOnClickListener(this);
+        btn_delete.setOnClickListener(this);
     }
 
     public void newConversion(Category category)
     {
         c_collection.addNewConversion(category);
+    }
+
+    public void showDeleteButton()
+    {
+        btn_delete.show();
     }
 
     @Override
@@ -43,8 +53,22 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         switch(view.getId())
         {
             case R.id.btn_fabtoolbar:
-                fabtoolbar.show();
+                if(!c_collection.deleteModeOn())
+                {
+                    btn_delete.hide();
+                    fabtoolbar.show();
+                }
                 break;
+
+            case R.id.fab_delete:
+                c_collection.toggleDeleteMode(btn_delete);
+
+                if(c_collection.deleteModeOn()) {
+                    btn_fabtoolbar.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#36454f")));
+                }
+                else{
+                    btn_fabtoolbar.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ff303f9f")));
+                }
         }
     }
 
