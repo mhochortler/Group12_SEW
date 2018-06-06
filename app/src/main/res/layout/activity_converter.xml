@@ -110,6 +110,7 @@
                 android:src="@drawable/ic_category_currency" />
         </LinearLayout>
 
+
     </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
 
 </android.support.constraint.ConstraintLayout>
