@@ -76,7 +76,7 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
         onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
-        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("0.006214")));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("10.93613")));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_volume)).perform(click());
         onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
-        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("10")));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("2.641722")));
     }
 
     @Test
@@ -178,7 +178,7 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.spinner_profil_left)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("United States"))).perform(click());
 
-        onView(withId(R.id.spinner_conversion_left)).check(matches(withSpinnerText(containsString("mile"))));
+        onView(withId(R.id.spinner_conversion_left)).check(matches(withSpinnerText(containsString("yd"))));
     }
 
     @Test
@@ -187,12 +187,12 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.btn_length)).perform(click());
 
         onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
-        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("0.006214")));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("10.93613")));
 
         onView(withId(R.id.spinner_conversion_left)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("ft"))).perform(click());
 
-        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("0.001894")));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("3.333333")));
     }
 
     @Test
@@ -201,7 +201,7 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.btn_length)).perform(click());
 
         onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
-        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("0.006214")));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("10.93613")));
 
         onView(withId(R.id.spinner_conversion_right)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("ft"))).perform(click());
@@ -242,15 +242,6 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.edittext_conversion_right)).check(matches(isDisplayed()));
         onView(withId(R.id.spinner_conversion_left)).check(matches(isDisplayed()));
         onView(withId(R.id.spinner_conversion_right)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void test_large_input() throws Exception {
-        onView(withId(R.id.btn_fabtoolbar)).perform(click());
-        onView(withId(R.id.btn_length)).perform(click());
-
-        onView(withId(R.id.edittext_conversion_left)).perform(typeText("100000000"));
-        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("62137.27")));
     }
 
 }
