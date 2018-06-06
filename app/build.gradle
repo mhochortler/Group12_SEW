@@ -15,9 +15,15 @@ android {
         }
 
     buildTypes {
+        debug{
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            testCoverageEnabled = true
         }
     }
 }
@@ -30,8 +36,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    implementation 'com.github.sarxos:exchange-rates-api:0.2'
-    implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     implementation 'com.android.support:design:25.4.0'
-    implementation 'com.github.fafaldo:fab-toolbar:1.2.0'
 }

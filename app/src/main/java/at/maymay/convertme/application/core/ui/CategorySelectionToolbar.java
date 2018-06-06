@@ -2,48 +2,34 @@ package at.maymay.convertme.application.core.ui;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
-
-import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import at.maymay.convertme.R;
-import at.maymay.convertme.application.core.Category;
+import at.maymay.convertme.application.config.AppConfig;
+import at.maymay.convertme.application.core.ICategoryContainer;
+import at.maymay.convertme.application.core.model.Category;
 import at.maymay.convertme.application.core.Converter;
-import at.maymay.convertme.application.core.Currency;
-import at.maymay.convertme.application.core.Length;
-import at.maymay.convertme.application.core.Speed;
-import at.maymay.convertme.application.core.Temperature;
-import at.maymay.convertme.application.core.Volume;
-import at.maymay.convertme.application.core.Weight;
 
-public class CategorySelectionToolbar implements View.OnClickListener{
-
-    private Currency currency;
-    private Length length;
-    private Speed speed;
-    private Temperature temperature;
-    private Volume volume;
-    private Weight weight;
-
-    private FABToolbarLayout layout;
-
+public class CategorySelectionToolbar implements View.OnClickListener
+{
+    private LinearLayout layout_toolbar;
     private Category selected_category;
-
     private Converter main_activity;
 
     public CategorySelectionToolbar(Context context) {
 
         main_activity = (Converter) context;
-        View view = ((Converter)context).findViewById(R.id.main_layout);
+        View view = main_activity.findViewById(R.id.layout_converter_main);
 
-        layout = (FABToolbarLayout) ((Converter) context).findViewById(R.id.layout_fabtoolbar);
+        layout_toolbar = (LinearLayout) view.findViewById(R.id.fabtoolbar_toolbar);
 
-        Button btn_length = (Button)view.findViewById(R.id.btn_length);
-        Button btn_weight = (Button) view.findViewById(R.id.btn_weight);
-        Button btn_speed = (Button) view.findViewById(R.id.btn_speed);
-        Button btn_temperature = (Button) view.findViewById(R.id.btn_temperature);
-        Button btn_volume = (Button) view.findViewById(R.id.btn_volume);
-        Button btn_currency = (Button) view.findViewById(R.id.btn_currency);
+        ImageButton btn_length = (ImageButton) view.findViewById(R.id.btn_length);
+        ImageButton btn_weight = (ImageButton) view.findViewById(R.id.btn_weight);
+        ImageButton btn_speed = (ImageButton) view.findViewById(R.id.btn_speed);
+        ImageButton btn_temperature = (ImageButton) view.findViewById(R.id.btn_temperature);
+        ImageButton btn_volume = (ImageButton) view.findViewById(R.id.btn_volume);
+        ImageButton btn_currency = (ImageButton) view.findViewById(R.id.btn_currency);
 
         btn_length.setOnClickListener(this);
         btn_weight.setOnClickListener(this);
@@ -52,43 +38,42 @@ public class CategorySelectionToolbar implements View.OnClickListener{
         btn_volume.setOnClickListener(this);
         btn_currency.setOnClickListener(this);
 
-        initCategories();
-        this.selected_category = length;
+        selected_category = AppConfig.categoryContainer().length();
     }
 
     public void show()
     {
-        layout.show();
+        layout_toolbar.setVisibility(LinearLayout.VISIBLE);
     }
 
-    private void initCategories() {
-        currency = new Currency();
-        length = new Length();
-        speed = new Speed();
-        temperature = new Temperature();
-        volume = new Volume();
-        weight = new Weight();
+    private void hide()
+    {
+        layout_toolbar.setVisibility(LinearLayout.GONE);
     }
 
     @Override
     public void onClick(View view) {
 
+        ICategoryContainer container = AppConfig.categoryContainer();
+
         switch (view.getId()){
-            case R.id.btn_length: selected_category = length;
+            case R.id.btn_length: selected_category = container.length();
                 break;
-            case R.id.btn_weight: selected_category = weight;
+            case R.id.btn_weight: selected_category = container.weight();
                 break;
-            case R.id.btn_speed: selected_category = speed;
+            case R.id.btn_speed: selected_category = container.speed();
                 break;
-            case R.id.btn_temperature: selected_category = temperature;
+            case R.id.btn_temperature: selected_category = container.temperature();
                 break;
-            case R.id.btn_volume: selected_category = volume;
+            case R.id.btn_volume: selected_category = container.volume();
                 break;
-            case R.id.btn_currency: selected_category = currency;
+            case R.id.btn_currency: selected_category = container.currency();
                 break;
         }
 
-        main_activity.addNewConversionLine(selected_category);
-        layout.hide();
+        main_activity.newConversion(selected_category);
+        hide();
+        main_activity.showDeleteButton();
+        main_activity.showToolbarButton();
     }
 }

@@ -2,126 +2,110 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
+    android:id="@+id/layout_converter_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     tools:context="at.maymay.convertme.application.core.Converter">
 
-
-    <ScrollView
-        android:id="@+id/scroll_conversions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:id="@+id/layout_conversions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="70dp"
-            android:animateLayoutChanges="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </ScrollView>
-
-    <com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout
-        android:id="@+id/layout_fabtoolbar"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_conversion_collection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:containerId="@+id/fabtoolbar_container"
-        app:fabId="@+id/btn_fabtoolbar"
-        app:fabToolbarId="@+id/fabtoolbar_toolbar"
-        app:fadeInFraction="0.2"
-        app:hideDuration="200"
-        app:horizontalMargin="30dp"
-        app:showDuration="600"
-        app:verticalMargin="30dp">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/fabtoolbar_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true">
+    </android.support.constraint.ConstraintLayout>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/btn_fabtoolbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_input_add"
-                android:tint="@android:color/background_dark"
-                app:fabSize="normal" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp"
+        android:layout_marginEnd="24dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_red_light"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 
-        </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_fabtoolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="24dp"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="#ffffff"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/fabtoolbar_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/fabtoolbar_toolbar"
+        style="?attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-            <Button
-                android:id="@+id/btn_length"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="L" />
+        <ImageButton
+            android:id="@+id/btn_length"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_category_lenght_holo_dark" />
 
-            <Button
-                android:id="@+id/btn_weight"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="W" />
+        <ImageButton
+            android:id="@+id/btn_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_category_weight_holo_dark" />
 
-            <Button
-                android:id="@+id/btn_speed"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="S" />
+        <ImageButton
+            android:id="@+id/btn_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_category_speed_holo_dark" />
 
-            <Button
-                android:id="@+id/btn_temperature"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="T" />
+        <ImageButton
+            android:id="@+id/btn_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_category_temperature_holo_dark" />
 
-            <Button
-                android:id="@+id/btn_volume"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="V" />
+        <ImageButton
+            android:id="@+id/btn_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_category_volume_holo_dark" />
 
-            <Button
-                android:id="@+id/btn_currency"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
-                android:text="C" />
-        </LinearLayout>
-
-    </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
+        <ImageButton
+            android:id="@+id/btn_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryDark"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_category_currency_holo_dark" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,7 @@
+package at.maymay.convertme.application.core.dao;
+
+import at.maymay.convertme.application.core.model.Weight;
+
+public interface IDAOWeight {
+    Weight load();
+}
