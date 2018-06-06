@@ -111,14 +111,6 @@ public class ConverterInstrumentedTest {
     }
 
     @Test
-    public void test_implicit_conversion_currency() throws Exception {
-        onView(withId(R.id.btn_fabtoolbar)).perform(click());
-        onView(withId(R.id.btn_currency)).perform(click());
-        onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
-        onView(withId(R.id.edittext_conversion_right)).check(matches(withText(containsString("."))));
-    }
-
-    @Test
     public void test_spinner_conversion_right() throws Exception {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
