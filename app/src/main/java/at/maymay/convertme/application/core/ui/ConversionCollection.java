@@ -202,7 +202,6 @@ public class ConversionCollection implements AdapterView.OnItemSelectedListener{
         if(view != null)
         {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            assert imm != null;
             imm.showSoftInput(view.findFocus(), InputMethodManager.SHOW_IMPLICIT);
         }
     }
@@ -212,7 +211,6 @@ public class ConversionCollection implements AdapterView.OnItemSelectedListener{
         if(view != null)
         {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            assert imm != null;
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
