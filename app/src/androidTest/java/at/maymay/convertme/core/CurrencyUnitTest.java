@@ -37,9 +37,6 @@ public class CurrencyUnitTest {
 
             return currency;
         }
-
-        @Override
-        public void save(Currency currency){}
     }
 
     private class DAOCurrencyMockEmpty implements IDAOCurrency {
@@ -52,9 +49,6 @@ public class CurrencyUnitTest {
 
             return currency;
         }
-
-        @Override
-        public void save(Currency currency){}
     }
 
     IDAOCurrency dao;
