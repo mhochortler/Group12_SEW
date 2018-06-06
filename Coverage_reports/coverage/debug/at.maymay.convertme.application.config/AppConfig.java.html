@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AppConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">at.maymay.convertme.application.config</a> &gt; <span class="el_source">AppConfig.java</span></div><h1>AppConfig.java</h1><pre class="source lang-java linenums">package at.maymay.convertme.application.config;
+
+import android.app.Application;
+
+import at.maymay.convertme.application.core.CategoryContainer;
+import at.maymay.convertme.application.core.ICategoryContainer;
+import at.maymay.convertme.application.core.ProfileContainer;
+import at.maymay.convertme.application.core.dao.IDAOCurrency;
+import at.maymay.convertme.application.core.dao.IDAOLength;
+import at.maymay.convertme.application.core.dao.IDAOProfile;
+import at.maymay.convertme.application.core.dao.IDAOSpeed;
+import at.maymay.convertme.application.core.dao.IDAOTemperature;
+import at.maymay.convertme.application.core.dao.IDAOVolume;
+import at.maymay.convertme.application.core.dao.IDAOWeight;
+import at.maymay.convertme.application.core.model.Currency;
+import at.maymay.convertme.application.core.model.Length;
+import at.maymay.convertme.application.core.model.Speed;
+import at.maymay.convertme.application.core.model.Temperature;
+import at.maymay.convertme.application.core.model.Volume;
+import at.maymay.convertme.application.core.model.Weight;
+import at.maymay.convertme.application.dal.dao.DAOCurrency;
+import at.maymay.convertme.application.dal.dao.DAOLength;
+import at.maymay.convertme.application.dal.dao.DAOProfile;
+import at.maymay.convertme.application.dal.dao.DAOSpeed;
+import at.maymay.convertme.application.dal.dao.DAOTemperature;
+import at.maymay.convertme.application.dal.dao.DAOVolume;
+import at.maymay.convertme.application.dal.dao.DAOWeight;
+
+<span class="fc" id="L29">public class AppConfig extends Application {</span>
+
+    static ICategoryContainer container_;
+    static ProfileContainer profile_container_;
+
+    IDAOWeight daoWeight_;
+    IDAOVolume daoVolume_;
+    IDAOTemperature daoTemperature_;
+    IDAOSpeed daoSpeed_;
+    IDAOLength daoLength_;
+    IDAOProfile daoProfile_;
+    static IDAOCurrency daoCurrency_;
+
+    @Override
+    public void onCreate() {
+<span class="fc" id="L44">        super.onCreate();</span>
+<span class="fc" id="L45">        configureDAOInterface();</span>
+<span class="fc" id="L46">        initCategoryContainer();</span>
+<span class="fc" id="L47">        initProfileContainer();</span>
+<span class="fc" id="L48">    }</span>
+
+    static public ICategoryContainer categoryContainer()
+    {
+<span class="fc" id="L52">        return container_;</span>
+    }
+
+    static public ProfileContainer profileContainer()
+    {
+<span class="fc" id="L57">        return profile_container_;</span>
+    }
+
+    private void initCategoryContainer()
+    {
+<span class="fc" id="L62">        Currency currency = daoCurrency_.load();</span>
+<span class="fc" id="L63">        Length length = daoLength_.load();</span>
+<span class="fc" id="L64">        Speed speed = daoSpeed_.load();</span>
+<span class="fc" id="L65">        Temperature temperature = daoTemperature_.load();</span>
+<span class="fc" id="L66">        Volume volume = daoVolume_.load();</span>
+<span class="fc" id="L67">        Weight weight = daoWeight_.load();</span>
+
+<span class="fc" id="L69">        container_ = new CategoryContainer(currency, length, speed, temperature, volume, weight);</span>
+<span class="fc" id="L70">    }</span>
+
+    private void initProfileContainer()
+    {
+<span class="fc" id="L74">        profile_container_ = new ProfileContainer(daoProfile_.loadAll(container_));</span>
+<span class="fc" id="L75">    }</span>
+
+    private void configureDAOInterface()
+    {
+<span class="fc" id="L79">        daoWeight_ = new DAOWeight();</span>
+<span class="fc" id="L80">        daoVolume_ = new DAOVolume();</span>
+<span class="fc" id="L81">        daoTemperature_ = new DAOTemperature();</span>
+<span class="fc" id="L82">        daoSpeed_ = new DAOSpeed();</span>
+<span class="fc" id="L83">        daoLength_ = new DAOLength();</span>
+<span class="fc" id="L84">        daoCurrency_ = new DAOCurrency();</span>
+
+<span class="fc" id="L86">        daoProfile_ = new DAOProfile();</span>
+<span class="fc" id="L87">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Generated by the Android Gradle plugin 3.1.1</div></body></html>

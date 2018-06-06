@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DAOProfile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debugAndroidTest</a> &gt; <a href="index.source.html" class="el_package">at.maymay.convertme.application.dal.dao</a> &gt; <span class="el_source">DAOProfile.java</span></div><h1>DAOProfile.java</h1><pre class="source lang-java linenums">package at.maymay.convertme.application.dal.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import at.maymay.convertme.application.core.ICategoryContainer;
+import at.maymay.convertme.application.core.Profile;
+import at.maymay.convertme.application.core.dao.IDAOProfile;
+import at.maymay.convertme.application.core.model.Unit;
+
+<span class="fc" id="L11">public class DAOProfile implements IDAOProfile {</span>
+
+    @Override
+    public List&lt;Profile&gt; loadAll(ICategoryContainer container) {
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        if (container == null)</span>
+<span class="fc" id="L16">            throw new NullPointerException(&quot;Invalid container, NULL-PTR!&quot;);</span>
+
+<span class="fc" id="L18">        List&lt;Profile&gt; profiles = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L20">        List&lt;Unit&gt; units_austria = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L21">        List&lt;Unit&gt; units_united_states = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L22">        List&lt;Unit&gt; units_england = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L24">        units_austria.add(container.length().getUnitByShortcut(&quot;m&quot;));</span>
+<span class="fc" id="L25">        units_austria.add(container.currency().getUnitByShortcut(&quot;EUR&quot;));</span>
+<span class="fc" id="L26">        units_austria.add(container.weight().getUnitByShortcut(&quot;kg&quot;));</span>
+<span class="fc" id="L27">        units_austria.add(container.volume().getUnitByShortcut(&quot;L&quot;));</span>
+<span class="fc" id="L28">        units_austria.add(container.speed().getUnitByShortcut(&quot;km/h&quot;));</span>
+<span class="fc" id="L29">        units_austria.add(container.temperature().getUnitByShortcut(&quot;°C&quot;));</span>
+
+<span class="fc" id="L31">        units_united_states.add(container.length().getUnitByShortcut(&quot;yd&quot;));</span>
+<span class="fc" id="L32">        units_united_states.add(container.currency().getUnitByShortcut(&quot;USD&quot;));</span>
+<span class="fc" id="L33">        units_united_states.add(container.weight().getUnitByShortcut(&quot;lb&quot;));</span>
+<span class="fc" id="L34">        units_united_states.add(container.volume().getUnitByShortcut(&quot;uslg&quot;));</span>
+<span class="fc" id="L35">        units_united_states.add(container.speed().getUnitByShortcut(&quot;mile/h&quot;));</span>
+<span class="fc" id="L36">        units_united_states.add(container.temperature().getUnitByShortcut(&quot;°F&quot;));</span>
+
+<span class="fc" id="L38">        units_england.add(container.length().getUnitByShortcut(&quot;ft&quot;));</span>
+<span class="fc" id="L39">        units_england.add(container.currency().getUnitByShortcut(&quot;GBP&quot;));</span>
+<span class="fc" id="L40">        units_england.add(container.weight().getUnitByShortcut(&quot;kg&quot;));</span>
+<span class="fc" id="L41">        units_england.add(container.volume().getUnitByShortcut(&quot;L&quot;));</span>
+<span class="fc" id="L42">        units_england.add(container.speed().getUnitByShortcut(&quot;mile/h&quot;));</span>
+<span class="fc" id="L43">        units_england.add(container.temperature().getUnitByShortcut(&quot;°C&quot;));</span>
+
+<span class="fc" id="L45">        Profile austria = new Profile(&quot;Austria&quot;, &quot;AUT&quot;, units_austria);</span>
+<span class="fc" id="L46">        Profile usa = new Profile(&quot;United States&quot;, &quot;USA&quot;, units_united_states);</span>
+<span class="fc" id="L47">        Profile england = new Profile(&quot;England&quot;, &quot;EN&quot;, units_england);</span>
+
+<span class="fc" id="L49">        profiles.add(austria);</span>
+<span class="fc" id="L50">        profiles.add(usa);</span>
+<span class="fc" id="L51">        profiles.add(england);</span>
+
+<span class="fc" id="L53">        return profiles;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Generated by the Android Gradle plugin 3.1.1</div></body></html>
