@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/ic_input_add"
-                android:tint="@android:color/background_dark"
+                android:tint="#ffffff"
                 app:backgroundTint="@color/colorPrimaryDark"
                 app:fabSize="normal" />
 
