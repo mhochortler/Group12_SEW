@@ -97,4 +97,14 @@ public class UnitUnitTest {
 
         assertEquals("newU", shortcut);
     }
+
+    @Test
+    public void setUnitFactor_ChangeFactorOfTheUnit_ReturnsUnitWithChangedFactor() throws Exception {
+        Unit unit = new Unit("Unit", "u", 1.01);
+
+        unit.setFactor(1.2);
+        double factor = unit.getFactor();
+
+        assertEquals(1.2, factor, 0.1);
+    }
 }

@@ -15,9 +15,8 @@ import at.maymay.convertme.application.core.model.Unit;
 public class DAOProfile implements IDAOProfile {
 
     @Override
-    public List<Profile> loadAll(ICategoryContainer container)
-    {
-        if(container == null)
+    public List<Profile> loadAll(ICategoryContainer container) {
+        if (container == null)
             throw new NullPointerException("Invalid container, NULL-PTR!");
 
         //List<DALProfile> DALProfiles;
@@ -27,6 +26,7 @@ public class DAOProfile implements IDAOProfile {
 
         List<Unit> units_austria = new ArrayList<>();
         List<Unit> units_united_states = new ArrayList<>();
+
 
         units_austria.add(container.length().getUnitByShortcut("m"));
         units_austria.add(container.currency().getUnitByShortcut("EUR"));
@@ -41,6 +41,7 @@ public class DAOProfile implements IDAOProfile {
         units_united_states.add(container.volume().getUnitByShortcut("m³"));
         units_united_states.add(container.speed().getUnitByShortcut("mile/h"));
         units_united_states.add(container.temperature().getUnitByShortcut("°F"));
+
 
         Profile austria = new Profile("Austria", "AUT", units_austria);
         Profile usa = new Profile("United States", "USA", units_united_states);
