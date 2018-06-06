@@ -50,7 +50,7 @@ public class ConversionCollection implements AdapterView.OnItemSelectedListener{
         this.conversions = new ArrayList<>();
 
         selected_profile_left = profiles.get(0);
-        selected_profile_right = profiles.get(0);
+        selected_profile_right = profiles.get(1);
 
         Spinner profile_left = (Spinner) view.findViewById(R.id.spinner_profil_left);
         Spinner profile_right = (Spinner) view.findViewById(R.id.spinner_profil_right);
@@ -59,6 +59,9 @@ public class ConversionCollection implements AdapterView.OnItemSelectedListener{
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         profile_left.setAdapter(adapter);
         profile_right.setAdapter(adapter);
+
+        profile_left.setSelection(0);
+        profile_right.setSelection(1);
 
         profile_left.setOnItemSelectedListener(this);
         profile_right.setOnItemSelectedListener(this);
