@@ -3,8 +3,6 @@ package at.maymay.convertme.application.core.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.maymay.convertme.application.dal.dalmodel.DALUnit;
-
 public abstract class Category {
 
     protected List<Unit> unit_list_ = new ArrayList<>();

@@ -22,8 +22,6 @@ import at.maymay.convertme.application.core.model.Temperature;
 
 import at.maymay.convertme.application.core.model.Volume;
 import at.maymay.convertme.application.core.model.Weight;
-import at.maymay.convertme.application.dal.dalmodel.DALProfile;
-import at.maymay.convertme.application.dal.dalmodel.DALUnit;
 import at.maymay.convertme.application.dal.dao.DAOCurrency;
 import at.maymay.convertme.application.dal.dao.DAOLength;
 import at.maymay.convertme.application.dal.dao.DAOProfile;
@@ -48,7 +46,7 @@ public class AppConfig extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initDb();
+        //initDb();
         configureDAOInterface();
         initCategoryContainer();
         initProfileContainer();
@@ -64,18 +62,18 @@ public class AppConfig extends Application {
         return profile_container_;
     }
 
-    private void initDb() {
+    /*private void initDb() {
         //deleteDatabase("Database_ConvertMe.db");
 
         Configuration.Builder dbConfiguration = new Configuration.Builder(this);
 
         dbConfiguration.setDatabaseName("Database_ConvertMe.db");
         dbConfiguration.setDatabaseVersion(1);
-        dbConfiguration.addModelClasses(DALUnit.class);
+       // dbConfiguration.addModelClasses(DALUnit.class);
         dbConfiguration.addModelClasses(DALProfile.class);
 
         ActiveAndroid.initialize(dbConfiguration.create());
-    }
+    }*/
 
     private void initCategoryContainer()
     {

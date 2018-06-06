@@ -13,11 +13,10 @@ import at.maymay.convertme.application.core.dao.IDAOCurrency;
 import at.maymay.convertme.application.core.model.Currency;
 import at.maymay.convertme.application.core.model.Unit;
 import at.maymay.convertme.application.dal.CurrencyExchangeAPI;
-import at.maymay.convertme.application.dal.dalmodel.DALUnit;
 
 public class DAOCurrency implements IDAOCurrency{
 
-    private List<DALUnit> dal_units =  new ArrayList<>();
+   // private List<DALUnit> dal_units =  new ArrayList<>();
     private List<Unit> units = new ArrayList<>();
 
     @Override
@@ -30,21 +29,21 @@ public class DAOCurrency implements IDAOCurrency{
         units.add(new Unit( "British Pound", "GBP", 0.0));
         units.add(new Unit( "Swiss Franc", "CHF", 0.0));
 
-        dal_units = createDALUnitList(units);
+       // dal_units = createDALUnitList(units);
 
         CurrencyExchangeAPI api = new CurrencyExchangeAPI();
         api.execute(this);
         return currency;
     }
 
-    private List<DALUnit> createDALUnitList(List<Unit> units_)
+    /*private List<DALUnit> createDALUnitList(List<Unit> units_)
     {
         List<DALUnit> dal_units_ = new ArrayList<>();
         long remoteID = 1;
         for(Unit unit : units_)
             dal_units_.add(new DALUnit(unit.getName(), unit.getShortcut(), remoteID++, unit.getFactor()));
         return dal_units_;
-    }
+    }*/
 
     public void loadExchangeRates(JSONObject obj)
     {
@@ -53,15 +52,15 @@ public class DAOCurrency implements IDAOCurrency{
                 String base = obj.getString("base");
                 if (base.equals("USD")) {
                     JSONObject rates = obj.getJSONObject("rates");
-                    for (DALUnit unit: dal_units) {
+                    for (Unit unit: units) {
                         unit.setFactor(1/rates.getDouble(unit.getShortcut()));
                     }
-                    saveUnitListToDB();
+                    //saveUnitListToDB();
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        }
+        }/*
         else if(!checkFactorsUnitList()){
             Context context = Converter.getAppContext();
 
@@ -84,10 +83,10 @@ public class DAOCurrency implements IDAOCurrency{
         for(int index = 0; index < units.size(); index++)
         {
             saveFactorToUnitList(index);
-        }
+        }*/
     }
 
-    private boolean checkFactorsUnitList()
+    /*private boolean checkFactorsUnitList()
     {
         for(DALUnit unit: dal_units) {
             if(unit != null && unit.getFactor() == 0.0)
@@ -112,7 +111,7 @@ public class DAOCurrency implements IDAOCurrency{
     private Unit convertDALUnitToUnit(DALUnit dalunit)
     {
         return new Unit(dalunit.getName(), dalunit.getShortcut(), dalunit.getFactor());
-    }
+    }*/
 
    /* @Override
     public void update()

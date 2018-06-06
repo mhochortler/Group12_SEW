@@ -7,9 +7,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import at.maymay.convertme.application.core.model.Unit;
-import at.maymay.convertme.application.dal.ListTypeSerializer;
 
-public class DALProfile extends Model implements Serializable {
+/*public class DALProfile extends Model implements Serializable {
 
     ListTypeSerializer listSerializer = new ListTypeSerializer();
 
@@ -69,3 +68,4 @@ public class DALProfile extends Model implements Serializable {
     }
     public void setStandard_units(List<Unit> standard_units_) { this.standard_units = standard_units_; }
 }
+*/
