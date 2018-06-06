@@ -47,6 +47,11 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
         btn_delete.show();
     }
 
+    public void showToolbarButton()
+    {
+        btn_fabtoolbar.show();
+    }
+
     @Override
     public void onClick(View view) {
 
@@ -57,6 +62,7 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
                 {
                     btn_delete.hide();
                     fabtoolbar.show();
+                    btn_fabtoolbar.hide();
                 }
                 break;
 

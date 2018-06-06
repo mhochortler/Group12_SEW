@@ -3,6 +3,7 @@ package at.maymay.convertme.application.core.ui;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
@@ -14,7 +15,7 @@ import at.maymay.convertme.application.core.Converter;
 
 public class CategorySelectionToolbar implements View.OnClickListener
 {
-    private FABToolbarLayout layout_toolbar;
+    private LinearLayout layout_toolbar;
     private Category selected_category;
     private Converter main_activity;
 
@@ -23,7 +24,7 @@ public class CategorySelectionToolbar implements View.OnClickListener
         main_activity = (Converter) context;
         View view = main_activity.findViewById(R.id.layout_converter_main);
 
-        layout_toolbar = (FABToolbarLayout) view.findViewById(R.id.layout_fabtoolbar);
+        layout_toolbar = (LinearLayout) view.findViewById(R.id.fabtoolbar_toolbar);
 
         ImageButton btn_length = (ImageButton) view.findViewById(R.id.btn_length);
         ImageButton btn_weight = (ImageButton) view.findViewById(R.id.btn_weight);
@@ -44,12 +45,12 @@ public class CategorySelectionToolbar implements View.OnClickListener
 
     public void show()
     {
-        layout_toolbar.show();
+        layout_toolbar.setVisibility(LinearLayout.VISIBLE);
     }
 
     public void hide()
     {
-        layout_toolbar.hide();
+        layout_toolbar.setVisibility(LinearLayout.GONE);
     }
 
     @Override
@@ -75,5 +76,6 @@ public class CategorySelectionToolbar implements View.OnClickListener
         main_activity.newConversion(selected_category);
         hide();
         main_activity.showDeleteButton();
+        main_activity.showToolbarButton();
     }
 }

@@ -15,6 +15,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
@@ -71,11 +72,51 @@ public class ConverterInstrumentedTest {
     }
 
     @Test
-    public void test_implicit_conversion() throws Exception {
+    public void test_implicit_conversion_lenght() throws Exception {
         onView(withId(R.id.btn_fabtoolbar)).perform(click());
         onView(withId(R.id.btn_length)).perform(click());
         onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
         onView(withId(R.id.edittext_conversion_right)).check(matches(withText("0.006214")));
+    }
+
+    @Test
+    public void test_implicit_conversion_temperature() throws Exception {
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_temperature)).perform(click());
+        onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("50")));
+    }
+
+    @Test
+    public void test_implicit_conversion_weight() throws Exception {
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_weight)).perform(click());
+        onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("22.04624")));
+    }
+
+    @Test
+    public void test_implicit_conversion_speed() throws Exception {
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_speed)).perform(click());
+        onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("6.21371")));
+    }
+
+    @Test
+    public void test_implicit_conversion_volume() throws Exception {
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_volume)).perform(click());
+        onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("10")));
+    }
+
+    @Test
+    public void test_implicit_conversion_currency() throws Exception {
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_currency)).perform(click());
+        onView(withId(R.id.edittext_conversion_left)).perform(typeText("10"));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText(containsString("."))));
     }
 
     @Test
@@ -176,10 +217,40 @@ public class ConverterInstrumentedTest {
         onView(withId(R.id.fab_delete)).perform(click());
         onView(withId(R.id.btn_delete)).perform(click());
 
-        onView(withId(R.id.edittext_conversion_left)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.edittext_conversion_right)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.spinner_conversion_left)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.spinner_conversion_right)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.edittext_conversion_left)).check(doesNotExist());
+        onView(withId(R.id.edittext_conversion_right)).check(doesNotExist());
+        onView(withId(R.id.spinner_conversion_left)).check(doesNotExist());
+        onView(withId(R.id.spinner_conversion_right)).check(doesNotExist());
+    }
+
+    @Test
+    public void test_delete_mode_toogle() throws Exception {
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_length)).perform(click());
+
+        onView(withId(R.id.fab_delete)).perform(click());
+        onView(withId(R.id.btn_delete)).perform(click());
+        onView(withId(R.id.fab_delete)).perform(click());
+
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_length)).perform(click());
+
+        onView(withId(R.id.fab_delete)).perform(click());
+        onView(withId(R.id.fab_delete)).perform(click());
+
+        onView(withId(R.id.edittext_conversion_left)).check(matches(isDisplayed()));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(isDisplayed()));
+        onView(withId(R.id.spinner_conversion_left)).check(matches(isDisplayed()));
+        onView(withId(R.id.spinner_conversion_right)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void test_large_input() throws Exception {
+        onView(withId(R.id.btn_fabtoolbar)).perform(click());
+        onView(withId(R.id.btn_length)).perform(click());
+
+        onView(withId(R.id.edittext_conversion_left)).perform(typeText("100000000"));
+        onView(withId(R.id.edittext_conversion_right)).check(matches(withText("62137.27")));
     }
 
 }
