@@ -228,6 +228,30 @@ public class CurrencyUnitTest {
         assertEquals(expectedUnit, actualUnit);
     }
 
+    @Test
+    public void getUnitByName_unitsFromEmptyDaoMock_returnsNullPointer() throws Exception {
+        Currency currencies = emptyDao.load();
+        Unit expectedUnit = null;
+        Unit actualUnit;
+
+        actualUnit = currencies.getUnitByName("Name1");
+
+        assertEquals(expectedUnit, actualUnit);
+    }
+
+    @Test
+    public void getFirstUnitByName_unitsFromDaoMock_returnsCorrectUnit() throws Exception {
+        Currency currencies = dao.load();
+        Unit expectedUnit = new Unit("Name1", "Shortcut1", 1);
+        Unit actualUnit;
+
+        actualUnit = currencies.getUnitByName("Name1");
+
+        assertEquals(expectedUnit.getShortcut(), actualUnit.getShortcut());
+        assertEquals(expectedUnit.getName(), actualUnit.getName());
+        assertEquals(expectedUnit.getFactor(), actualUnit.getFactor(), 0.1);
+    }
+
 
 
 

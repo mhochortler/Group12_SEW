@@ -7,8 +7,7 @@ import at.maymay.convertme.application.core.model.Temperature;
 import at.maymay.convertme.application.core.model.Volume;
 import at.maymay.convertme.application.core.model.Weight;
 
-public class CategoryContainer
-{
+public class CategoryContainer implements ICategoryContainer {
     private Currency currency_;
     private Length length_;
     private Speed speed_;
@@ -26,21 +25,27 @@ public class CategoryContainer
         weight_ = weight;
     }
 
+    @Override
     public Currency currency(){
         return currency_;
     }
+    @Override
     public Length length(){
         return length_;
     }
+    @Override
     public Speed speed(){
         return speed_;
     }
+    @Override
     public Temperature temperature(){
         return temperature_;
     }
+    @Override
     public Volume volume(){
         return volume_;
     }
+    @Override
     public Weight weight(){
         return weight_;
     }

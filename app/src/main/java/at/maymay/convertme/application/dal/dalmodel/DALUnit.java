@@ -7,7 +7,7 @@ import com.activeandroid.annotation.Table;
 
 import java.io.Serializable;
 
-@Table(name = "Unit")
+/*@Table(name = "Unit")
 public class DALUnit extends Model implements Serializable
 {
     @Column(name = "Name")
@@ -52,4 +52,4 @@ public class DALUnit extends Model implements Serializable
         return factor_;
     }
     public void setFactor(double factor) { this.factor_ = factor; }
-}
+}*/

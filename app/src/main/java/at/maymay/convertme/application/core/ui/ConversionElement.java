@@ -214,9 +214,9 @@ public class ConversionElement implements AdapterView.OnItemSelectedListener, Vi
 
         if(input.getText().length() > 0)
         {
-            if(category.getClass() == Currency.class) {
+            /*if(category.getClass() == Currency.class) {
                 AppConfig.updateFactors();
-            }
+            }*/
             double RESULT = category.convert(from, to, getValueAsDouble(input));
             setValue(RESULT, result);
         }

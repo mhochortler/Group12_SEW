@@ -4,6 +4,7 @@
     package="at.maymay.convertme">
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".application.config.AppConfig"
         android:allowBackup="true"
@@ -13,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
+        <meta-data android:name="List_SERIALIZERS"
+            android:value="at.maymay.convertme.application.dal.ListTypeSerializer" />
 
         <activity
             android:name=".application.core.Converter"
