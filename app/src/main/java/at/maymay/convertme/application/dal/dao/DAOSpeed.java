@@ -15,8 +15,8 @@ public class DAOSpeed implements IDAOSpeed {
 
         units.add(new Unit( "KilometersHours", "km/h", 1.0));
         units.add(new Unit( "MilesHours", "mile/h", 1.6093445));
-        units.add(new Unit( "FootSeconds", "ft/s", 1.0972805));
         units.add(new Unit( "MeterSeconds", "m/s", 3.6));
+        units.add(new Unit( "FootSeconds", "ft/s", 1.0972805));
         units.add(new Unit( "Knot", "kn", 1.8519994));
 
         return speed;

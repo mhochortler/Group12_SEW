@@ -26,28 +26,36 @@ public class DAOProfile implements IDAOProfile {
 
         List<Unit> units_austria = new ArrayList<>();
         List<Unit> units_united_states = new ArrayList<>();
-
+        List<Unit> units_england = new ArrayList<>();
 
         units_austria.add(container.length().getUnitByShortcut("m"));
         units_austria.add(container.currency().getUnitByShortcut("EUR"));
         units_austria.add(container.weight().getUnitByShortcut("kg"));
-        units_austria.add(container.volume().getUnitByShortcut("m³"));
+        units_austria.add(container.volume().getUnitByShortcut("L"));
         units_austria.add(container.speed().getUnitByShortcut("km/h"));
         units_austria.add(container.temperature().getUnitByShortcut("°C"));
 
-        units_united_states.add(container.length().getUnitByShortcut("mile"));
+        units_united_states.add(container.length().getUnitByShortcut("yd"));
         units_united_states.add(container.currency().getUnitByShortcut("USD"));
         units_united_states.add(container.weight().getUnitByShortcut("lb"));
-        units_united_states.add(container.volume().getUnitByShortcut("m³"));
+        units_united_states.add(container.volume().getUnitByShortcut("uslg"));
         units_united_states.add(container.speed().getUnitByShortcut("mile/h"));
         units_united_states.add(container.temperature().getUnitByShortcut("°F"));
 
+        units_england.add(container.length().getUnitByShortcut("ft"));
+        units_england.add(container.currency().getUnitByShortcut("GBP"));
+        units_england.add(container.weight().getUnitByShortcut("kg"));
+        units_england.add(container.volume().getUnitByShortcut("L"));
+        units_england.add(container.speed().getUnitByShortcut("mile/h"));
+        units_england.add(container.temperature().getUnitByShortcut("°C"));
 
         Profile austria = new Profile("Austria", "AUT", units_austria);
         Profile usa = new Profile("United States", "USA", units_united_states);
+        Profile england = new Profile("England", "EN", units_england);
 
         profiles.add(austria);
         profiles.add(usa);
+        profiles.add(england);
 
          /*   DALProfiles = createDALProfileList(profiles);
             saveProfiles(DALProfiles);

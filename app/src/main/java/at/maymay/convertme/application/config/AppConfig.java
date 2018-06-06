@@ -2,9 +2,6 @@ package at.maymay.convertme.application.config;
 
 import android.app.Application;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Configuration;
-
 import at.maymay.convertme.application.core.CategoryContainer;
 import at.maymay.convertme.application.core.ICategoryContainer;
 import at.maymay.convertme.application.core.ProfileContainer;
@@ -19,7 +16,6 @@ import at.maymay.convertme.application.core.model.Currency;
 import at.maymay.convertme.application.core.model.Length;
 import at.maymay.convertme.application.core.model.Speed;
 import at.maymay.convertme.application.core.model.Temperature;
-
 import at.maymay.convertme.application.core.model.Volume;
 import at.maymay.convertme.application.core.model.Weight;
 import at.maymay.convertme.application.dal.dao.DAOCurrency;

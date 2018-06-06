@@ -13,7 +13,7 @@ public class DAOVolume implements IDAOVolume {
         Volume volume = new Volume();
         List<Unit> units = volume.getUnitList();
 
-        units.add(new Unit("Litre", "l", 1.0));
+        units.add(new Unit("Litre", "L", 1.0));
         units.add(new Unit("US liquid gallon", "uslg", 3.78541));
         units.add(new Unit("US liquid quart", "uslq", 0.946353));
         units.add(new Unit("US liquid pint", "uslp", 0.473176));

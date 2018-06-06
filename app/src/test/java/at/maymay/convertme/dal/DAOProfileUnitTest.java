@@ -66,7 +66,7 @@ public class DAOProfileUnitTest {
 
         int size = profiles.size();
 
-        assertEquals(2, size);
+        assertEquals(3, size);
     }
 
     @Test
@@ -75,8 +75,10 @@ public class DAOProfileUnitTest {
 
         assertEquals("Austria", profiles.get(0).getName());
         assertEquals("United States", profiles.get(1).getName());
+        assertEquals("England", profiles.get(2).getName());
 
         assertEquals("AUT", profiles.get(0).getShortcut());
         assertEquals("USA", profiles.get(1).getShortcut());
+        assertEquals("EN", profiles.get(2).getShortcut());
     }
 }

@@ -48,7 +48,7 @@ public class DAOVolumeUnitTest {
     @Test
     public void createVolumeCategory_daoVolumeLoadMethod_ReturnsListOfUnitsWithCorrectShortcuts() throws Exception {
         Volume volumes = dao.load();
-        String[] expectedShortcuts = new String[] {"l", "uslg", "uslq", "uslp", "uslc", "usfo", "ustap", "usts",
+        String[] expectedShortcuts = new String[] {"L", "uslg", "uslq", "uslp", "uslc", "usfo", "ustap", "usts",
                 "ig", "iq", "ip", "ic", "ifo", "itap", "its", "m³", "ft³", "in³"};
 
         List<Unit> volumeList = volumes.getUnitList();
