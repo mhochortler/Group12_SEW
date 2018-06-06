@@ -6,6 +6,13 @@ public class Unit  {
     private String shortcut_;
     private double factor_;
 
+    public Unit(String name, String shortcut)
+    {
+        super();
+        name_ = name;
+        shortcut_ = shortcut;
+    }
+
     public Unit(String name, String shortcut, double factor)
     {
         super();

@@ -1,6 +1,5 @@
 package at.maymay.convertme.application.dal.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import at.maymay.convertme.application.core.dao.IDAOWeight;

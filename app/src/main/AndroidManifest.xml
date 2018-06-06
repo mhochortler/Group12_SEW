@@ -15,9 +15,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <meta-data android:name="List_SERIALIZERS"
-            android:value="at.maymay.convertme.application.dal.ListTypeSerializer" />
-
         <activity
             android:name=".application.core.Converter"
             android:screenOrientation="portrait">

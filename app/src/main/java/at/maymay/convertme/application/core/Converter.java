@@ -1,6 +1,5 @@
 package at.maymay.convertme.application.core;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
@@ -20,12 +19,10 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
     FloatingActionButton btn_delete;
     CategorySelectionToolbar fabtoolbar;
     ConversionCollection c_collection;
-    static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getApplicationContext();
         setContentView(R.layout.activity_converter);
 
         c_collection = new ConversionCollection(this, AppConfig.profileContainer().profiles());
@@ -76,10 +73,5 @@ public class Converter extends AppCompatActivity implements View.OnClickListener
                     btn_fabtoolbar.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ff303f9f")));
                 }
         }
-    }
-
-    public static Context getAppContext()
-    {
-        return context;
     }
 }

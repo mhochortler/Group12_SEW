@@ -42,7 +42,6 @@ public class AppConfig extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //initDb();
         configureDAOInterface();
         initCategoryContainer();
         initProfileContainer();
@@ -57,19 +56,6 @@ public class AppConfig extends Application {
     {
         return profile_container_;
     }
-
-    /*private void initDb() {
-        //deleteDatabase("Database_ConvertMe.db");
-
-        Configuration.Builder dbConfiguration = new Configuration.Builder(this);
-
-        dbConfiguration.setDatabaseName("Database_ConvertMe.db");
-        dbConfiguration.setDatabaseVersion(1);
-       // dbConfiguration.addModelClasses(DALUnit.class);
-        dbConfiguration.addModelClasses(DALProfile.class);
-
-        ActiveAndroid.initialize(dbConfiguration.create());
-    }*/
 
     private void initCategoryContainer()
     {
@@ -99,9 +85,4 @@ public class AppConfig extends Application {
 
         daoProfile_ = new DAOProfile();
     }
-
-    /*public static void updateFactors()
-    {
-        daoCurrency_.update();
-    }*/
 }

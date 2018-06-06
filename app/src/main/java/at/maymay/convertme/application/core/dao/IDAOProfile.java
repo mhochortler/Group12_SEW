@@ -6,5 +6,5 @@ import at.maymay.convertme.application.core.ICategoryContainer;
 import at.maymay.convertme.application.core.Profile;
 
 public interface IDAOProfile {
-    public List<Profile> loadAll(ICategoryContainer container);
+    List<Profile> loadAll(ICategoryContainer container);
 }

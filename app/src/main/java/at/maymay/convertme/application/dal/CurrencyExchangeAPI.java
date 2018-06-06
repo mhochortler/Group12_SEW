@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 
 import at.maymay.convertme.application.dal.dao.DAOCurrency;
 
-
 public class CurrencyExchangeAPI extends AsyncTask<DAOCurrency, Void, JSONObject> {
     static private String url = "https://openexchangerates.org/api/latest.json";
     static private String charset = java.nio.charset.StandardCharsets.UTF_8.name();

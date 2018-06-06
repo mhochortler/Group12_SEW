@@ -1,9 +1,5 @@
 package at.maymay.convertme.application.dal.dao;
 
-import com.activeandroid.query.Select;
-import com.fasterxml.jackson.databind.jsontype.impl.AsArrayTypeSerializer;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +15,7 @@ public class DAOProfile implements IDAOProfile {
         if (container == null)
             throw new NullPointerException("Invalid container, NULL-PTR!");
 
-        //List<DALProfile> DALProfiles;
         List<Profile> profiles = new ArrayList<>();
-
-        //DALProfiles = loadDALProfiles();
 
         List<Unit> units_austria = new ArrayList<>();
         List<Unit> units_united_states = new ArrayList<>();
@@ -57,60 +50,6 @@ public class DAOProfile implements IDAOProfile {
         profiles.add(usa);
         profiles.add(england);
 
-         /*   DALProfiles = createDALProfileList(profiles);
-            saveProfiles(DALProfiles);
-        }
-        else {
-            profiles = convertDALProfilesToProfiles(DALProfiles);
-        }*/
         return profiles;
     }
-
-   /* private List<DALProfile> createDALProfileList(List<Profile> profiles_)
-    {
-        List<DALProfile> DALProfiles_ = new ArrayList<>();
-        long remoteID = 1;
-        for(Profile profile : profiles_)
-        {
-            DALProfile DALprofile = new DALProfile(profile.getName(), profile.getShortcut(), profile.getUnitList(), remoteID++);
-            DALProfiles_.add(DALprofile);
-        }
-        return DALProfiles_;
-    }
-
-    private void saveProfiles(List<DALProfile> DALProfiles_)
-    {
-        if(DALProfiles_ == null)
-            return;
-        for(DALProfile DALProfile_ : DALProfiles_)
-        {
-            DALProfile_.serializeList();
-            DALProfile_.save();
-        }
-    }
-
-    private DALProfile loadProfileByID(long remoteID)
-    {
-        DALProfile profile_ = DALProfile.load(DALProfile.class, remoteID);
-        profile_.deserializeList();
-        return profile_;
-    }
-
-    private List<DALProfile> loadDALProfiles()
-    {
-        List<DALProfile> DALProfiles_;
-        DALProfiles_ = new Select().from(DALProfile.class).execute();
-        for(DALProfile DALProfile_ : DALProfiles_)
-            DALProfile_.deserializeList();
-
-        return  DALProfiles_;
-    }
-
-    private List<Profile> convertDALProfilesToProfiles(List<DALProfile> DALProfiles_)
-    {
-        List<Profile> profiles_ = new ArrayList<>();
-        for(DALProfile DALProfile_ : DALProfiles_)
-            profiles_.add(new Profile(DALProfile_.getName(), DALProfile_.getShortcut(), DALProfile_.getStandard_units()));
-        return profiles_;
-    }*/
 }

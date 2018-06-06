@@ -5,11 +5,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
-
 import at.maymay.convertme.R;
 import at.maymay.convertme.application.config.AppConfig;
-import at.maymay.convertme.application.core.CategoryContainer;
 import at.maymay.convertme.application.core.ICategoryContainer;
 import at.maymay.convertme.application.core.model.Category;
 import at.maymay.convertme.application.core.Converter;
@@ -49,7 +46,7 @@ public class CategorySelectionToolbar implements View.OnClickListener
         layout_toolbar.setVisibility(LinearLayout.VISIBLE);
     }
 
-    public void hide()
+    private void hide()
     {
         layout_toolbar.setVisibility(LinearLayout.GONE);
     }
